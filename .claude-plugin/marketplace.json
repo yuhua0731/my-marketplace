@@ -1,0 +1,32 @@
+{
+  "name": "my-marketplace",
+  "owner": {
+    "name": "huayu",
+    "email": "yuhua0731@github"
+  },
+  "metadata": {
+    "description": "Embedded design tools and virtual coworker personas"
+  },
+  "plugins": [
+    {
+      "name": "embedded-design-docs",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/yuhua0731/embedded-design-docs.git"
+      },
+      "description": "Write HLD, LLD, and unified design documents for embedded software. Includes templates, checklists, and domain-specific prompts for BLE, motor control, OTA, and more.",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "coworkers",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/yuhua0731/coworkers.git"
+      },
+      "description": "Virtual coworker personas distilled from real colleagues' design docs, code reviews, and decisions. Get a second opinion from your team even when they're not around.",
+      "version": "1.0.0",
+      "strict": true
+    }
+  ]
+}

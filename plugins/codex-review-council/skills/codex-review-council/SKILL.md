@@ -31,6 +31,20 @@ Do not use this skill for ordinary feature work, bug fixes, or generic "review m
 scripts/review_with_copilot.sh
 ```
 
+For a true review council loop that keeps Copilot in the same session, use:
+
+```bash
+scripts/review_with_copilot.sh --council-loop
+```
+
+The script prints the Copilot session ID and transcript path. By default, the transcript is kept under the current Codex thread's temp directory so the user can open it after the loop without polluting the repo.
+
+After Codex verifies findings, write a short follow-up file with accepted/rejected/disputed items and send it back to the same session:
+
+```bash
+scripts/review_with_copilot.sh --session-id <session-id> --follow-up review-council-followup.md
+```
+
 If the current shell is this skill directory (`skills/codex-review-council`), first move to the plugin root:
 
 ```bash
@@ -46,7 +60,7 @@ Standalone skill symlink installs do not include this script; install the plugin
    - accept and fix if correct
    - reject with technical reason if wrong
    - ask the user if architectural or unverifiable
-6. Cross-check disagreement:
+6. Cross-check disagreement. In council-loop mode, send rejected and disputed findings back into the same Copilot session with `--follow-up`.
    - Codex-only finding: compare against Copilot output and code evidence.
    - Copilot-only finding: compare against Codex reviewer output and code evidence.
    - Conflicting findings: resolve by code/tests, not reviewer authority.
@@ -54,6 +68,7 @@ Standalone skill symlink installs do not include this script; install the plugin
    - accepted findings
    - rejected findings with reasons
    - user-decision items
+   - transcript file path for the full council discussion
 8. Fix accepted findings, run relevant tests, and rerun the council if the fixes materially change code.
 
 ## Copilot Script Options
@@ -70,6 +85,10 @@ scripts/review_with_copilot.sh --base origin/main
 
 # choose a model
 scripts/review_with_copilot.sh --model claude-opus-4.7
+
+# persistent Copilot session for accepted/rejected/disputed review loop
+scripts/review_with_copilot.sh --council-loop
+scripts/review_with_copilot.sh --session-id <session-id> --follow-up review-council-followup.md
 ```
 
 Default model: `claude-sonnet-4.6`.

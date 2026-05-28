@@ -1,0 +1,7 @@
+interface:
+  display_name: "Codex Review Council"
+  short_description: "Combine Codex and Copilot reviews"
+  default_prompt: "Use $codex-review-council to add Copilot as a second local reviewer."
+
+policy:
+  allow_implicit_invocation: true

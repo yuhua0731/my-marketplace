@@ -1,0 +1,40 @@
+{
+  "name": "codex-review-council",
+  "version": "1.0.0",
+  "description": "Add Copilot CLI as a second local code reviewer when explicitly requested.",
+  "author": {
+    "name": "yuhua0731",
+    "email": "yuhua364@gmail.com",
+    "url": "https://github.com/yuhua0731"
+  },
+  "homepage": "https://github.com/yuhua0731/codex-review-council",
+  "repository": "https://github.com/yuhua0731/codex-review-council",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "codex",
+    "copilot",
+    "code-review",
+    "claude"
+  ],
+  "skills": "./",
+  "interface": {
+    "displayName": "Codex Review Council",
+    "shortDescription": "Combine Codex and Copilot code reviews",
+    "longDescription": "Use Codex Review Council to keep the normal Codex development flow while adding GitHub Copilot CLI with a Claude model as a second local reviewer when explicitly requested.",
+    "developerName": "yuhua0731",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://github.com/yuhua0731/codex-review-council",
+    "defaultPrompt": [
+      "Use Copilot as a second reviewer for this change.",
+      "Run a review council with Codex and Copilot.",
+      "Have Copilot cross-check the local diff."
+    ],
+    "brandColor": "#6366F1",
+    "screenshots": []
+  }
+}

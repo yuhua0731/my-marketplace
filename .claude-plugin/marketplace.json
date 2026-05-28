@@ -27,6 +27,16 @@
       "description": "Virtual coworker personas distilled from real colleagues' design docs, code reviews, and decisions. Get a second opinion from your team even when they're not around.",
       "version": "1.0.0",
       "strict": true
+    },
+    {
+      "name": "codex-review-council",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/yuhua0731/codex-review-council.git"
+      },
+      "description": "Add GitHub Copilot CLI with a Claude model as a second local code reviewer when explicitly requested, while preserving the normal Codex development flow.",
+      "version": "1.0.0",
+      "strict": true
     }
   ]
 }

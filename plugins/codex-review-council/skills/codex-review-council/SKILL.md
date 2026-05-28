@@ -68,7 +68,7 @@ Standalone skill symlink installs do not include this script; install the plugin
    - accepted findings
    - rejected findings with reasons
    - user-decision items
-   - transcript file path for the full council discussion
+   - clickable transcript link for the full council discussion
 8. Fix accepted findings, run relevant tests, and rerun the council if the fixes materially change code.
 
 ## Copilot Script Options
@@ -106,9 +106,13 @@ Rejected:
 
 Needs user decision:
 - question and options
+
+Council record:
+- [copilot-review-council-<session-id>.md](/absolute/path/to/copilot-review-council-<session-id>.md)
 ```
 
 If both reviewers have no actionable findings, say so and continue to normal completion.
+Always include the `Council record` link when `--council-loop` was used. Use the absolute transcript path printed by the script, and format it as a Markdown file link so the user can click it.
 
 ## Commit Boundary
 

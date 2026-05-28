@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coworkers"
+  short_description: "Consult virtual coworkers for technical review"
+  default_prompt: "Use $coworkers to review this technical decision through Jack's embedded architecture lens."

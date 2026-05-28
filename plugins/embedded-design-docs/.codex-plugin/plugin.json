@@ -1,0 +1,41 @@
+{
+  "name": "embedded-design-docs",
+  "version": "1.0.0",
+  "description": "Write HLD, LLD, and unified design documents for embedded software.",
+  "author": {
+    "name": "yuhua0731",
+    "email": "yuhua364@gmail.com",
+    "url": "https://github.com/yuhua0731"
+  },
+  "homepage": "https://github.com/yuhua0731/embedded-design-docs",
+  "repository": "https://github.com/yuhua0731/embedded-design-docs",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "embedded",
+    "hld",
+    "lld",
+    "design-docs"
+  ],
+  "skills": "./",
+  "interface": {
+    "displayName": "Embedded Design Docs",
+    "shortDescription": "Draft embedded HLD, LLD, and unified docs",
+    "longDescription": "Use Embedded Design Docs to create review-ready embedded software design documents with templates, interface checks, error handling flows, compatibility guidance, and domain prompts.",
+    "developerName": "yuhua0731",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/yuhua0731/embedded-design-docs",
+    "defaultPrompt": [
+      "Draft an embedded software design doc.",
+      "Write an HLD for this embedded system.",
+      "Review this embedded LLD for missing interfaces."
+    ],
+    "brandColor": "#0EA5E9",
+    "screenshots": []
+  }
+}

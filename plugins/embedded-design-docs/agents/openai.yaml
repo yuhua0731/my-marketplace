@@ -1,0 +1,4 @@
+interface:
+  display_name: "Embedded Design Docs"
+  short_description: "Draft embedded HLD, LLD, and unified docs"
+  default_prompt: "Use $embedded-design-docs to draft an embedded software design document from my requirements."

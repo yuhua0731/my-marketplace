@@ -54,6 +54,15 @@ scripts/review_with_copilot.sh
 
 Standalone skill symlink installs do not include this script; install the plugin from `my-marketplace` when Copilot review support is needed.
 
+## Runtime Monitoring
+
+Do not impose a fixed wall-clock timeout on Copilot review runs. Start the script as a long-running command, then poll its output stream.
+
+- Continue waiting while stdout/stderr keeps producing new output.
+- If there is no new stdout/stderr for 3 minutes, stop the Copilot process and report that the council run stalled.
+- When stopping for inactivity, include the last visible Copilot output and the transcript path if one was printed.
+- Do not treat a long run as failed solely because elapsed time is high.
+
 4. Treat both reviews as external feedback.
 5. Apply code-review reception discipline to every finding:
    - verify against code

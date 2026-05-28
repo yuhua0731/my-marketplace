@@ -37,7 +37,7 @@ For a true review council loop that keeps Copilot in the same session, use:
 scripts/review_with_copilot.sh --council-loop
 ```
 
-The script prints the Copilot session ID and transcript path. By default, the transcript is kept under the current Codex thread's temp directory so the user can open it after the loop without polluting the repo.
+The script prints the Copilot session ID, full transcript path, and summary path. By default, both files are kept under the current Codex thread's temp directory so the user can open them after the loop without polluting the repo.
 
 After Codex verifies findings, write a short follow-up file with accepted/rejected/disputed items and send it back to the same session:
 
@@ -77,8 +77,40 @@ Do not impose a fixed wall-clock timeout on Copilot review runs. Start the scrip
    - accepted findings
    - rejected findings with reasons
    - user-decision items
+   - clickable summary link for the concise council minutes
    - clickable transcript link for the full council discussion
 8. Fix accepted findings, run relevant tests, and rerun the council if the fixes materially change code.
+
+## Council Summary File
+
+After `--council-loop` completes, write a concise meeting-minutes summary to the `Copilot summary:` path printed by the script. The script only prints and prepares this path; Codex must create or update the summary file before reporting completion. This file is for the user; keep it short and scannable.
+
+If this is a follow-up round, update the existing summary's Decisions table and verification notes with the revised outcome instead of replacing the whole file.
+
+Use this structure:
+
+```markdown
+# Review Council Summary
+
+## Scope
+- Repository/branch or diff scope reviewed.
+- Copilot session id.
+
+## Participants
+- Codex reviewer: <short role>
+- Copilot reviewer: <model/session if known>
+
+## Decisions
+| Item | Decision | Action |
+| --- | --- | --- |
+| <finding> | Accepted/Rejected/Withdrawn/Needs user decision | <fix or reason> |
+
+## Verification
+- <commands/tests run and result>
+
+## Links
+- Full transcript: [copilot-review-council-<session-id>.md](/absolute/path/to/copilot-review-council-<session-id>.md)
+```
 
 ## Copilot Script Options
 
@@ -117,11 +149,12 @@ Needs user decision:
 - question and options
 
 Council record:
-- [copilot-review-council-<session-id>.md](/absolute/path/to/copilot-review-council-<session-id>.md)
+- Summary: [copilot-review-council-summary-<session-id>.md](/absolute/path/to/copilot-review-council-summary-<session-id>.md)
+- Full transcript: [copilot-review-council-<session-id>.md](/absolute/path/to/copilot-review-council-<session-id>.md)
 ```
 
 If both reviewers have no actionable findings, say so and continue to normal completion.
-Always include the `Council record` link when `--council-loop` was used. Use the absolute transcript path printed by the script, and format it as a Markdown file link so the user can click it.
+Always include the `Council record` links when `--council-loop` was used. Prefer the summary link first. Use the absolute paths printed by the script, and format them as Markdown file links so the user can click them.
 
 ## Commit Boundary
 

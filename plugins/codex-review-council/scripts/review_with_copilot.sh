@@ -8,12 +8,14 @@ COUNCIL_LOOP=0
 SESSION_ID=""
 FOLLOW_UP_FILE=""
 SHARE_PATH=""
+SUMMARY_PATH=""
 
 usage() {
   cat <<'USAGE'
 Usage: review_with_copilot.sh [--staged] [--base <ref>] [--model <model>]
                               [--council-loop] [--session-id <uuid>]
                               [--follow-up <file>] [--share <file>]
+                              [--summary <file>]
 
 Runs a read-only GitHub Copilot CLI review of local git changes.
 
@@ -21,6 +23,8 @@ Default mode is a stateless single-pass review.
 Use --council-loop to start or resume a persistent Copilot review session.
 Use --follow-up with --session-id to send Codex's accepted/rejected findings
 back into the same Copilot session for disputed-item review.
+Use --summary to choose where Codex should write the meeting-minutes summary.
+Implies --council-loop.
 USAGE
 }
 
@@ -60,6 +64,12 @@ while [[ $# -gt 0 ]]; do
     --share)
       SHARE_PATH="${2:-}"
       [[ -n "$SHARE_PATH" ]] || { echo "missing value for --share" >&2; exit 2; }
+      COUNCIL_LOOP=1
+      shift 2
+      ;;
+    --summary)
+      SUMMARY_PATH="${2:-}"
+      [[ -n "$SUMMARY_PATH" ]] || { echo "missing value for --summary" >&2; exit 2; }
       COUNCIL_LOOP=1
       shift 2
       ;;
@@ -161,6 +171,11 @@ if [[ "$COUNCIL_LOOP" -eq 1 ]]; then
   fi
   mkdir -p "$(dirname "$SHARE_PATH")"
 
+  if [[ -z "$SUMMARY_PATH" ]]; then
+    SUMMARY_PATH="$(dirname "$SHARE_PATH")/copilot-review-council-summary-${SESSION_ID}.md"
+  fi
+  mkdir -p "$(dirname "$SUMMARY_PATH")"
+
   if [[ -n "$FOLLOW_UP_FILE" ]]; then
     FOLLOW_UP=$(cat "$FOLLOW_UP_FILE")
     PROMPT=$(printf '%s\n\n%s\n\n%s\n' \
@@ -183,6 +198,7 @@ same session for re-evaluation. Use concrete file/line evidence only.")
 
   echo "Copilot review council session: $SESSION_ID" >&2
   echo "Copilot transcript: $SHARE_PATH" >&2
+  echo "Copilot summary: $SUMMARY_PATH" >&2
   echo "Open the transcript after the loop to inspect the full council discussion." >&2
 
   copilot \

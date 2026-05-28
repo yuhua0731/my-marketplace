@@ -1,0 +1,9 @@
+{
+  "name": "embedded-design-docs",
+  "description": "Write HLD, LLD, and unified design documents for embedded software.",
+  "version": "1.0.0",
+  "author": {
+    "name": "yuhua0731",
+    "email": "yuhua364@gmail.com"
+  }
+}

@@ -7,8 +7,8 @@
     "email": "yuhua364@gmail.com",
     "url": "https://github.com/yuhua0731"
   },
-  "homepage": "https://github.com/yuhua0731/coworkers",
-  "repository": "https://github.com/yuhua0731/coworkers",
+  "homepage": "https://github.com/yuhua0731/my-marketplace/tree/main/plugins/coworkers",
+  "repository": "https://github.com/yuhua0731/my-marketplace",
   "license": "MIT",
   "keywords": [
     "skills",
@@ -17,7 +17,7 @@
     "review",
     "embedded"
   ],
-  "skills": "./",
+  "skills": "./skills/",
   "interface": {
     "displayName": "Coworkers",
     "shortDescription": "Consult virtual coworkers for technical review",
@@ -28,7 +28,7 @@
       "Interactive",
       "Read"
     ],
-    "websiteURL": "https://github.com/yuhua0731/coworkers",
+    "websiteURL": "https://github.com/yuhua0731/my-marketplace/tree/main/plugins/coworkers",
     "defaultPrompt": [
       "Review this design as Jack.",
       "What would Jack think about this architecture?"

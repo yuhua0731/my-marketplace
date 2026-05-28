@@ -4,19 +4,17 @@ A Claude Code skill for writing design documents for embedded software: unified 
 
 ## Installation
 
-Claude Code:
+Claude Code marketplace:
 
 ```bash
-git clone https://github.com/yuhua0731/embedded-design-docs.git
-mkdir -p ~/.claude/skills
-ln -s "$(pwd)/embedded-design-docs" ~/.claude/skills/embedded-design-docs
+/plugin marketplace add yuhua0731/my-marketplace
+/plugin install embedded-design-docs@my-marketplace
 ```
 
-Codex:
+Codex marketplace:
 
 ```bash
-mkdir -p ~/.codex/skills
-ln -s "$(pwd)/embedded-design-docs" ~/.codex/skills/embedded-design-docs
+View embedded-design-docs from the my-marketplace plugin list.
 ```
 
 Restart Claude Code or Codex. The skill activates automatically on prompts like "write an HLD for..."
@@ -42,13 +40,14 @@ Helps Claude write complete, review-ready design documents by enforcing:
 
 ```
 embedded-design-docs/
-├── SKILL.md                              # Process: decisions, 3-phase flow, checklists, domain prompts
-├── unified-template.md                   # Unified Starter (single MCU)
-├── unified-professional-template.md      # Unified Professional (single MCU)
-├── hld-template.md                       # HLD Starter
-├── hld-professional-template.md          # HLD Professional
-├── lld-template.md                       # LLD Starter
-└── lld-professional-template.md          # LLD Professional
+└── skills/embedded-design-docs/
+    ├── SKILL.md                              # Process: decisions, 3-phase flow, checklists, domain prompts
+    ├── unified-template.md                   # Unified Starter (single MCU)
+    ├── unified-professional-template.md      # Unified Professional (single MCU)
+    ├── hld-template.md                       # HLD Starter
+    ├── hld-professional-template.md          # HLD Professional
+    ├── lld-template.md                       # LLD Starter
+    └── lld-professional-template.md          # LLD Professional
 ```
 
 ## Usage

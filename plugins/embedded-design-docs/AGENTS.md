@@ -4,14 +4,14 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Overview
 
-This is a Codex skill (`embedded-design-docs`) that guides Codex through writing design documents for embedded software. SKILL.md is the entry point — it contains the process flow, decision logic, checklists, and domain prompts. Templates are standalone markdown files with `{{placeholder}}` syntax.
+This is a Codex skill (`embedded-design-docs`) that guides Codex through writing design documents for embedded software. `skills/embedded-design-docs/SKILL.md` is the entry point — it contains the process flow, decision logic, checklists, and domain prompts. Templates live beside that skill file and use `{{placeholder}}` syntax.
 
 ## File roles
 
-- `SKILL.md` — Process engine: Unified vs HLD/LLD decision, Starter vs Professional, 3-phase workflow, mandatory review checklist, anti-pattern catalog, domain-specific prompt table, reference document handling
-- `unified-template.md` / `unified-professional-template.md` — Unified edition for single-MCU products: merges HLD + LLD into one document (5 chapters Starter, 10 chapters Professional)
-- `hld-template.md` / `lld-template.md` — Starter edition (6 chapters, no compatibility section)
-- `hld-professional-template.md` / `lld-professional-template.md` — Professional edition (9-10 chapters, adds compatibility, resource budgets, risk assessment, timing diagrams, test guidance, traceability matrix)
+- `skills/embedded-design-docs/SKILL.md` — Process engine: Unified vs HLD/LLD decision, Starter vs Professional, 3-phase workflow, mandatory review checklist, anti-pattern catalog, domain-specific prompt table, reference document handling
+- `skills/embedded-design-docs/unified-template.md` / `skills/embedded-design-docs/unified-professional-template.md` — Unified edition for single-MCU products: merges HLD + LLD into one document (5 chapters Starter, 10 chapters Professional)
+- `skills/embedded-design-docs/hld-template.md` / `skills/embedded-design-docs/lld-template.md` — Starter edition (6 chapters, no compatibility section)
+- `skills/embedded-design-docs/hld-professional-template.md` / `skills/embedded-design-docs/lld-professional-template.md` — Professional edition (9-10 chapters, adds compatibility, resource budgets, risk assessment, timing diagrams, test guidance, traceability matrix)
 
 ## Key design rule
 

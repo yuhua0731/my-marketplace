@@ -1,0 +1,9 @@
+{
+  "name": "coworkers",
+  "description": "Consult virtual coworker personas for technical decisions, architecture review, and design tradeoffs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "yuhua0731",
+    "email": "yuhua364@gmail.com"
+  }
+}

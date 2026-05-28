@@ -7,8 +7,8 @@
     "email": "yuhua364@gmail.com",
     "url": "https://github.com/yuhua0731"
   },
-  "homepage": "https://github.com/yuhua0731/codex-review-council",
-  "repository": "https://github.com/yuhua0731/codex-review-council",
+  "homepage": "https://github.com/yuhua0731/my-marketplace/tree/main/plugins/codex-review-council",
+  "repository": "https://github.com/yuhua0731/my-marketplace",
   "license": "MIT",
   "keywords": [
     "skills",
@@ -17,7 +17,7 @@
     "code-review",
     "claude"
   ],
-  "skills": "./",
+  "skills": "./skills/",
   "interface": {
     "displayName": "Codex Review Council",
     "shortDescription": "Combine Codex and Copilot code reviews",
@@ -28,7 +28,7 @@
       "Interactive",
       "Read"
     ],
-    "websiteURL": "https://github.com/yuhua0731/codex-review-council",
+    "websiteURL": "https://github.com/yuhua0731/my-marketplace/tree/main/plugins/codex-review-council",
     "defaultPrompt": [
       "Use Copilot as a second reviewer for this change.",
       "Run a review council with Codex and Copilot.",

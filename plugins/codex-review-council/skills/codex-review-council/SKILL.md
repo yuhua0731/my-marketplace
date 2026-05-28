@@ -25,13 +25,20 @@ Do not use this skill for ordinary feature work, bug fixes, or generic "review m
 
 1. Complete implementation and normal verification first.
 2. Run the normal Codex reviewer path for the current environment.
-3. Run Copilot review with the bundled script:
+3. Run Copilot review with the bundled script from the plugin root, the directory that contains `scripts/review_with_copilot.sh`:
 
 ```bash
 scripts/review_with_copilot.sh
 ```
 
-If the current shell is not in this skill directory, locate the installed skill directory first, then run the script from there.
+If the current shell is this skill directory (`skills/codex-review-council`), first move to the plugin root:
+
+```bash
+cd ../..
+scripts/review_with_copilot.sh
+```
+
+Standalone skill symlink installs do not include this script; install the plugin from `my-marketplace` when Copilot review support is needed.
 
 4. Treat both reviews as external feedback.
 5. Apply code-review reception discipline to every finding:

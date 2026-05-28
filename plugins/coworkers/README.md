@@ -10,16 +10,17 @@ A Claude Code skill containing virtual coworker personas — distilled from real
 
 ## Install
 
-Claude Code:
+Claude Code marketplace:
 
 ```bash
-ln -s "$(pwd)" ~/.claude/skills/coworkers
+/plugin marketplace add yuhua0731/my-marketplace
+/plugin install coworkers@my-marketplace
 ```
 
-Codex:
+Codex marketplace:
 
 ```bash
-ln -s "$(pwd)" ~/.codex/skills/coworkers
+View coworkers from the my-marketplace plugin list.
 ```
 
 ## Usage

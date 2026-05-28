@@ -7,8 +7,8 @@
     "email": "yuhua364@gmail.com",
     "url": "https://github.com/yuhua0731"
   },
-  "homepage": "https://github.com/yuhua0731/embedded-design-docs",
-  "repository": "https://github.com/yuhua0731/embedded-design-docs",
+  "homepage": "https://github.com/yuhua0731/my-marketplace/tree/main/plugins/embedded-design-docs",
+  "repository": "https://github.com/yuhua0731/my-marketplace",
   "license": "MIT",
   "keywords": [
     "skills",
@@ -17,7 +17,7 @@
     "lld",
     "design-docs"
   ],
-  "skills": "./",
+  "skills": "./skills/",
   "interface": {
     "displayName": "Embedded Design Docs",
     "shortDescription": "Draft embedded HLD, LLD, and unified docs",
@@ -29,7 +29,7 @@
       "Read",
       "Write"
     ],
-    "websiteURL": "https://github.com/yuhua0731/embedded-design-docs",
+    "websiteURL": "https://github.com/yuhua0731/my-marketplace/tree/main/plugins/embedded-design-docs",
     "defaultPrompt": [
       "Draft an embedded software design doc.",
       "Write an HLD for this embedded system.",

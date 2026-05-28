@@ -34,10 +34,4 @@ Adds GitHub Copilot CLI with a Claude model as a second local code reviewer when
 ## Codex
 
 Native Codex marketplace metadata lives at `.agents/plugins/marketplace.json`.
-The local marketplace expects these sibling checkout links:
-
-```bash
-plugins/embedded-design-docs -> ../../embedded-design-docs
-plugins/coworkers -> ../../coworkers
-plugins/codex-review-council -> ../../codex-review-council
-```
+Plugin payloads live directly under `plugins/<plugin-name>/`.

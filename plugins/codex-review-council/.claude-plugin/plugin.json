@@ -1,0 +1,9 @@
+{
+  "name": "codex-review-council",
+  "description": "Add GitHub Copilot CLI as a second local code reviewer when explicitly requested.",
+  "version": "1.0.0",
+  "author": {
+    "name": "yuhua0731",
+    "email": "yuhua364@gmail.com"
+  }
+}

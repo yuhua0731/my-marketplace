@@ -1,0 +1,23 @@
+{
+  "name": "troubleshooter",
+  "version": "0.1.0",
+  "description": "Company-specific fault-tree troubleshooting for C134 field issues.",
+  "author": {
+    "name": "Huayu"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Troubleshooter",
+    "shortDescription": "Diagnose C134 field issues with structured fault trees.",
+    "longDescription": "Troubleshooter routes C134 issue packets, Feishu problem documents, logs, videos, CAN traces, and field notes through leader and specialist workflows for Ant, Mantis, scheduler, network, media, and workstation faults.",
+    "developerName": "Huayu",
+    "category": "Productivity",
+    "capabilities": [
+      "Fault-tree diagnosis",
+      "C134 field case triage",
+      "CAN/NXP/log evidence routing",
+      "Missing-asset intake"
+    ],
+    "defaultPrompt": "Use Troubleshooter to diagnose this C134 issue packet. Separate observed facts, claims, inference, confirmed causes, excluded branches, and missing assets."
+  }
+}

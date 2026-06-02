@@ -1,0 +1,7 @@
+interface:
+  display_name: "Troubleshooter"
+  short_description: "Diagnose C134 field issues with fault trees"
+  default_prompt: "Use $leader to diagnose this C134 issue packet. Separate facts, claims, inference, confirmed causes, excluded branches, and missing assets."
+
+policy:
+  allow_implicit_invocation: true

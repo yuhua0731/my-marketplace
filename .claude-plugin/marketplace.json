@@ -25,6 +25,12 @@
             "source": "./plugins/codex-review-council",
             "description": "Add GitHub Copilot CLI with a Claude model as a second local code reviewer when explicitly requested, while preserving the normal Codex development flow.",
             "strict": true
+        },
+        {
+            "name": "troubleshooter",
+            "source": "./plugins/troubleshooter",
+            "description": "Diagnose C134 field issues with structured fault trees and specialist workflows.",
+            "strict": true
         }
   ]
 }

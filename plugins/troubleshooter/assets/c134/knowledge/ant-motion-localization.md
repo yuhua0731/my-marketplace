@@ -1,22 +1,23 @@
 # C134 Ant Motion Localization Knowledge
 
 source_set: accepted high-priority `Ant/motion-localization`
-case_count: 26
-status: draft refined from visible text
+case_count: 30
+status: draft refined from visible text and first downloaded motion logs
 
 ## Symptoms
 
-- DM code lost during straight movement: `c134-0011`, `c134-0018`, `c134-0037`, `c134-0352`, `c134-0365`
-- visible route deviation or collision after deviation: `c134-0034`, `c134-0037`, `c134-0038`, `c134-0043`, `c134-0117`, `c134-0120`, `c134-0121`, `c134-0219`, `c134-0231`, `c134-0232`, `c134-0276`, `c134-0304`, `c134-0319`, `c134-0323`, `c134-0352`, `c134-0365`
-- angle too large / command direction mismatch: `c134-0041`, `c134-0093`, `c134-0101`, `c134-0197`, `c134-0198`, `c134-0250`
+- DM code lost during straight movement: `c134-0003`, `c134-0011`, `c134-0018`, `c134-0037`, `c134-0352`, `c134-0365`
+- visible route deviation or collision after deviation: `c134-0003`, `c134-0015`, `c134-0034`, `c134-0037`, `c134-0038`, `c134-0043`, `c134-0117`, `c134-0120`, `c134-0121`, `c134-0199`, `c134-0219`, `c134-0231`, `c134-0232`, `c134-0276`, `c134-0304`, `c134-0319`, `c134-0323`, `c134-0352`, `c134-0365`
+- angle too large / command direction mismatch: `c134-0041`, `c134-0093`, `c134-0101`, `c134-0197`, `c134-0198`, `c134-0208`, `c134-0250`
 - short-distance/high-speed command overrun or unreasonable braking: `c134-0304`, `c134-0319`, `c134-0428`
-- repeated issue at WS001-3 or same coordinate: `c134-0101`, `c134-0198`, `c134-0231`, `c134-0232`
+- repeated issue at WS001-3 or same coordinate: `c134-0101`, `c134-0198`, `c134-0208`, `c134-0231`, `c134-0232`
 
 ## Fault Tree
 
 1. Confirm whether localization was lost.
    - Look for `DM code lost during linear motion`, continuous `NoRead`, or low scan success.
-   - Examples: `c134-0037` has `[ERROR]1202#DIFF402_ERROR#MOVER_MOTOR#DM code lost during linear motion`; `c134-0352` has low scan success during rotation and straight-move failure.
+   - Examples: `c134-0003` and `c134-0037` have `[ERROR]1202#DIFF402_ERROR#MOVER_MOTOR#DM code lost during linear motion`; `c134-0352` has low scan success during rotation and straight-move failure.
+   - In downloaded `c134-0003` logs, the event window starts a `LINEAR_EVENT` around `2025-10-21T02:29:00Z`; scan offset grows from `x_offset: -41` to `x_offset: -415` before later correction.
 2. Inspect floor-code condition and route segment.
    - Dirty/contaminated DM code caused deviation in `c134-0037`, `c134-0038`, `c134-0219`.
    - Repeated requests to inspect specific segments appear in `c134-0117`, `c134-0120`.
@@ -40,6 +41,8 @@ status: draft refined from visible text
    - `c134-0323`: severe deviation after reducer replacement; two walking motors had inconsistent subdivision, new motor subdivision was not changed.
 8. Separate collision aftermath from primary cause.
    - Collisions in `c134-0034`, `c134-0037`, `c134-0304`, `c134-0319`, `c134-0352`, `c134-0365` are consequences unless logs/video prove external impact preceded deviation.
+9. Check whether the attached logs actually cover the deviation.
+   - `c134-0015` has downloaded NXP/wormhole logs, but they begin post-boot and mostly show startup/idle state, not the reported deviation sequence.
 
 ## Evidence Needed
 
@@ -62,7 +65,7 @@ status: draft refined from visible text
 ## Likely Causes
 
 - dirty/contaminated floor code: `c134-0037`, `c134-0038`, `c134-0219`
-- scan gap/low DM read success during rotation or straight move: `c134-0121`, `c134-0231`, `c134-0232`, `c134-0352`, `c134-0365`
+- scan gap/low DM read success during rotation or straight move: `c134-0003`, `c134-0121`, `c134-0199`, `c134-0231`, `c134-0232`, `c134-0352`, `c134-0365`
 - command direction/tolerance too strict near static state: `c134-0041`, `c134-0197`
 - repeated same target or very short corrective move after offset: `c134-0101`, `c134-0198`, `c134-0250`
 - impossible braking/short-distance command planning: `c134-0304`, `c134-0319`, `c134-0428`
@@ -99,6 +102,10 @@ status: draft refined from visible text
 ## Unresolved Examples
 
 - `c134-0011`, `c134-0018`: DM loss visible, root cause not confirmed in visible text.
+- `c134-0003`: source reports `DM code lost duuring linear motion`; NXP logs show large scan-offset growth and correction around `2025-10-21T02:29:00Z`, but floor-code/scanner/RMS root cause is not confirmed.
+- `c134-0015`: downloaded assets exist, but logs only show startup/idle and do not cover the deviation sequence.
+- `c134-0199`: downloaded logs show DM scan/correction evidence near the A103 deviation window, but root cause remains unconfirmed.
+- `c134-0208`: WS001-3 angle-too-large/source symptom with downloaded NXP scan context; RMS command payload is still needed for final diagnosis.
 - `c134-0117`, `c134-0120`: specific floor-code segments requested for inspection; conclusion missing.
 - `c134-0231`, `c134-0232`: same coordinate `[130847, 101500]` DM read/rotation issue; root cause unresolved.
 - `c134-0276`: possible motor obstruction or external force; CAN log disabled.

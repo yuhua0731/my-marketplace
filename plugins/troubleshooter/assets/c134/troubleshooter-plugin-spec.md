@@ -79,6 +79,7 @@ Use for:
 
 - NXP logs
 - firmware startup/self-check
+- robot software version identification
 - reboot markers and `UPTIME`
 - state-machine transitions
 - overlay/SD-card/logging failures
@@ -87,6 +88,7 @@ Use for:
 Outputs:
 
 - exact log lines
+- software version source: issue document, NXP log print, factory robot info sheet, or robot repo latest main fallback
 - firmware/state-machine branch status
 - required firmware/config follow-up
 
@@ -215,6 +217,7 @@ Guardrail: WLED belongs to workstation, not Ant. A WS location in a title does n
 ## Prompt Guardrails
 
 - Preserve exact timestamps, command labels, robot IDs, log names, coordinates, firmware/config names, and source wording.
+- For software issues, confirm robot software version first: issue document, NXP logs, factory robot info sheet, then robot repo latest main branch.
 - Mark chat claims as claims unless supported by logs/video/config/repeated evidence.
 - Keep Ant, Mantis, workstation, scheduler, network, and server branches separate.
 - Use `unknown` instead of inventing causes.

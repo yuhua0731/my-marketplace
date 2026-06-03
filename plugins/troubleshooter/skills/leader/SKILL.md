@@ -11,11 +11,17 @@ Use the local plugin assets first:
 - `assets/c134/troubleshooter-plugin-spec.md`
 - `assets/c134/knowledge/`
 - `assets/c134/high-priority-asset-intake-plan.md`
+- `assets/c134/case-index.md`
+- `assets/c134/troubleshooting-playbook.md`
+- `assets/c134/training/diagnostic-patterns.md`
+- `assets/c134/training/asset-requests.md`
 
 ## Workflow
 
 1. Read the source packet before deciding.
-2. Extract exact symptom, timestamps, robot IDs, location, product line, and available files.
+2. Extract exact symptom, timestamps, robot IDs, location, product line, software version, and available files.
+   - For software issues, confirm software version in order: issue document, NXP log print, factory robot info sheet, then latest main branch of the robot repo.
+   - Factory robot info sheet: https://hcrobots.feishu.cn/sheets/CaODsB0iEhiu9ZtuoV4cUucsnSb?sheet=1pNOmt
 3. Classify the area using `fault-taxonomy.md`.
 4. Load the matching knowledge file.
 5. Build a fault tree from observed symptom to plausible branches.

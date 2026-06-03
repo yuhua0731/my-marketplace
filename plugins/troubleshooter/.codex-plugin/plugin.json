@@ -1,6 +1,6 @@
 {
   "name": "troubleshooter",
-  "version": "0.1.0",
+  "version": "0.1.0+codex.20260603174757",
   "description": "Company-specific fault-tree troubleshooting for C134 field issues.",
   "author": {
     "name": "Huayu"

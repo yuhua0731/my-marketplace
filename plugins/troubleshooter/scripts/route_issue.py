@@ -32,27 +32,41 @@ ROUTES = [
     },
     {
         "area": "ant.power",
-        "needles": ["重启", "关机", "低电", "充电", "蓝灯", "蜂鸣器", "under voltage", "UPTIME"],
+        "needles": ["重启", "关机", "低电", "充电", "蓝灯", "蜂鸣器", "自检", "INIT", "motor init", "ToF init", "under voltage", "UPTIME"],
         "specialists": ["embedded-software", "can-bus", "scheduler-traffic", "network-infra"],
         "knowledge": "ant-power.md",
     },
     {
         "area": "workstation_wled",
-        "needles": ["WLED", "HLED", "灯带", "WS001", "WS002", "工作台"],
-        "specialists": ["workstation"],
-        "knowledge": None,
+        "needles": ["WLED", "HLED", "灯带", "亮灯", "光栅", "满箱传感器", "拣货台"],
+        "specialists": ["workstation", "scheduler-traffic", "vision-media"],
+        "knowledge": "workstation-wled.md",
     },
 ]
 
 
 def score(route, text):
     lowered = text.lower()
+    is_mantis_packet = "螳螂" in text or re.search(r"\bM-A\d", text)
+    is_ant_packet = "蚂蚁" in text or re.search(r"\bA-\d", text)
+    if route["area"].startswith("mantis.") and is_ant_packet and not is_mantis_packet:
+        return 0, []
+    if route["area"].startswith("ant.") and is_mantis_packet:
+        return 0, []
     total = 0
     hits = []
     for needle in route["needles"]:
         if needle.lower() in lowered:
             total += 1
             hits.append(needle)
+    if total and route["area"] == "ant.load_handling" and is_ant_packet:
+        total += 1
+    if route["area"] == "ant.power" and any(
+        term in hits for term in ["重启", "关机", "低电", "充电", "蓝灯", "自检", "INIT", "motor init", "ToF init", "under voltage", "UPTIME"]
+    ):
+        total += 2
+    if total and route["area"] == "workstation_wled":
+        total += 3
     return total, hits
 
 
@@ -88,7 +102,7 @@ def main():
             "knowledge": None,
         }
 
-    decision["asset_signals"] = sorted(set(re.findall(r"[\w./()（）-]+\\.(?:log|pcap|mp4|mov|jpg|jpeg|png|gz|7z)", text, re.I)))
+    decision["asset_signals"] = sorted(set(re.findall(r"[\w./()（）-]+\.(?:log|pcap|mp4|mov|jpg|jpeg|png|gz|7z)", text, re.I)))
     print(json.dumps(decision, ensure_ascii=False, indent=2))
 
 

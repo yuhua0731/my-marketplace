@@ -1,18 +1,27 @@
 # C134 Mantis Load Handling Knowledge
 
 source_set: accepted high-priority `Mantis/load-handling`
-case_count: 21
+case_count: 44
 status: draft refined from visible text
 
 ## Symptoms
 
 - pull/deposit fails but tote is physically already placed: `c134-0077`, `c134-0267`, `c134-0269`, `c134-0271`, `c134-0274`
-- fork/finger/arm expected-state mismatch: `c134-0079`, `c134-0269`, `c134-0296`, `c134-0305`, `c134-0331`, `c134-0351`, `c134-0364`
+- fork/finger/arm expected-state mismatch: `c134-0079`, `c134-0140`, `c134-0269`, `c134-0296`, `c134-0305`, `c134-0331`, `c134-0351`, `c134-0364`
 - repeated quick stop on pull motor: `c134-0267`, `c134-0272`, `c134-0274`
 - offset/position mismatch around A2/A3 access nodes: `c134-0186`, `c134-0187`, `c134-0316`, `c134-0351`
 - no action with tote on Mantis or no available deposit target: `c134-0311`, `c134-0316`
 - mechanical interference/high torque during pull/deposit: `c134-0317`, `c134-0318`, `c134-0362`, `c134-0364`
+- tote skew during A2 pull with short startup/CANopen evidence: `c134-0195`
 - insufficient logs blocking conclusion: `c134-0079`, `c134-0308`, `c134-0316`
+- Mantis/Ant traffic deadlock after avoidance: `c134-0054`
+- Mantis left-right shaking / Ant below stopped / mode recovery dependency: `c134-0026`
+- front load sensor or tote-state abnormal during deposit/unload: `c134-0386`
+- local command dictionary miss during extraction: `c134-0013`
+- anti-pinch sensor state mismatch or false trigger: `c134-0008`, `c134-0431`
+- `ARM_MOTOR_SINGLE` following error during pull/load: `c134-0010`, `c134-0076`, `c134-0085`, `c134-0096`, `c134-0153`, `c134-0154`, `c134-0155`, `c134-0172`, `c134-0229`, `c134-0289`, `c134-0327`, `c134-0357`, `c134-0369`
+- `ARM_MOTOR_SINGLE` following error during deposit/unload: `c134-0270`
+- `ARM_MOTOR_SINGLE` stall during pull/load: `c134-0156`
 
 ## Fault Tree
 
@@ -28,6 +37,7 @@ status: draft refined from visible text
 4. Check command target/state and offset config.
    - `c134-0351`: rest position offset y `-7` led to current y `11341`, load access node offset y `-6` expected EXTEND y `11342`; 1 mm mismatch caused expected/actual error.
    - `c134-0316` reports similar `coordY Expected: 11342 Actual 11341` without logs.
+   - `c134-0140`: RMS shows `EXTEND` blocked by `coordY - Expected: 18068 Actual: 18067`; manual move to Bay1 recovered operation.
    - `c134-0186`, `c134-0187`: M3 offset biased toward B3; needed adjustment toward B1, sometimes location-specific rather than global.
 5. Check finger command and sensor state.
    - `c134-0296`: pull task failed before fork extension; inspect `ARTICULATE_FINGERS` command and nearby rest/load positions.
@@ -40,6 +50,36 @@ status: draft refined from visible text
 7. Check logs before concluding.
    - `c134-0079`: RMS logs incomplete; could not locate arm retract/task-complete logs.
    - `c134-0308`, `c134-0316`: no RMS logs; mark blocked and wait for reproduction.
+8. If filenames and robot label say Mantis, reclassify even when the initial case extraction says Ant.
+   - `c134-0195`: source/assets say `A2巷道螳螂`, wormhole/NXP identify `M-A2-S1-1`; NXP only shows startup `canopen_stack`/`node_led` errors, not the full pull sequence.
+9. If Mantis task failure is mixed with Ant aisle occupancy or避让, route scheduler/traffic first.
+   - `c134-0054`: M1避让 for A-106, then immediately took a pull/deposit task and returned toward a path blocked by A-104; A-106 NXP showed command success, so embedded failure was not the primary branch.
+   - `c134-0026`: Mantis pull failure was followed by left-right shaking and an Ant stopped below; computer-side manual mode let the Ant leave, then Mantis auto recovered. SAS logs show reservation/mode churn and conflicts such as selected target already reserved by an Ant.
+10. For front-load-sensor deposit failures, correlate UI/video, GPIO, CAN, and container state.
+   - `c134-0386`: FLO showed M-A2-S1-1 deposit/unload failed for `TOTE-L-600431`; WAS later logged `container.orphaned` from `M-A2-S1-1`; NXP sampled GPIO transitions but no direct `COMPLETE_FAILURE` line proving root cause.
+11. For `ARM_MOTOR_SINGLE#following error`, separate motor/driver fault from external load.
+   - `c134-0010`: UI error `[ERROR]1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55299`; NXP recorded `node402 fault history recorded: ARM_MOTOR_SINGLE#following error, 55299` and `MoveArms -> FaultReaction`; source notes `A2-S2-B5-PT1` had not replaced sheet metal, and photo shows tote skew/contact risk.
+   - `c134-0155`: UI and NXP both show `ARM_MOTOR_SINGLE#following error, 55347`; photo shows tote not fully pulled into the access area.
+   - `c134-0085`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 55344`; CAN1 was 0KB and unavailable.
+   - `c134-0096`: UI error `[ERROR]1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55386`; CAN pcaps are available but NXP/wormhole are not, so external load versus motor branch remains unresolved.
+   - `c134-0153`: PDA/NXP show repeated `ARM_MOTOR_SINGLE#following error` values `10217` and `10245`.
+   - `c134-0154`: NXP shows repeated `ARM_MOTOR_SINGLE#following error` values `55317` and `55423`; field photo shows tote partly in the access area.
+   - `c134-0172`: UI and NXP both show `ARM_MOTOR_SINGLE#following error, 55388`; photo shows tote partly in the access/pull area.
+   - `c134-0289`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 55225`; field inspection found no abnormal interference but measured Mantis托箱面 about 1 mm higher than the access-position托箱面.
+   - `c134-0327`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 55405`; field inspection found the tote partly riding on the limit strip/限位条.
+   - `c134-0369`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 55272`; source preliminary judgment was tote skew.
+   - `c134-0229`: UI error `1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55341`; field photo showed tote partly on the B1-side挡边, making mechanical load/interference a high-value branch.
+   - `c134-0076`: UI error `1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55214`; NXP/wormhole at failure time were 0KB, so backend logs alone cannot prove motor hardware failure.
+   - `c134-0357`: NXP records `ARM_MOTOR_SINGLE#following error, 10307` and `MoveArms -> FaultReaction`; photo shows tote in access/pull area, but exact contact/load cause is unresolved.
+12. For `ARM_MOTOR_SINGLE#stall`, inspect physical obstruction and excessive load first.
+   - `c134-0156`: UI showed `1102#NODE402_ERROR#ARM_MOTOR_SINGLE#stall`; NXP recorded `node402 fault history recorded: ARM_MOTOR_SINGLE#stall, 56614` and `MoveArms -> FaultReaction`; photo shows tote close to side guide/access mechanism.
+13. For deposit/unload following error, inspect shelf/tote clearance before motor hardware.
+   - `c134-0270`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 10260` while depositing `TOTE-H-101665`; field inspection found tote bottom interfered with shelf crossbeam/横梁.
+14. For command-cache errors, inspect RCS/RMS command lifecycle before hardware.
+   - `c134-0013`: `"Could not get RobotCommand ... from local commands dictionary"` while mechanism had not extended; clear plus reset arms recovered.
+15. For anti-pinch sensor mismatches, verify physical obstruction and IO mapping.
+   - `c134-0008`: UI showed `antiPinchSensors front - Expected: False Actual: True`; field text said fork was not blocked and tote was not clamped.
+   - `c134-0431`: backend state showed `antiPinchSensors.left=true` while `M-A3-S2-2` was idle/no obstacle and task failed with `[WARNING]FUTURE_STATE_NOT_MATCH#PIN_SENSOR_ANTIPINCH_LEFT#Expected: false#Actual: true`; fault-time NXP/wormhole logs were 0 B.
 
 ## Evidence Needed
 
@@ -50,6 +90,8 @@ status: draft refined from visible text
 - access node and accessNodeOffset config for rest, load, deposit points.
 - torque curves for pull/fork/finger motors.
 - video/photo showing tote position, fork extension, finger position, PT/PD deformation/interference.
+- robot label from wormhole/MQTT when title text is ambiguous.
+- UI screenshots for exact FLO/Fleet errors such as `ARM_MOTOR_SINGLE#following error`, `ARM_MOTOR_SINGLE#stall`, `antiPinchSensors front`, and missing `RobotCommand`.
 
 ## Logs And Files To Inspect
 
@@ -59,15 +101,27 @@ status: draft refined from visible text
 - SAS `SelectDepositService`, `FindClosestAvailableShelfService`, robot task create logs.
 - access node/offset database rows for affected location.
 - monitor video around physical contact or failed extend/pull.
+- RCS/RMS command dictionary and command-set lifecycle when the UI says `Could not get RobotCommand`.
 
 ## Likely Causes
 
 - pull motor quick stop plus missed IO event / firmware target-reached behavior: `c134-0267`, `c134-0272`, `c134-0274`
 - expected-state mismatch due to 1 mm offset difference: `c134-0351`, likely `c134-0316`
+- expected-state mismatch due to 1 mm `coordY` difference before `EXTEND`: `c134-0140`
 - location-specific offset bias: `c134-0186`, `c134-0187`
 - no available deposit target / duplicate deposit contention: `c134-0311`
 - mechanical interference or PT/PD deformation: `c134-0318`, `c134-0362`, `c134-0364`
 - incomplete logs preventing root-cause proof: `c134-0079`, `c134-0308`, `c134-0316`
+- limited startup/CANopen evidence with physical tote-skew symptom: `c134-0195`
+- scheduler/traffic sequencing deadlock after Mantis避让: `c134-0054`
+- scheduler/traffic/mode interlock causing Mantis shaking/blocked Ant recovery dependency: likely branch for `c134-0026`
+- front-load-sensor/tote-state mismatch during Mantis deposit: `c134-0386`
+- command dictionary/cache desync or missing command record: `c134-0013`
+- anti-pinch sensor active when expected false: `c134-0008`, `c134-0431`
+- external load/mechanical interference causing arm following error: likely branch for `c134-0010`, `c134-0155`, `c134-0172`, `c134-0229`; unresolved for `c134-0076`
+- tote/limit-strip/shelf clearance interference causing arm following error: `c134-0270`, likely `c134-0327`, branch for `c134-0369`
+- small access-height mismatch contributing to arm following error: branch for `c134-0289`
+- external obstruction/excessive load causing arm stall: likely branch for `c134-0156`
 
 ## Exclusion Checks
 
@@ -77,6 +131,15 @@ status: draft refined from visible text
 - Torque >200%: prioritize physical interference, deformation, or tote/finger contact.
 - No RMS logs: classify as unresolved and request reproduction logs; do not invent conclusion.
 - Same task has no available PD/tunnel: route to scheduler/traffic, not Mantis actuator first.
+- Startup `failed to sdo client download` or LED-type errors are evidence, but not enough to prove the tote-skew root cause without the command/pull window.
+- A Mantis traffic deadlock with successful device commands should not be treated as a Mantis actuator fault first.
+- If Mantis shaking clears only after an Ant below leaves, inspect reservations, mode changes, and shared access-zone occupancy before motor hardware.
+- UI says front load sensor error: verify against video and CAN/GPIO mapping before replacing the sensor.
+- UI says `ARM_MOTOR_SINGLE#following error`: inspect tote skew,挡边 contact, and arm load before concluding motor/driver failure.
+- UI says `ARM_MOTOR_SINGLE#stall`: inspect physical obstruction, tote side-guide contact, and torque/current before concluding motor/driver failure.
+- UI says missing `RobotCommand`: inspect command lifecycle/local dictionary/cache first; mechanical inspection is secondary if the mechanism did not move.
+- `coordY` differs by 1 mm before `EXTEND`: inspect access-node/offset generation and tolerance before replacing Mantis hardware.
+- Left anti-pinch true with no physical neighbor/obstacle: inspect sensor, wiring, IO mapping, and debounce before concluding scheduler failure.
 
 ## Handling Recommendations
 
@@ -86,14 +149,20 @@ status: draft refined from visible text
 - For repeated B2/PT failures, inspect sheet metal, tote height, finger contact, and torque rather than relying on manual no-resistance checks.
 - For Mantis with tote and no action, inspect SAS available-location selection and duplicate deposit task generation.
 - Preserve RMS logs before clear/reset; many cases become unrecoverable without them.
+- Trust exact robot labels and asset filenames (`M-A2-S1-1`, `A2巷道螳螂`) over a stale `Ant` extraction label.
 
 ## Confirmed Examples
 
 - `c134-0267`: quick stop, missed short IO event risk, stale target-reached after operation enabled, and premature complete explain tote placed but command failure.
 - `c134-0351`: `coordY` mismatch `11341` vs expected `11342` traced to offset `-7` versus `-6`.
+- `c134-0140`: `coordY` mismatch `18067` vs expected `18068` blocked `EXTEND`; manual move to Bay1 recovered operation.
 - `c134-0311`: two Ant deposit tasks were generated when only one A2 position was available, leaving Mantis with tote and no deposit path.
 - `c134-0362`: high fork torque/interference lifted tote tail, disturbed fingers, and left tote partly on Mantis.
 - `c134-0364`: tote not placed correctly and finger motors 3/4 stalled, likely finger hit tote.
+- `c134-0054`: M1/A-104/A-106 deadlock was operationally explained by Mantis避让/task sequencing and blocked return path.
+- `c134-0026`: Mantis shaking plus stopped Ant below was operationally recovered by computer-side manual mode allowing the Ant to leave; logs point to scheduler/reservation/mode interaction, not confirmed motor fault.
+- `c134-0013`: missing local `RobotCommand` caused extraction/load failure before mechanism extension; clear plus reset arms recovered.
+- `c134-0270`: deposit/unload following error `10260` was operationally explained by tote-bottom interference with shelf crossbeam/横梁.
 
 ## Unresolved Examples
 
@@ -101,6 +170,24 @@ status: draft refined from visible text
 - `c134-0308`: no RMS logs; only similar to prior A2 offset/state issue.
 - `c134-0316`: failed task and 1 mm EXTEND mismatch observed, but logs rolled off.
 - `c134-0317`, `c134-0318`: repeated B2 PT failures suggest mechanical/torque issue; exact root cause not confirmed.
+- `c134-0195`: A2 pull failure with skewed tote; NXP only has startup `canopen_stack`/`node_led` errors and MQTT label `M-A2-S1-1`, so root cause remains unresolved.
+- `c134-0386`: M2 deposit/unload failed for `TOTE-L-600431`; source claims front load sensor error and logs show later orphaned tote state, but sensor/CAN root cause is unresolved.
+- `c134-0008`: front anti-pinch expected/actual mismatch was visible and recovered after initialize, but sensor hardware versus transient signal remains unproven.
+- `c134-0431`: left anti-pinch false trigger/stuck true caused `FUTURE_STATE_NOT_MATCH`; sensor hardware, wiring, IO mapping, and debounce branch remains unresolved because NXP/wormhole logs were 0 B.
+- `c134-0076`: `ARM_MOTOR_SINGLE#following error, 55214`; fault-time NXP/wormhole logs were 0KB, so root cause remains unresolved.
+- `c134-0085`: `ARM_MOTOR_SINGLE#following error, 55344`; CAN1 was 0KB, so motor/driver versus external-load branch remains unresolved.
+- `c134-0096`: `ARM_MOTOR_SINGLE#following error, 55386`; CAN pcaps and images exist, but NXP/wormhole logs are absent and decoded CAN/physical cause remains unresolved.
+- `c134-0010`: `ARM_MOTOR_SINGLE#following error, 55299`; NXP confirms `MoveArms -> FaultReaction`, and source/photo suggest PT sheet-metal or tote skew/contact branch, but exact cause remains unresolved.
+- `c134-0153`: repeated following errors `10217` and `10245`; exact physical/CAN cause remains unresolved.
+- `c134-0154`: repeated following errors `55317` and `55423`; photo shows incomplete pull, but exact physical or motor cause remains unresolved.
+- `c134-0155`: `ARM_MOTOR_SINGLE#following error, 55347`; NXP confirms fault history and photo shows incomplete pull, but exact physical or motor cause remains unresolved.
+- `c134-0156`: `ARM_MOTOR_SINGLE#stall, 56614`; NXP confirms stall and photo shows side-guide/contact risk, but exact obstruction or hardware cause remains unresolved.
+- `c134-0172`: `ARM_MOTOR_SINGLE#following error, 55388`; NXP confirms fault history and photo shows tote in access area, but exact cause remains unresolved.
+- `c134-0229`: `ARM_MOTOR_SINGLE#following error, 55341` with tote partly on B1-side挡边; likely external load/interference branch, but exact motor/CAN proof remains unresolved.
+- `c134-0289`: `ARM_MOTOR_SINGLE#following error, 55225`; field found no direct interference but about 1 mm height mismatch, so cause remains unresolved.
+- `c134-0327`: `ARM_MOTOR_SINGLE#following error, 55405`; tote partly riding on limit strip/限位条 is strong physical evidence, but CAN torque proof is not closed.
+- `c134-0357`: `ARM_MOTOR_SINGLE#following error, 10307`; NXP confirms fault transition and photo shows tote in access area, but physical/CAN root cause remains unresolved.
+- `c134-0369`: `ARM_MOTOR_SINGLE#following error, 55272`; source observed tote skew, but exact contact point/CAN proof remains unresolved.
 
 ## Specialist Routing
 

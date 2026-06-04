@@ -2,7 +2,7 @@
 
 source_set: accepted high-priority `Ant/network`
 case_count: 14
-status: draft refined from visible text
+status: refined into evidence-strength patterns from visible text
 
 ## Symptoms
 
@@ -42,6 +42,30 @@ status: draft refined from visible text
    - `c134-0027`: last pre-reboot command succeeded in `IDLE`; robot rebooted to `UNKNOWN`, could not move to charge, then voltage dropped below `4.0v`.
 9. If a robot is reported disconnected but the status light looks normal, verify UPTIME before accepting the visual inference.
    - `c134-0139`: field text said green light preliminarily excluded reboot, but wormhole UPTIME dropped from `2029` to `29` at `[2026-01-13T00:51:05Z]` and NXP dropped to `[UPTIME:39]`.
+
+## Evidence Strength Matrix
+
+| Evidence | Diagnostic strength | Use it for | Do not use it for |
+|---|---|---|---|
+| both robot IPs unreachable with timestamp | strong | NIC/AP/link/board branch | MQTT-only conclusion |
+| both robot IPs ping but FLO/MQTT disconnected | strong | NXP-wormhole-MQTT internal branch | AP/uplink blame |
+| NXP MQTT timestamp aligned with wormhole NIC/AP event | strong | robot-side network path timing | reset root cause without UPTIME |
+| one NIC down while the other still carries MQTT | medium | degraded redundancy / failover risk | full disconnect before keepAlive loss |
+| AP and EasyBox ping drop together | strong | upstream physical path | AP-only fault |
+| Kafka/controller/disk-I/O evidence during whole-site stop | strong | server/service branch | individual robot hardware |
+| UPTIME reset or boot marker around event | strong | reboot presenting as disconnect | network root cause |
+| screenshot-only disconnect | weak | routing and asset request | final root cause |
+
+## Pattern Library
+
+- Dual-IP unreachable / dual-NIC failover: `c134-0252`, `c134-0256`; collect both-IP ping, wormhole NIC events, and failover state before reboot.
+- IP reachable but MQTT disconnected: `c134-0228`; keep AP/uplink excluded unless pcap shows path loss.
+- Partial NIC degradation: `c134-0157`; one bad NIC can mask risk until the remaining path loses MQTT.
+- Repeated same-robot dual NIC loss: `c134-0283`, `c134-0284`; layer-3/network board replacement is a proven branch.
+- Whole-site physical path loss: `c134-0227`; AP and EasyBox ping together separate upstream fiber/transceiver from AP-only issues.
+- Whole-site Kafka/server stop: `c134-0337`; disk I/O and Kafka election evidence outrank robot network hypotheses.
+- Disconnect actually reboot/UNKNOWN: `c134-0139`, `c134-0027`; UPTIME beats field light-state inference.
+- Screenshot-only whole-site cases: `c134-0370`, `c134-0371`; useful for routing, blocked for root cause.
 
 ## Evidence Needed
 

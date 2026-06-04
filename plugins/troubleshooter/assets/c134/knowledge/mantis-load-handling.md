@@ -2,7 +2,7 @@
 
 source_set: accepted high-priority `Mantis/load-handling`
 case_count: 57
-status: draft refined from visible text
+status: refined into evidence-strength patterns from visible text
 
 ## Symptoms
 
@@ -95,6 +95,32 @@ status: draft refined from visible text
    - `c134-0368`: `A2-S2-B12-L10-T3` pull failed; arm biased toward `B13`; source action was adjusting pull offset toward `B1` about `7mm`.
    - `c134-0432`: `A2-S2-B6` 13:13 pull failed; whole pick biased toward `B1`; same location recurred in `c134-0430` at 18:53 with FLO following error.
    - `c134-0435`: title says `M-A3-S2-1`, body says `M-A2-S2-1`; `A3-S2-B5-L5-T4` pull failed and source action was adjusting toward `B1` by `3-4mm`. Preserve the robot-label conflict.
+
+## Evidence Strength Matrix
+
+| Evidence | Diagnostic strength | Use it for | Do not use it for |
+|---|---|---|---|
+| UI + NXP node402 following/stall error | strong | Mantis arm/fork fault branch | physical root cause alone |
+| CAN quick stop / `60FD` / TPDO timing | strong | firmware/IO timing branch | scheduler-only conclusion |
+| 1 mm `coordY` expected/actual mismatch | strong | access-node/offset config branch | motor replacement |
+| torque >200% or speed collapse | strong | external load/interference branch | pure software conclusion |
+| SAS `No PDs or Tunnels available` | strong | scheduler target-selection branch | actuator fault |
+| missing local `RobotCommand` | strong | command lifecycle/cache branch | mechanical fault first |
+| anti-pinch expected false actual true with GPIO toggles | strong | sensor/wiring/debounce branch | arm motor root cause |
+| image-only offset or tote skew | medium | operational geometry branch | firmware or motor proof |
+| 0KB NXP/CAN/wormhole logs | weak/blocking | asset request | negative proof |
+
+## Pattern Library
+
+- Quick stop / missed IO / stale target-reached: `c134-0267`, `c134-0272`, `c134-0274`; check TPDO mode and firmware semantics.
+- 1 mm expected-state mismatch: `c134-0351`, `c134-0140`, `c134-0316`; audit access-node offsets before hardware.
+- No deposit target / scheduler contention: `c134-0311`; route SAS/PD/tunnel selection first.
+- External load, high torque, PT deformation: `c134-0362`, `c134-0318`, `c134-0364`; video/torque/contact evidence outranks motor swap guesses.
+- ARM following error with physical interference: `c134-0270`, `c134-0229`, `c134-0327`, `c134-0010`, `c134-0155`; inspect tote bottom, side guide, limit strip, and shelf clearance.
+- Height/offset geometry corrections: `c134-0259`, `c134-0430`, `c134-0432`, `c134-0434`, `c134-0435`; accept operational fix while keeping firmware/motor cause unproven without logs.
+- Anti-pinch/sensor mismatch: `c134-0008`, `c134-0425`, `c134-0431`, `c134-0303`; separate physical obstruction from IO instability.
+- Command dictionary/cache desync: `c134-0013`; inspect RCS/RMS command lifecycle before mechanism inspection.
+- Logs missing or 0KB: `c134-0076`, `c134-0085`, `c134-0303`, `c134-0431`; keep diagnosis unresolved even when UI error is clear.
 
 ## Evidence Needed
 

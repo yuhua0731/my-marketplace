@@ -77,12 +77,15 @@ def score(route, text):
     match = re.search(r"^system_area:\s*(.+?)\s*$", text, re.M)
     if match:
         system_area = SYSTEM_AREA_MAP.get(match.group(1).strip())
+    if system_area and route["area"] != system_area:
+        return 0, []
     is_mantis_packet = "螳螂" in text or re.search(r"\bM-A\d", text)
     is_ant_packet = "蚂蚁" in text or re.search(r"\bA-\d", text)
-    if route["area"].startswith("mantis.") and is_ant_packet and not is_mantis_packet:
-        return 0, []
-    if route["area"].startswith("ant.") and is_mantis_packet:
-        return 0, []
+    if not system_area:
+        if route["area"].startswith("mantis.") and is_ant_packet and not is_mantis_packet:
+            return 0, []
+        if route["area"].startswith("ant.") and is_mantis_packet:
+            return 0, []
     total = 0
     hits = []
     for needle in route["needles"]:

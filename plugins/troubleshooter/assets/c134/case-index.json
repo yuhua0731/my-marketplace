@@ -3961,14 +3961,14 @@
   },
   {
     "case_id": "c134-0201",
-    "decision": "needs-assets",
+    "decision": "rejected",
     "title": "【问题跟踪】2025-12-06 C134上海菱华项目 工作台WS001-1的任务完成后 机器人没有将箱子取走",
     "source": "https://hcrobots.feishu.cn/wiki/JsUEw1MqfiKRe0k8eR6cFS0cnTf",
     "obj_token": "JDbbdzwBeoR4YfxTHNEcSJfknzg",
     "product_line": "C134 穿云箭",
     "system_area": "Ant/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0201-2025-12-06-C134上海菱华项目-工作台WS001-1的任务完成后-机器人没有将箱子取走.md",
+    "local_path": "cases/rejected/c134/0201-2025-12-06-C134上海菱华项目-工作台WS001-1的任务完成后-机器人没有将箱子取走.md",
     "symptom_signal": "12月6日，下午14点24分左右，WS001-1这个工位上的101168箱子，操作人员在点击完成任务之后，在箱子下面的A-109蚂蚁机器人并没有将箱子举升离开，反而停在原地不动。flo界面上没有报错。",
     "asset_requests": [
       "0.log",

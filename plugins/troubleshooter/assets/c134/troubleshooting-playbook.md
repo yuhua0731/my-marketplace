@@ -91,21 +91,14 @@ Knowledge file: `docs/c134/knowledge/ant-power.md`
 - `c134-0299`: A105 reboot with overlay full and SD-card log loss; resolution was SD-card replacement.
 - `c134-0409`: A111 initialization failed because motor 2 stopped heartbeat; recovery procedure tied to E-stop/motor protection state.
 
-- `c134-0012`: lift-time reboot confirmed by system UPTIME reset to 32 at `2026-01-31T01:22:57Z`; NXP was 0 KB, so BMS/boost/lift root cause unknown.
-- `c134-0192`, `c134-0236`, `c134-0260`: pre-reboot logs missing due to download gap; root cause unknown.
-- `c134-0035`, `c134-0036`, `c134-0005`, `c134-0057`, `c134-0058`, `c134-0063`, `c134-0066`, `c134-0067`, `c134-0068`, `c134-0071`, `c134-0072`, `c134-0081`, `c134-0082`, `c134-0083`, `c134-0088`, `c134-0090`, `c134-0091`, `c134-0104`, `c134-0127`, `c134-0146`, `c134-0148`, `c134-0163`, `c134-0166`, `c134-0176`, `c134-0177`, `c134-0225`, `c134-0226`, `c134-0235`, `c134-0032`, `c134-0280`, `c134-0281`, `c134-0282`, `c134-0285`, `c134-0286`, `c134-0287`, `c134-0312`, `c134-0338`, `c134-0341`, `c134-0345`, `c134-0347`, `c134-0372`, `c134-0374`, `c134-0383`, `c134-0412`, `c134-0437`: reboot confirmed by `UPTIME` reset and startup markers; root cause remains unknown without CAN/BMS/boost-module proof.
-- `c134-0122`, `c134-0123`, `c134-0124`, `c134-0126`, `c134-0143`, `c134-0174`, `c134-0414`: reboot with abrupt SOC drop after charging/near charge pile; battery/BMS/charging-power branch is strongest but not final without CAN/BMS confirmation.
-- `c134-0064`, `c134-0065`, `c134-0426`, `c134-0009`: source reports reboot/found-after-reboot, but downloaded logs start after boot or lack the pre-reset marker; useful for training log-window-gap handling.
-- `c134-0070`, `c134-0144`: complete downloaded logs show continuous `UPTIME`; reported reboot is not confirmed and source date/time must be checked.
-- `c134-0125`: charging-pile reboot with four buzzer alarms; available logs show post-boot/startup material but not the exact pre-reset marker for reported `12点45分左右`.
-- `c134-0145`, `c134-0178`: A107 reboot reports with messy concatenated logs; low-uptime lines exist in package but exact event-time reset remains uncertain.
-- `c134-0024`: screenshot confirms A-109 `1102#NODE402_ERROR#MOVER_MOTOR_LEFT#under voltage`; SAS logs give only task/availability context, so BMS/boost/electrical root cause remains unknown.
-- `c134-0422`: A-107 offline screenshot plus low-uptime/startup lines in NXP/system logs; package is non-chronological/concatenated, so exact event-time reset remains uncertain.
-- `c134-0147`, `c134-0151`: source says no logs available; screenshots show A107 UI/asset absence only, so root cause remains unknown.
-- `c134-0239`, `c134-0240`, `c134-0261`, `c134-0321`, `c134-0328`, `c134-0334`: reboot confirmed by `UPTIME` reset; visible text does not prove root cause.
-- `c134-0243`: frequent NIC disconnects on A107/A112/A109 observed; causality to reboot not confirmed.
-- `c134-0372`: A102 disappeared from FLO; MQTT/network errors preceded reboot, but the causal path from network failure to reboot is not proven.
-- `c134-0346`: only marked same as previous reboot; evidence insufficient.
+- Confirmed reboot, cause unknown: repeated restart cases with `UPTIME` reset/startup markers but no pre-reset fatal, BMS/CAN, boost-module, storage, or charger-contact proof. Representative IDs: `c134-0012`, `c134-0036`, `c134-0124`, `c134-0235`, `c134-0286`, `c134-0372`, `c134-0414`.
+- Pre-window/log-window gap: source reports reboot, but logs start after boot, are 0 KB, or miss the pre-reset period. Representative IDs: `c134-0009`, `c134-0064`, `c134-0065`, `c134-0192`, `c134-0236`, `c134-0260`, `c134-0426`.
+- Continuous-uptime contradiction: logs cover the reported window but do not show a reboot; verify source time/date before diagnosing hardware. Examples: `c134-0070`, `c134-0144`.
+- Non-chronological package: low-uptime lines exist but exported logs are concatenated/messy, so do not bind them to the reported event until timestamp order is validated. Examples: `c134-0145`, `c134-0178`, `c134-0422`.
+- Abrupt SOC drop near reboot/charging: BMS/boost/charging-power is the leading branch, but root cause remains unconfirmed without CAN/BMS or charger-contact evidence. Examples: `c134-0122`, `c134-0123`, `c134-0124`, `c134-0126`, `c134-0143`, `c134-0174`, `c134-0414`.
+- Screenshot-only or no-logs reports: accept operational symptom, keep cause unknown. Examples: `c134-0024`, `c134-0147`, `c134-0151`.
+- Network/service correlation not causality: frequent NIC/MQTT failures may precede reboot or FLO disappearance, but need AP/server/firmware/CAN timing proof before claiming cause. Examples: `c134-0243`, `c134-0372`.
+- Weak duplicate pointer: source only says "same as previous" or lacks usable evidence; keep as low-information training only. Example: `c134-0346`.
 
 ## C134 Ant Motion Localization Knowledge
 
@@ -153,6 +146,7 @@ Knowledge file: `docs/c134/knowledge/ant-motion-localization.md`
 - video covering the start of deviation, not only final collision.
 - floor-code photos and exact route segment coordinates after cleaning status is known.
 - robot calibration data: camera offset angle, motor subdivision, reducer/motor replacement history.
+- for WS repeated-point cases, workstation ID, exit/entry direction, and exact DM coordinate.
 
 ### Exclusions
 
@@ -162,6 +156,7 @@ Knowledge file: `docs/c134/knowledge/ant-motion-localization.md`
 - If multiple robots fail at the same coordinate, prioritize floor code/route geometry over a single robot fault.
 - If one robot deviates after motor/reducer replacement, verify motor subdivision and calibration before changing global route logic.
 - If collision is observed after deviation, do not use collision as root cause unless video shows external contact first.
+- If robot ID differs between title/body/assets, keep a metadata-conflict branch and route by the strongest evidence source.
 
 ### Examples
 
@@ -171,16 +166,14 @@ Knowledge file: `docs/c134/knowledge/ant-motion-localization.md`
 - `c134-0323`: A102 severe deviation after reducer replacement; two walking motors had inconsistent subdivision.
 - `c134-0428`: planning used real speed instead of theoretical speed; route exceeded endpoint; resolution was to use theoretical values for planning.
 
-- `c134-0011`, `c134-0018`: DM loss visible, root cause not confirmed in visible text.
-- `c134-0003`: source reports `DM code lost duuring linear motion`; NXP logs show large scan-offset growth and correction around `2025-10-21T02:29:00Z`, but floor-code/scanner/RMS root cause is not confirmed.
-- `c134-0015`: downloaded assets exist, but logs only show startup/idle and do not cover the deviation sequence.
-- `c134-0199`: downloaded logs show DM scan/correction evidence near the A103 deviation window, but root cause remains unconfirmed.
-- `c134-0208`: WS001-3 angle-too-large/source symptom with downloaded NXP scan context; RMS command payload is still needed for final diagnosis.
-- `c134-0361`: A-102/A-111 identity mismatch; image/assets identify A-102, NXP near `2026-02-08T01:07:57Z` shows long `NoRead` recovery and `corrected_pose`, but direct scissor/tote-strip collision cause is not closed.
-- `c134-0117`, `c134-0120`: specific floor-code segments requested for inspection; conclusion missing.
-- `c134-0231`, `c134-0232`: same coordinate `[130847, 101500]` DM read/rotation issue; root cause unresolved.
-- `c134-0276`: possible motor obstruction or external force; CAN log disabled.
-- `c134-0304`: similar to `c134-0319`, but RMS logs missing.
+- DM/localization symptom confirmed but root cause open: `c134-0003`, `c134-0011`, `c134-0018`, `c134-0199`. Need floor segment condition, scanner health, and command context before final cause.
+- Log coverage gap: `c134-0015` has local assets, but logs show startup/idle rather than the reported deviation sequence.
+- Segment inspection requested, conclusion missing: `c134-0117`, `c134-0120`.
+- WS001-3 repeated-point family: `c134-0101`, `c134-0198`, `c134-0208`, `c134-0231`, `c134-0232`, `c134-0361`. Prioritize coordinate/WS geometry, scan count, rotation state, and RMS payload before single-robot hardware.
+- Metadata conflict: `c134-0361` title/assets identify A-102 but source body says A-111; NXP near `2026-02-08T01:07:57Z` shows long `NoRead` recovery and `corrected_pose`, but the direct scissor/tote-strip collision cause is not closed.
+- Drivetrain branch unresolved: `c134-0276` suggests one-side motor obstruction or external force, but CAN logging was off.
+- Similar-pattern without full closure: `c134-0304` resembles `c134-0319` short-distance high-speed stop, but RMS logs are missing.
+- Evidence-window insufficient: `c134-0015`, `c134-0208` show why attached logs must be checked for actual event coverage before concluding no fault.
 
 ## C134 Ant Network Knowledge
 

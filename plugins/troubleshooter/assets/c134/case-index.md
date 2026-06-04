@@ -6,8 +6,8 @@ Source-to-local mapping for C134 troubleshooting material.
 
 - total: 445
 - accepted: 346
-- needs-assets: 97
-- rejected: 2
+- needs-assets: 96
+- rejected: 3
 
 ## Priority Counts
 
@@ -239,7 +239,7 @@ Source-to-local mapping for C134 troubleshooting material.
 - `c134-0198` `accepted` `high` `Ant/motion-localization` assets=3 source=https://hcrobots.feishu.cn/wiki/V92NwaHWyiTGYRkbCBEc47dlnEe local=cases/accepted/c134/0198-2025-12-08-C134上海菱华项目-A107蚂蚁-WS001-3位置报转角过大.md title=【问题跟踪】2025-12-08 C134上海菱华项目 A107蚂蚁 WS001-3位置报转角过大
 - `c134-0199` `accepted` `high` `Ant/motion-localization` assets=6 source=https://hcrobots.feishu.cn/wiki/S6zCwUfLCi4j92k4y5ncWaoXnGb local=cases/accepted/c134/0199-2025-12-06-C134上海菱华项目-A103蚂蚁跑偏.md title=【问题跟踪】2025-12-06 C134上海菱华项目 A103蚂蚁跑偏
 - `c134-0200` `rejected` `medium` `Ant/unknown` assets=1 source=https://hcrobots.feishu.cn/wiki/XDJYwOryKipzDJkYHhccHWcwn5e local=cases/rejected/c134/0200-2025-12-08-C134上海菱华项目-工作台WS002-3的任务完成后-机器人没有将箱子取走.md title=【问题跟踪】2025-12-08 C134上海菱华项目 工作台WS002-3的任务完成后 机器人没有将箱子取走
-- `c134-0201` `needs-assets` `high` `Ant/load-handling` assets=5 source=https://hcrobots.feishu.cn/wiki/JsUEw1MqfiKRe0k8eR6cFS0cnTf local=cases/needs-assets/c134/0201-2025-12-06-C134上海菱华项目-工作台WS001-1的任务完成后-机器人没有将箱子取走.md title=【问题跟踪】2025-12-06 C134上海菱华项目 工作台WS001-1的任务完成后 机器人没有将箱子取走
+- `c134-0201` `rejected` `high` `Ant/load-handling` assets=5 source=https://hcrobots.feishu.cn/wiki/JsUEw1MqfiKRe0k8eR6cFS0cnTf local=cases/rejected/c134/0201-2025-12-06-C134上海菱华项目-工作台WS001-1的任务完成后-机器人没有将箱子取走.md title=【问题跟踪】2025-12-06 C134上海菱华项目 工作台WS001-1的任务完成后 机器人没有将箱子取走
 - `c134-0202` `accepted` `medium` `Ant/unknown` assets=2 source=https://hcrobots.feishu.cn/wiki/CBGTwbJpjiXCndks8ipcYYbun5f local=cases/accepted/c134/0202-2025-12-18-C134上海菱华项目-工作台WS002-3的任务完成后-机器人没有将箱子取走.md title=【问题跟踪】2025-12-18 C134上海菱华项目 工作台WS002-3的任务完成后 机器人没有将箱子取走
 - `c134-0203` `needs-assets` `medium` `Ant/unknown` assets=3 source=https://hcrobots.feishu.cn/wiki/BBmtwvVkjihJLfkB55xcs9yInbg local=cases/needs-assets/c134/0203-2025-12-18-C134上海菱华项目-工作台WS002-1的任务完成后-机器人没有将箱子取走.md title=【问题跟踪】2025-12-18 C134上海菱华项目 工作台WS002-1的任务完成后 机器人没有将箱子取走
 - `c134-0204` `accepted` `high` `Mantis/load-handling` assets=2 source=https://hcrobots.feishu.cn/wiki/Bhjqwt0xci9KpmkKgArcDHmfnpf local=cases/accepted/c134/0204-2025-12-18-C134上海菱华项目-M2螳螂在A2-S2-B5-PT位取箱失败.md title=【问题跟踪】2025-12-18 C134上海菱华项目 M2螳螂在A2-S2-B5-PT位取箱失败

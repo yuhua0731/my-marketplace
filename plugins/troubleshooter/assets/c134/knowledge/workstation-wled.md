@@ -2,7 +2,7 @@
 
 source_set: accepted and needs-assets `Workstation/light-strip`
 case_count: visible-text low-priority workstation cases
-status: draft refined from visible text
+status: refined into evidence-strength patterns from visible text
 
 ## Symptoms
 
@@ -31,6 +31,26 @@ status: draft refined from visible text
 6. For sensor/operator-cue cases, inspect physical sensor state and UI prompt mapping.
    - `c134-0439` indicates full-box sensor trigger was not obvious enough, causing operators to identify the wrong picking position.
    - `c134-0292` reports `WS002-1` photoelectric/light-curtain sensor abnormal flashing while the paired sensor stayed red/triggered; classify as workstation sensor/electrical/alignment first.
+
+## Evidence Strength Matrix
+
+| Evidence | Diagnostic strength | Use it for | Do not use it for |
+|---|---|---|---|
+| station light-control logs with queue size and timestamps | strong | queue contention / delay branch | module reboot proof |
+| video showing all/partial modules reset | medium to strong | WLED/HLED reboot branch | reset source without controller logs |
+| WLED/HLED module status/export | strong | module power/network/controller branch | Ant fault |
+| UI/task normal but physical light absent/wrong | medium | station mapping or module branch | robot motion fault |
+| sensor indicator state plus UI prompt and operator action | strong | cue/sensor/alignment branch | Ant handling root cause |
+| monitor time offset recorded | strong | log/video alignment | root cause alone |
+| image/video missing | weak/blocking | asset request | final diagnosis |
+
+## Pattern Library
+
+- Light-command queue contention: `c134-0110`, `c134-0149`; split/inspect station queues before hardware.
+- WLED/HLED reboot reports: `c134-0106`, `c134-0108`, `c134-0109`, `c134-0114`, `c134-0115`, `c134-0116`, `c134-0191`, `c134-0300`, `c134-0349`; require local media plus module/controller evidence.
+- Wrong or missing light after robot self-check: `c134-0211`, `c134-0212`, `c134-0213`, `c134-0214`, `c134-0418`; workstation mapping/module branch first if robot task is normal.
+- Sensor/operator cue ambiguity: `c134-0439`; training value is HMI/process as much as hardware.
+- Physical sensor/harness/alignment branch: `c134-0230`, `c134-0292`; classify as workstation unless Ant mechanical clearance is directly observed.
 
 ## Evidence Needed
 

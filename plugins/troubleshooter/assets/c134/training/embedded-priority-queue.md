@@ -275,7 +275,3 @@ Review order: embedded software/hardware first.
 - `c134-0303` 【问题跟踪】2026-05-21 C134上海菱华项目 A3巷道1号螳螂机器人货叉松动
 
 ## Needs Assets High Priority
-
-### Ant/load-handling
-
-- `c134-0201` assets=5 【问题跟踪】2025-12-06 C134上海菱华项目 工作台WS001-1的任务完成后 机器人没有将箱子取走

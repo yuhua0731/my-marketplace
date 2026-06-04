@@ -2,7 +2,7 @@
 
 source_set: accepted high-priority `Mantis/power`, `Mantis/network`
 case_count: 8
-status: draft refined from visible text
+status: refined into evidence-strength patterns from visible text
 
 ## Symptoms
 
@@ -33,6 +33,29 @@ status: draft refined from visible text
    - `c134-0053`: NXP changed from uptime `[87:06:09.836]` before the event to a boot marker and later `[00:07:29.961]`; Wormhole also showed DHCP/DHCPACK around `Mon Feb 2 07:06:54 2026`.
    - `c134-0277`: NXP started at `2026-03-17T21:49:46Z [00:00:30.141]`, then initialized `M-A3-S2-1` from `HsmMain::Unknown -> Init`; file names say `A1巷道`, but NXP `robotLabel` says `M-A3-S2-1`.
    - `c134-0253`: FLO screenshot showed `M-A3-S2-1` `Unknown` and CAN files at `2026/2/24 8:26` were 0KB, but NXP uptime was continuous from `2026-02-22T17:20:21Z [00:00:30.141]` to `2026-02-24T00:24:07Z [31:04:07.408]`; do not claim an event-time reboot from this log alone.
+
+## Evidence Strength Matrix
+
+| Evidence | Diagnostic strength | Use it for | Do not use it for |
+|---|---|---|---|
+| manual Mantis movement works and Ant avoidance works | strong | exclude robot power as primary | scheduler root cause without SAS logs |
+| SAS/Redis timeout followed by orchestration silence | strong | scheduler/lock branch | robot network fault |
+| physical tote present but data says absent after Mantis error | strong | orphan recovery / state mismatch | hardware fault by itself |
+| MQTT/pcap batching with robot timestamps still 1s apart | strong | network retransmission/path branch | robot-reporting-period loss |
+| whole-site stop with Kafka/server symptoms | strong | server/service branch | individual Mantis diagnosis |
+| low uptime / Zephyr boot / `Unknown -> Init` | strong | confirmed reboot | reset source |
+| continuous NXP uptime through reported window | strong exclusion | unconfirmed reboot/log gap | proof nothing happened |
+| 0KB CAN/NXP/wormhole files | weak/blocking | asset request | negative proof |
+
+## Pattern Library
+
+- Scheduler no-action with healthy robots: `c134-0350`; SAS Redis lock/timeout evidence beats power/network guesses.
+- Post-error physical/data mismatch: `c134-0438`; use orphan-area recovery and inspect finger/fork evidence only for the original error.
+- State batching/retransmission: `c134-0150`; compare robot local timestamps, broker timestamps, and pcap.
+- Whole-site Kafka/server failure: `c134-0353`; collect Kafka/disk/EFK evidence before robot-specific work.
+- Mantis reboot/Unknown confirmed: `c134-0053`, `c134-0182`, `c134-0277`; reboot proof is not reset-cause proof.
+- Unknown screenshot/log gap: `c134-0253`; continuous uptime blocks a reboot conclusion despite 0KB CAN files.
+- Robot label conflict: `c134-0277`; preserve NXP `robotLabel` over title/folder wording.
 
 ## Evidence Needed
 

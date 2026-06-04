@@ -2,7 +2,7 @@
 
 source_set: accepted high-priority `Ant/load-handling`
 case_count: 33
-status: draft refined from visible text
+status: refined into evidence-strength patterns from visible text
 
 ## Symptoms
 
@@ -58,6 +58,31 @@ status: draft refined from visible text
 10. For empty-PT or post-TP anomalies, inspect container ownership and demand state.
    - `c134-0401`: A104 faulted raised at empty `A2-S2-B9` PT; WAS shows `TOTE-L-600035` moved to that PT and still present in WS002 demand state after manual/TP handling, but final root cause is unresolved.
    - `c134-0020`: A110 no-action at WS002-2 was recovered by TP/reboot/clear; robot logs mainly show successful post-recovery commands, so upper-system pre-recovery state remains the missing branch.
+
+## Evidence Strength Matrix
+
+| Evidence | Diagnostic strength | Use it for | Do not use it for |
+|---|---|---|---|
+| FLO has no robot error and no next command | strong | reservation/task-state branch | lift hardware fault |
+| reservation intersection / invalid command log | strong | scheduler/RMS root branch | sensor or motor replacement |
+| WAS `WorkerTask` or stale container state | strong | upper-system state branch | mechanical diagnosis first |
+| load sensor expected/actual mismatch | medium | tote seating/sensor timing branch | sensor hardware proof alone |
+| photo/video of tilted tote or PT contact | medium to strong | mechanical interference branch | actuator fault without logs |
+| wrong MQTT HOST or MQTT disconnect | strong | config/network masquerading as handling | lift mechanism root cause |
+| NXP/candump lift movement and sensor timing | strong | embedded/lift/sensor sequence | scheduler state without upper logs |
+| physical harness damage | strong | workstation/clearance branch | pure software root cause |
+| logs end before reported event | weak/blocking | asset request | reboot or buzzer confirmation |
+
+## Pattern Library
+
+- Command/reservation no-action: `c134-0152`, `c134-0206`, `c134-0249`; inspect command creation and reservation overlap before hardware.
+- Missing lift command/task-flow: `c134-0055`; robot reboot was excluded and RMS showed no obvious lift-height command in the relevant sequence.
+- WorkerTask/container-state blockage: `c134-0196`, `c134-0401`; preserve WAS/SAS state before manual TP/clear.
+- Load sensor mismatch with physical seating delay: `c134-0084`, `c134-0444`; sensor false/late timing needs video plus candump/MQTT.
+- PT/PD/WS mechanical interference: `c134-0194`, `c134-0230`; classify contact, tote tilt, harness damage as physical evidence first.
+- MQTT/config masquerading as handling: `c134-0100`, `c134-0254`; resolve communication/config before lift debugging.
+- Lift power or buzzer branch: `c134-0180`, `c134-0237`, `c134-0340`, `c134-0378`; require BMS/boost CAN and exact log coverage.
+- Manual/clear/TP aftermath: `c134-0047`, `c134-0401`; container ownership can be more important than the final robot pose.
 
 ## Evidence Needed
 

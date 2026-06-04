@@ -1,8 +1,8 @@
 # C134 Ant Motion Localization Knowledge
 
-source_set: accepted high-priority `Ant/motion-localization`
+source_set: accepted high-priority `Ant/motion-localization`; focused cleanup sample `docs/c134/high-value-sample-cleanup-20260604.md`
 case_count: 31
-status: draft refined from visible text and first downloaded motion logs
+status: refined into motion/localization evidence patterns and route-ready decision rules from high-priority accepted cases
 
 ## Symptoms
 
@@ -46,6 +46,98 @@ status: draft refined from visible text and first downloaded motion logs
 9. Check whether the attached logs actually cover the deviation.
    - `c134-0015` has downloaded NXP/wormhole logs, but they begin post-boot and mostly show startup/idle state, not the reported deviation sequence.
 
+## Evidence Strength Matrix
+
+| Evidence | Diagnostic strength | Use it for | Do not use it for |
+|---|---:|---|---|
+| explicit `DM code lost during linear motion` | strong | confirming localization-loss symptom | proving floor dirt without segment evidence |
+| repeated `NoRead` followed by `corrected_pose` near event | medium-strong | scan instability / pose-correction branch | final collision cause without video/command context |
+| command geometry with angle or tolerance violation | strong | planning/command rejection branch | blaming camera or floor code first |
+| short command distance lower than braking distance | strong | impossible stop / overrun branch | floor-code diagnosis unless scan loss also exists |
+| same coordinate repeated across robots | medium-strong | local route/floor/WS geometry branch | single-robot hardware cause |
+| CAN motor asymmetry, heartbeat, torque/speed abnormality | strong | drivetrain branch | command planning branch alone |
+| video showing first physical contact before deviation | strong | external collision/contact as cause | only proving aftermath if deviation starts earlier |
+| source robot ID conflicts with filenames/image/logs | strong metadata warning | evidence reconciliation | merging cases silently |
+
+## Evidence Checklist
+
+Use this checklist before assigning a root cause.
+
+1. DM/localization state.
+   - Confirm exact `DM code lost during linear motion`, sustained `NoRead`, low scan count, or `corrected_pose`.
+   - Dirty floor code is confirmed only when segment inspection, photo, or cleaning recovery matches the event segment.
+2. Command geometry.
+   - Compare expected/future pose, command distance, orientation tolerance, velocity, acceleration, and cancellation chain.
+   - For short corrective moves, compute braking distance before blaming floor code.
+   - Treat angle-too-large as either strict direction tolerance or tiny-move angle amplification before merging it with DM-loss cases.
+3. Repeated point or WS geometry.
+   - If several robots fail at WS001-3 or the same coordinate, prioritize local route/floor/WS geometry over single-robot hardware.
+   - At `131847,101499/101500` or `[130847,101500]`, check same-point planning, camera offset, local scan quality, and exit/rotation geometry first.
+   - Keep WS as workstation context; do not reclassify WLED/workstation-only symptoms as Ant motion.
+4. Drivetrain and repair branch.
+   - If commanded correction conflicts with observed deviation, request CAN/motor evidence.
+   - After reducer/motor replacement, verify motor subdivision/config and calibration first.
+5. Collision ordering and metadata.
+   - Treat collision as an outcome unless video/log timing proves external contact happened before deviation.
+   - Preserve robot-ID conflicts; route by filenames, image labels, and logs, not by a single contradictory sentence.
+
+## Pattern Library
+
+### Floor-Code / DM-Loss Deviation
+
+Pattern: robot reports DM loss or shows sustained scan/no-read instability before deviation.
+
+- `c134-0037`: A109 deviation/collision; floor code had dust and task failed with `[ERROR]1202#DIFF402_ERROR#MOVER_MOTOR#DM code lost during linear motion`.
+- `c134-0003`: A107 reported `[ERROR]1202#DIFF402_ERROR#MOVER_MOTOR#DM code lost duuring linear motion`; downloaded logs show scan-offset growth and correction near the event.
+- Diagnostic rule: DM-loss error confirms localization symptom; dirty floor code is confirmed only when segment inspection/photo/cleaning recovery supports it.
+
+### Sparse Reads During Rotation Or WS Exit
+
+Pattern: repeated failures at WS exit/same point with low scan count, `NoRead`, or pose correction.
+
+- `c134-0231` and `c134-0232`: same coordinate `[130847, 101500]` near WS001-3; one A102 case and one A111 case point to same location.
+- `c134-0361`: source body says A111, title/assets identify A102; NXP near `2026-02-08T01:07:57Z` shows `NoRead status recovered after 933 occurrences` then `corrected_pose`.
+- Diagnostic rule: when same point appears across robots, prioritize local floor/route/WS geometry and preserve robot-ID conflicts explicitly.
+
+### Command Geometry / Angle Tolerance
+
+Pattern: robot is nearly static or making a tiny move; calculated command angle exceeds tolerance.
+
+- `c134-0041`: command angle `10.784297867562598°` exceeded the 10-degree same-direction tolerance; resolution increased tolerance to 45 degrees.
+- `c134-0197` and `c134-0250` repeat the same family: small movement or offset makes angle error dominate.
+- Diagnostic rule: inspect command start/end, actual pose, camera offset, and tolerance before cleaning floor code.
+
+### Short-Distance High-Speed Stop
+
+Pattern: a command asks the robot to stop or correct position over a distance shorter than physical braking feasibility.
+
+- `c134-0319`: A107 needed to slow from about `2100 mm/s` to 0 over roughly `453 mm` at `500 mm/s^2`; required stopping distance is far larger.
+- `c134-0304`: similar to `c134-0319`; RMS logs missing, so use as similar-pattern but not fully closed.
+- `c134-0428`: planning used current real velocity instead of theoretical velocity and planned beyond endpoint.
+- Diagnostic rule: calculate braking distance before blaming floor code; new diff/planning semantics are the leading branch when geometry is impossible.
+
+### Drivetrain / Calibration After Repair
+
+Pattern: one robot deviates after mechanical repair or despite corrective angular command.
+
+- `c134-0323`: A102 severe deviation after reducer replacement; two walking motors had inconsistent subdivision.
+- `c134-0276`: robot computed right-turn angular speed but still deviated left; CAN was off, so obstruction/external-force branch stayed unconfirmed.
+- Diagnostic rule: after reducer/motor replacement, verify motor subdivision and calibration; if behavior contradicts commanded correction, request CAN.
+
+### Collision Ordering
+
+Pattern: final state is collision, but root cause may be earlier scan/planning/drivetrain error.
+
+- `c134-0034`, `c134-0037`, `c134-0304`, `c134-0319`, `c134-0352`, `c134-0365`, `c134-0361`.
+- Diagnostic rule: classify collision as an outcome unless video shows contact before deviation; then open external-force/contact branch.
+
+### Log Coverage Gap
+
+Pattern: local assets exist, but logs cover startup/idle or a different window.
+
+- `c134-0015`: downloaded NXP/wormhole logs begin post-boot and do not cover reported deviation.
+- Diagnostic rule: do not infer a no-fault conclusion from logs that miss the motion window.
+
 ## Evidence Needed
 
 - NXP localization/motion logs with DM read/no-read sequence.
@@ -55,6 +147,7 @@ status: draft refined from visible text and first downloaded motion logs
 - video covering the start of deviation, not only final collision.
 - floor-code photos and exact route segment coordinates after cleaning status is known.
 - robot calibration data: camera offset angle, motor subdivision, reducer/motor replacement history.
+- for WS repeated-point cases, workstation ID, exit/entry direction, and exact DM coordinate.
 
 ## Logs And Files To Inspect
 
@@ -83,6 +176,7 @@ status: draft refined from visible text and first downloaded motion logs
 - If multiple robots fail at the same coordinate, prioritize floor code/route geometry over a single robot fault.
 - If one robot deviates after motor/reducer replacement, verify motor subdivision and calibration before changing global route logic.
 - If collision is observed after deviation, do not use collision as root cause unless video shows external contact first.
+- If robot ID differs between title/body/assets, keep a metadata-conflict branch and route by the strongest evidence source.
 
 ## Handling Recommendations
 
@@ -103,16 +197,14 @@ status: draft refined from visible text and first downloaded motion logs
 
 ## Unresolved Examples
 
-- `c134-0011`, `c134-0018`: DM loss visible, root cause not confirmed in visible text.
-- `c134-0003`: source reports `DM code lost duuring linear motion`; NXP logs show large scan-offset growth and correction around `2025-10-21T02:29:00Z`, but floor-code/scanner/RMS root cause is not confirmed.
-- `c134-0015`: downloaded assets exist, but logs only show startup/idle and do not cover the deviation sequence.
-- `c134-0199`: downloaded logs show DM scan/correction evidence near the A103 deviation window, but root cause remains unconfirmed.
-- `c134-0208`: WS001-3 angle-too-large/source symptom with downloaded NXP scan context; RMS command payload is still needed for final diagnosis.
-- `c134-0361`: A-102/A-111 identity mismatch; image/assets identify A-102, NXP near `2026-02-08T01:07:57Z` shows long `NoRead` recovery and `corrected_pose`, but direct scissor/tote-strip collision cause is not closed.
-- `c134-0117`, `c134-0120`: specific floor-code segments requested for inspection; conclusion missing.
-- `c134-0231`, `c134-0232`: same coordinate `[130847, 101500]` DM read/rotation issue; root cause unresolved.
-- `c134-0276`: possible motor obstruction or external force; CAN log disabled.
-- `c134-0304`: similar to `c134-0319`, but RMS logs missing.
+- DM/localization symptom confirmed but root cause open: `c134-0003`, `c134-0011`, `c134-0018`, `c134-0199`. Need floor segment condition, scanner health, and command context before final cause.
+- Log coverage gap: `c134-0015` has local assets, but logs show startup/idle rather than the reported deviation sequence.
+- Segment inspection requested, conclusion missing: `c134-0117`, `c134-0120`.
+- WS001-3 repeated-point family: `c134-0101`, `c134-0198`, `c134-0208`, `c134-0231`, `c134-0232`, `c134-0361`. Prioritize coordinate/WS geometry, scan count, rotation state, and RMS payload before single-robot hardware.
+- Metadata conflict: `c134-0361` title/assets identify A-102 but source body says A-111; NXP near `2026-02-08T01:07:57Z` shows long `NoRead` recovery and `corrected_pose`, but the direct scissor/tote-strip collision cause is not closed.
+- Drivetrain branch unresolved: `c134-0276` suggests one-side motor obstruction or external force, but CAN logging was off.
+- Similar-pattern without full closure: `c134-0304` resembles `c134-0319` short-distance high-speed stop, but RMS logs are missing.
+- Evidence-window insufficient: `c134-0015`, `c134-0208` show why attached logs must be checked for actual event coverage before concluding no fault.
 
 ## Specialist Routing
 

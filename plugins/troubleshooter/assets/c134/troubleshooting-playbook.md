@@ -42,6 +42,7 @@ Knowledge file: `docs/c134/knowledge/ant-power.md`
    - If logs show continuous `UPTIME` through the reported window, do not confirm reboot; examples `c134-0070`, `c134-0144`.
    - If exported logs are concatenated or not chronological, do not bind low-uptime lines to the reported event without timestamp-order validation; examples `c134-0145`, `c134-0178`.
    - If logs confirm reboot but no pre-reset fatal/panic/low-voltage marker exists, keep cause unknown and route to CAN/BMS/boost-module inspection.
+   - If a screenshot confirms `NODE402_ERROR#...#under voltage` but only service logs are available, accept the under-voltage symptom while keeping BMS/boost/root cause unknown; example `c134-0024`.
 4. Check storage/overlay/SD-card health.
    - Overlay full or SD-card mount/log loss can explain repeated A-105 reboot; examples `c134-0298`, `c134-0299`.
 5. Check wireless/network correlation, but do not overclaim.
@@ -98,7 +99,8 @@ Knowledge file: `docs/c134/knowledge/ant-power.md`
 - `c134-0070`, `c134-0144`: complete downloaded logs show continuous `UPTIME`; reported reboot is not confirmed and source date/time must be checked.
 - `c134-0125`: charging-pile reboot with four buzzer alarms; available logs show post-boot/startup material but not the exact pre-reset marker for reported `12点45分左右`.
 - `c134-0145`, `c134-0178`: A107 reboot reports with messy concatenated logs; low-uptime lines exist in package but exact event-time reset remains uncertain.
-- `c134-0422`: partial assets only; missing `A-107nxp.log`, and available system log appears non-chronological/concatenated, so exact event-time reset remains uncertain.
+- `c134-0024`: screenshot confirms A-109 `1102#NODE402_ERROR#MOVER_MOTOR_LEFT#under voltage`; SAS logs give only task/availability context, so BMS/boost/electrical root cause remains unknown.
+- `c134-0422`: A-107 offline screenshot plus low-uptime/startup lines in NXP/system logs; package is non-chronological/concatenated, so exact event-time reset remains uncertain.
 - `c134-0147`, `c134-0151`: source says no logs available; screenshots show A107 UI/asset absence only, so root cause remains unknown.
 - `c134-0239`, `c134-0240`, `c134-0261`, `c134-0321`, `c134-0328`, `c134-0334`: reboot confirmed by `UPTIME` reset; visible text does not prove root cause.
 - `c134-0243`: frequent NIC disconnects on A107/A112/A109 observed; causality to reboot not confirmed.
@@ -138,6 +140,7 @@ Knowledge file: `docs/c134/knowledge/ant-motion-localization.md`
    - `c134-0323`: severe deviation after reducer replacement; two walking motors had inconsistent subdivision, new motor subdivision was not changed.
 8. Separate collision aftermath from primary cause.
    - Collisions in `c134-0034`, `c134-0037`, `c134-0304`, `c134-0319`, `c134-0352`, `c134-0365` are consequences unless logs/video prove external impact preceded deviation.
+   - `c134-0361` has title/assets identifying A-102 but source body says A-111; preserve both and use local image/log filenames as stronger evidence for robot identity.
 9. Check whether the attached logs actually cover the deviation.
    - `c134-0015` has downloaded NXP/wormhole logs, but they begin post-boot and mostly show startup/idle state, not the reported deviation sequence.
 
@@ -173,6 +176,7 @@ Knowledge file: `docs/c134/knowledge/ant-motion-localization.md`
 - `c134-0015`: downloaded assets exist, but logs only show startup/idle and do not cover the deviation sequence.
 - `c134-0199`: downloaded logs show DM scan/correction evidence near the A103 deviation window, but root cause remains unconfirmed.
 - `c134-0208`: WS001-3 angle-too-large/source symptom with downloaded NXP scan context; RMS command payload is still needed for final diagnosis.
+- `c134-0361`: A-102/A-111 identity mismatch; image/assets identify A-102, NXP near `2026-02-08T01:07:57Z` shows long `NoRead` recovery and `corrected_pose`, but direct scissor/tote-strip collision cause is not closed.
 - `c134-0117`, `c134-0120`: specific floor-code segments requested for inspection; conclusion missing.
 - `c134-0231`, `c134-0232`: same coordinate `[130847, 101500]` DM read/rotation issue; root cause unresolved.
 - `c134-0276`: possible motor obstruction or external force; CAN log disabled.
@@ -263,6 +267,7 @@ Knowledge file: `docs/c134/knowledge/ant-load-handling.md`
    - `c134-0152`: A109 moved to `(130847,105831)`, rotated to 0 degrees, then received no new command; A101’s legal exit reservation overlapped A109 state reservation by about 8 mm.
    - `c134-0206`: A111 stayed under `WS001-2`/box `100905`; RMS logged reservation intersection with A107 and `Commands created for A-111 are invalid`.
    - `c134-0249` is same pattern as `c134-0152`.
+   - `c134-0055`: after A-106 extracted `TOTE-H-200585` at `2026-02-02T13:28:08.580Z`, RMS generated MOVE/EXIT-style commands with `liftHeight: 0`; robot reboot was excluded, so task/state flow is the leading branch.
 4. Check load sensor timing and physical tote seating.
    - `c134-0084`: FLO failed lift/extract with `FUTURE_STATE_NOT_MATCH#LoadSensor#Expected: true#Actual: false`; photos show abnormal tote seating at `A3-S2-B10`.
    - `c134-0094`: FLO failed extracting `TOTE-L-600138` at `A2-S2-B12-PT1` with `FUTURE_STATE_NOT_MATCH#LoadSensor#Expected: true#Actual: false`; robot logs are unavailable.
@@ -304,6 +309,7 @@ Knowledge file: `docs/c134/knowledge/ant-load-handling.md`
 - physical inspection of PT/PD sheet metal, limit blocks, tote placement, picking-station height, and scissor mechanism.
 - battery/boost-module CAN data during lift if buzzer or low-voltage appears.
 - exact log coverage end time when an event is reported near the edge of the downloaded window.
+- clear/manual intervention records when behavior changes from workstation handling to returning the tote.
 
 ### Exclusions
 
@@ -345,6 +351,7 @@ Knowledge file: `docs/c134/knowledge/ant-load-handling.md`
 - `c134-0170`: A-112 FLO notification confirms load-sensor mismatch while moving; robot logs unavailable.
 - `c134-0171`: A-108 full log set shows load-sensor transitions; root cause unresolved.
 - `c134-0181`: A-101 manual check normal but software reported sensor abnormal; intermittent/state-timing cause unresolved.
+- `c134-0055`: A-106 no-lift report at `WS001-2` with `TOTE-H-200585`; NXP/system exclude reboot and RMS shows no obvious lift-at-WS command in the relevant post-extract sequence, but workstation/clear-flow root cause remains unresolved.
 
 ## C134 Mantis Load Handling Knowledge
 
@@ -389,6 +396,9 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
    - `c134-0155`: UI and NXP both show `ARM_MOTOR_SINGLE#following error, 55347`; photo shows tote not fully pulled into the access area.
    - `c134-0085`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 55344`; CAN1 was 0KB and unavailable.
    - `c134-0096`: UI error `[ERROR]1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55386`; CAN pcaps are available but NXP/wormhole are not, so external load versus motor branch remains unresolved.
+   - `c134-0141`: UI error `[ERROR]1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55355`; photo shows tote skew/tilt at `A2-S2-B2`, making external load/PT geometry a high-value branch.
+   - `c134-0204`: UI error `[ERROR]1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 55490`; photo shows tote visibly skewed/tilted at `A2-S2-B5`.
+   - `c134-0205`: UI error `[ERROR]1102#NODE402_ERROR#ARM_MOTOR_SINGLE#following error, 10277`; source reports tote skew at `A3-S2-B12-PT`.
    - `c134-0153`: PDA/NXP show repeated `ARM_MOTOR_SINGLE#following error` values `10217` and `10245`.
    - `c134-0154`: NXP shows repeated `ARM_MOTOR_SINGLE#following error` values `55317` and `55423`; field photo shows tote partly in the access area.
    - `c134-0172`: UI and NXP both show `ARM_MOTOR_SINGLE#following error, 55388`; photo shows tote partly in the access/pull area.
@@ -402,11 +412,20 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
    - `c134-0156`: UI showed `1102#NODE402_ERROR#ARM_MOTOR_SINGLE#stall`; NXP recorded `node402 fault history recorded: ARM_MOTOR_SINGLE#stall, 56614` and `MoveArms -> FaultReaction`; photo shows tote close to side guide/access mechanism.
 13. For deposit/unload following error, inspect shelf/tote clearance before motor hardware.
    - `c134-0270`: UI/NXP show `ARM_MOTOR_SINGLE#following error, 10260` while depositing `TOTE-H-101665`; field inspection found tote bottom interfered with shelf crossbeam/横梁.
+   - `c134-0259`: source concludes Mantis plane was lower than shelf/storage position at `B7-L15-T4`; adjust Mantis deposit height before chasing motor hardware.
+   - `c134-0434`: FLO shows `M-A1-S1-1` `ARM_MOTOR_SINGLE#following error, 55259` while extracting `TOTE-H-100281`; source says `A1-S2-B4` pick position needs lowering `6MM`, so height/access geometry is the first branch.
+   - `c134-0430`: FLO shows `M-A2-S1-1` `ARM_MOTOR_SINGLE#following error, 10040` while extracting `TOTE-L-600316`; source says `A2-S2-B6` whole pick is biased toward `B1`, matching offset/external-load before motor-hardware diagnosis.
 14. For command-cache errors, inspect RCS/RMS command lifecycle before hardware.
    - `c134-0013`: `"Could not get RobotCommand ... from local commands dictionary"` while mechanism had not extended; clear plus reset arms recovered.
 15. For anti-pinch sensor mismatches, verify physical obstruction and IO mapping.
    - `c134-0008`: UI showed `antiPinchSensors front - Expected: False Actual: True`; field text said fork was not blocked and tote was not clamped.
+   - `c134-0425`: NXP confirmed `PIN_SENSOR_ANTIPINCH_RIGHT is not as expected. expected value: false, actual value: true` and `FUTURE_STATE_NOT_MATCH#PIN_SENSOR_ANTIPINCH_RIGHT#Expected: false#Actual: true`; repeated GPIO toggles support sensor/IO instability branch.
    - `c134-0431`: backend state showed `antiPinchSensors.left=true` while `M-A3-S2-2` was idle/no obstacle and task failed with `[WARNING]FUTURE_STATE_NOT_MATCH#PIN_SENSOR_ANTIPINCH_LEFT#Expected: false#Actual: true`; fault-time NXP/wormhole logs were 0 B.
+   - `c134-0303`: FLO screenshot marked `Anti-pinch Rear`; field inspection found fork looseness, and later maintenance suspected belt pressure-block looseness causing belt looseness.
+16. For image/text-only pull-offset cases, accept the operational offset conclusion but keep the root cause bounded.
+   - `c134-0368`: `A2-S2-B12-L10-T3` pull failed; arm biased toward `B13`; source action was adjusting pull offset toward `B1` about `7mm`.
+   - `c134-0432`: `A2-S2-B6` 13:13 pull failed; whole pick biased toward `B1`; same location recurred in `c134-0430` at 18:53 with FLO following error.
+   - `c134-0435`: title says `M-A3-S2-1`, body says `M-A2-S2-1`; `A3-S2-B5-L5-T4` pull failed and source action was adjusting toward `B1` by `3-4mm`. Preserve the robot-label conflict.
 
 ### Evidence
 
@@ -417,6 +436,7 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
 - access node and accessNodeOffset config for rest, load, deposit points.
 - torque curves for pull/fork/finger motors.
 - video/photo showing tote position, fork extension, finger position, PT/PD deformation/interference.
+- photos/videos showing sensor panel state, fork looseness, belt pressure-block condition, and belt tension.
 - robot label from wormhole/MQTT when title text is ambiguous.
 - UI screenshots for exact FLO/Fleet errors such as `ARM_MOTOR_SINGLE#following error`, `ARM_MOTOR_SINGLE#stall`, `antiPinchSensors front`, and missing `RobotCommand`.
 
@@ -433,10 +453,15 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
 - If Mantis shaking clears only after an Ant below leaves, inspect reservations, mode changes, and shared access-zone occupancy before motor hardware.
 - UI says front load sensor error: verify against video and CAN/GPIO mapping before replacing the sensor.
 - UI says `ARM_MOTOR_SINGLE#following error`: inspect tote skew,挡边 contact, and arm load before concluding motor/driver failure.
+- Source says Mantis plane is lower than shelf/货位: measure and adjust deposit height/access-node offset before motor debugging.
 - UI says `ARM_MOTOR_SINGLE#stall`: inspect physical obstruction, tote side-guide contact, and torque/current before concluding motor/driver failure.
 - UI says missing `RobotCommand`: inspect command lifecycle/local dictionary/cache first; mechanical inspection is secondary if the mechanism did not move.
 - `coordY` differs by 1 mm before `EXTEND`: inspect access-node/offset generation and tolerance before replacing Mantis hardware.
 - Left anti-pinch true with no physical neighbor/obstacle: inspect sensor, wiring, IO mapping, and debounce before concluding scheduler failure.
+- Right/top anti-pinch future-state mismatch during arm movement: inspect GPIO pulse timing, wiring, IO mapping, and physical obstruction before replacing arm motor hardware.
+- Rear anti-pinch trigger with field-visible fork/belt looseness: inspect mechanical mounting and belt pressure block before replacing sensor/electronics.
+- Image/text-only offset recommendations are operationally useful but not enough to prove motor, driver, or firmware root cause.
+- `ARM_MOTOR_SINGLE#following error` with a field offset/height recommendation should be routed through geometry/load checks before replacing motor hardware.
 
 ### Examples
 
@@ -450,6 +475,12 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
 - `c134-0026`: Mantis shaking plus stopped Ant below was operationally recovered by computer-side manual mode allowing the Ant to leave; logs point to scheduler/reservation/mode interaction, not confirmed motor fault.
 - `c134-0013`: missing local `RobotCommand` caused extraction/load failure before mechanism extension; clear plus reset arms recovered.
 - `c134-0270`: deposit/unload following error `10260` was operationally explained by tote-bottom interference with shelf crossbeam/横梁.
+- `c134-0259`: A2 `B7-L15-T4` deposit failure was operationally attributed to Mantis plane lower than the shelf position; recommended action was adjusting Mantis deposit height.
+- `c134-0303`: FLO marked `Anti-pinch Rear`; field inspection found fork looseness and likely belt pressure-block looseness, making mechanical maintenance the primary branch.
+- `c134-0368`: `A2-S2-B12-L10-T3` pull failure was operationally attributed to arm bias toward `B13`; recommended offset correction was toward `B1` about `7mm`.
+- `c134-0430` and `c134-0432`: repeated `A2-S2-B6` M2 pull failures were operationally attributed to pick offset bias toward `B1`; `c134-0430` additionally records `ARM_MOTOR_SINGLE#following error, 10040`.
+- `c134-0434`: `A1-S2-B4` M1 pull failure records `ARM_MOTOR_SINGLE#following error, 55259`; source action was lowering the pick position by `6MM`.
+- `c134-0435`: `A3-S2-B5-L5-T4` pull failure source action was adjusting toward `B1` by `3-4mm`; robot label remains inconsistent between title and body.
 
 - `c134-0079`: missing RMS logs block task sequence analysis.
 - `c134-0308`: no RMS logs; only similar to prior A2 offset/state issue.
@@ -459,9 +490,13 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
 - `c134-0386`: M2 deposit/unload failed for `TOTE-L-600431`; source claims front load sensor error and logs show later orphaned tote state, but sensor/CAN root cause is unresolved.
 - `c134-0008`: front anti-pinch expected/actual mismatch was visible and recovered after initialize, but sensor hardware versus transient signal remains unproven.
 - `c134-0431`: left anti-pinch false trigger/stuck true caused `FUTURE_STATE_NOT_MATCH`; sensor hardware, wiring, IO mapping, and debounce branch remains unresolved because NXP/wormhole logs were 0 B.
+- `c134-0425`: right anti-pinch false trigger caused `FUTURE_STATE_NOT_MATCH`; NXP confirms sensor mismatch and GPIO toggles, but exact physical versus electrical cause remains unresolved.
 - `c134-0076`: `ARM_MOTOR_SINGLE#following error, 55214`; fault-time NXP/wormhole logs were 0KB, so root cause remains unresolved.
 - `c134-0085`: `ARM_MOTOR_SINGLE#following error, 55344`; CAN1 was 0KB, so motor/driver versus external-load branch remains unresolved.
 - `c134-0096`: `ARM_MOTOR_SINGLE#following error, 55386`; CAN pcaps and images exist, but NXP/wormhole logs are absent and decoded CAN/physical cause remains unresolved.
+- `c134-0141`: `ARM_MOTOR_SINGLE#following error, 55355`; photo shows tote skew at `A2-S2-B2`, but NXP/CAN/RMS are absent.
+- `c134-0204`: `ARM_MOTOR_SINGLE#following error, 55490`; photo shows tote skew at `A2-S2-B5`, but NXP/CAN/RMS are absent.
+- `c134-0205`: `ARM_MOTOR_SINGLE#following error, 10277`; source reports tote skew at `A3-S2-B12-PT`, but NXP/CAN/RMS are absent.
 - `c134-0010`: `ARM_MOTOR_SINGLE#following error, 55299`; NXP confirms `MoveArms -> FaultReaction`, and source/photo suggest PT sheet-metal or tote skew/contact branch, but exact cause remains unresolved.
 - `c134-0153`: repeated following errors `10217` and `10245`; exact physical/CAN cause remains unresolved.
 - `c134-0154`: repeated following errors `55317` and `55423`; photo shows incomplete pull, but exact physical or motor cause remains unresolved.
@@ -473,6 +508,10 @@ Knowledge file: `docs/c134/knowledge/mantis-load-handling.md`
 - `c134-0327`: `ARM_MOTOR_SINGLE#following error, 55405`; tote partly riding on limit strip/限位条 is strong physical evidence, but CAN torque proof is not closed.
 - `c134-0357`: `ARM_MOTOR_SINGLE#following error, 10307`; NXP confirms fault transition and photo shows tote in access area, but physical/CAN root cause remains unresolved.
 - `c134-0369`: `ARM_MOTOR_SINGLE#following error, 55272`; source observed tote skew, but exact contact point/CAN proof remains unresolved.
+- `c134-0217`: `A2-S2-B2` PT取箱失败 with complete CAN/NXP assets; NXP text search found no node402 fault/following-error string, so RMS/FLO error and CAN decoding are still needed.
+- `c134-0168`: `A3-S2-B9` pull failure with only images; source says No.2 Mantis could not be connected, so logs could not be extracted.
+- `c134-0303`: NXP/wormhole were 0KB, so firmware/CAN branch is not closed even though mechanical evidence is strong.
+- `c134-0368`, `c134-0430`, `c134-0432`, `c134-0434`, `c134-0435`: no NXP/CAN/RMS/SAS logs were provided, so motor/driver/firmware root cause is not closed.
 
 ## C134 Mantis Power And Network Knowledge
 
@@ -492,6 +531,11 @@ Knowledge file: `docs/c134/knowledge/mantis-power-network.md`
    - pcap from two wormholes showed retransmission around 17:30:38, pointing to wormhole-to-AP or server-side network path.
 5. For whole-site stop, inspect Kafka/server before individual robot network.
    - `c134-0353`: all robots disconnected/no robots after refresh, then partial recovery; action plan was collect Kafka logs to EFK, widen controller timeout, split controller/broker, and replace HDD with SSD in similar environments.
+6. For Mantis `Unknown` after reported reboot, prove reboot from local uptime and boot markers before diagnosing cause.
+   - `c134-0182`: NXP changed from `2026-01-05T10:07:44Z [UPTIME:351586]` to `2026-01-05T10:09:12Z [UPTIME:39] *** Booting Zephyr OS build 120b940a00e8 ***`; FLO showed `M-A3-S2-2` `Unknown` and failed deposit/unload tasks for `TOTE-H-200050`.
+   - `c134-0053`: NXP changed from uptime `[87:06:09.836]` before the event to a boot marker and later `[00:07:29.961]`; Wormhole also showed DHCP/DHCPACK around `Mon Feb 2 07:06:54 2026`.
+   - `c134-0277`: NXP started at `2026-03-17T21:49:46Z [00:00:30.141]`, then initialized `M-A3-S2-1` from `HsmMain::Unknown -> Init`; file names say `A1巷道`, but NXP `robotLabel` says `M-A3-S2-1`.
+   - `c134-0253`: FLO screenshot showed `M-A3-S2-1` `Unknown` and CAN files at `2026/2/24 8:26` were 0KB, but NXP uptime was continuous from `2026-02-22T17:20:21Z [00:00:30.141]` to `2026-02-24T00:24:07Z [31:04:07.408]`; do not claim an event-time reboot from this log alone.
 
 ### Evidence
 
@@ -501,6 +545,10 @@ Knowledge file: `docs/c134/knowledge/mantis-power-network.md`
 - FLO/data container state versus physical tote state.
 - robot MQTT/state timestamps, broker receive timestamps, and pcap from wormhole/AP/server.
 - Kafka controller/broker logs, server disk I/O, EFK load.
+- NXP boot markers, uptime before/after the reported event, and `HsmMain::Unknown -> Init` initialization sequence.
+- Wormhole DHCP, dumpcap restart, and CAN capture file-number resets.
+- FLO screenshots for exact robot label, `Unknown` state, active failed task, tote ID, and mode.
+- 0KB CAN/NXP/wormhole files as missing-evidence signals rather than negative proof.
 
 ### Exclusions
 
@@ -508,15 +556,23 @@ Knowledge file: `docs/c134/knowledge/mantis-power-network.md`
 - Robot state messages are batched but local robot timestamps are 1s apart: do not classify as robot not reporting.
 - Data says no tote after Mantis error but physical tote exists: treat as post-error data inconsistency and follow orphan recovery.
 - Whole-site disconnect affects all robots: inspect Kafka/server/network path before individual Mantis hardware.
+- FLO `Unknown` alone does not prove reboot; require NXP low uptime/boot marker, Wormhole restart/DHCP, or power evidence.
+- Startup `canopen_stack`/`node_led` errors after boot are not root cause unless they precede and explain the reset.
+- If NXP uptime is continuous through the reported window, classify the report as unconfirmed reboot or log gap.
 
 ### Examples
 
 - `c134-0350`: SAS did not issue Mantis EXTRACT tasks; Redis timeouts preceded scheduler silence; SAS restart restored task dispatch.
 - `c134-0438`: Mantis physical/data mismatch after error should be handled by orphan-area recovery; fork ALLCAN-590 IDs `0x14`/`0x15` had no abnormality.
 - `c134-0150`: pcap showed retransmissions around `17:30:38`, while robot local state interval remained about 1s.
+- `c134-0053`: FLO showed `M-A3-S2-1` `Unknown`; NXP uptime dropped from 87h to post-boot minutes and Wormhole showed DHCP reconnect around the event.
+- `c134-0182`: `M-A3-S2-2` deposit/unload failure for `TOTE-H-200050`; NXP proved reboot from `[UPTIME:351586]` to `[UPTIME:39]`.
+- `c134-0277`: nighttime reboot/Unknown report; NXP low uptime and initialization sequence prove reboot/initialization, with robotLabel `M-A3-S2-1`.
 
 - `c134-0350`: exact Redis-lock failure path still needed code or reproduction proof.
 - `c134-0353`: visible text contains plan and hypothesis, but not final verified root cause.
+- `c134-0053`, `c134-0182`, `c134-0277`: reset source remains unknown; current evidence proves reboot but not power, firmware, or network root cause.
+- `c134-0253`: event-time reboot is not proven because NXP uptime is continuous through the reported 2026-02-24 08:21 CST window; CAN files were 0KB.
 
 ## C134 Workstation WLED Knowledge
 

@@ -4,7 +4,7 @@ Built from accepted high-priority visible-text cases.
 
 ## Ant/power
 
-Cases: 93
+Cases: 95
 
 Signals:
 
@@ -18,6 +18,8 @@ Signals:
   analysis: System log confirms a real reboot/reset close to the reported lift-time restart.
 - `c134-0019` symptom: 如题  20.10分左右  A110蚂蚁在运行过程中关机   将它推到充电桩位置重启初始化后发现电量剩余44%
   analysis: 通过日志可知，A110号蚂蚁从19点开始到20点期间，电量从24%持续降低到0%，导致升压模块检测到电池低电量自动关机。升压模块低电量自动关机的条件为持续3min电量低于0%（4.0V），期间只要电量高于0%一次，时间会重新计数。
+- `c134-0024` symptom: 如题  19.18分，109蚂蚁报"under voltage"，如下图：
+  analysis: Local assets downloaded under `assets/c134-0024/`.
 - `c134-0032` symptom: 1月31日，下午14点47分左右发现，A-109蚂蚁机器人在休息位前的通道重启。
   analysis: Downloaded local assets under `assets/c134-0032/`.
 - `c134-0035` symptom: 14点55分左右：110蚂蚁在休息位“重启”，当观察到他时，他的指示灯是蓝色长亮。
@@ -26,8 +28,6 @@ Signals:
   analysis: Downloaded local assets under `assets/c134-0036/`.
 - `c134-0040` symptom: 19.45分  107报错  观察到小车状态灯熄灭   在FLO界面看到小车电量灯见底
   analysis: 11/20/2025, 19:00:16 电量上报20
-- `c134-0050` symptom: 21：15左右  重启104后，通过界面进行了clear  然后重置。  界面显示104为 idle 。 但是蚂蚁指示灯蓝灯常亮。
-  analysis: 机器人启动正常启动，蓝灯就是常亮的。
 
 Training focus:
 
@@ -36,7 +36,7 @@ Training focus:
 
 ## Ant/motion-localization
 
-Cases: 30
+Cases: 31
 
 Signals:
 
@@ -100,7 +100,7 @@ Training focus:
 
 ## Ant/load-handling
 
-Cases: 26
+Cases: 27
 
 Signals:
 
@@ -110,6 +110,8 @@ Signals:
   analysis: 18点9分的clear的A-108蚂蚁
 - `c134-0048` symptom: 12月4日16.31分   A105蚂蚁在WS001-2位置  需要举升进入拣货台  但是举升失败报错
   analysis: 此报错非机器人上报
+- `c134-0055` symptom: 2月2日，晚9.29分 A106带料箱TOTE-H-200585前往WS001-2位置，蚂蚁到达工作位的举升点时，没有举升动作，clear后任务变成带料箱返回接驳位。
+  analysis: Local assets downloaded under `assets/c134-0055/`.
 - `c134-0061` symptom: 12月5日，下午14点40分左右，A-105蚂蚁机器人在A1-S2-B2-PL1-PT1-PS1上放箱失败。
   analysis: Downloaded local assets under `assets/c134-0061/`.
 - `c134-0078` symptom: 12月23日，13点59分，A-104蚂蚁机器人在WS001-2前的地码举箱报错。
@@ -122,8 +124,6 @@ Signals:
   analysis: - Observed fact: FLO screenshot shows A-107 active task failed while extracting `TOTE-L-600138` at `A2-S2-B12-PT1`.
 - `c134-0098` symptom: 12月12日，上午8点40左右（具体时间未知），A-105蚂蚁机器人在PT位A1-S2-B2上还箱失败。
   analysis: image.png
-- `c134-0100` symptom: 12月9日，18.28分左右发现，A-112蚂蚁机器人在ws001-1位置拣货完成   但蚂蚁未有举升动作带料箱离开  FLO界面未搜到112蚂蚁
-  analysis: 日志补充：
 
 Training focus:
 
@@ -157,7 +157,7 @@ Training focus:
 
 ## Mantis/load-handling
 
-Cases: 44
+Cases: 56
 
 Signals:
 
@@ -189,10 +189,18 @@ Training focus:
 
 ## Mantis/power
 
-Cases: 2
+Cases: 6
 
 Signals:
 
+- `c134-0053` symptom: 2月2日，下午15点09分左右发现，A3巷道的1号螳螂机器人重启。
+  analysis: 2月2日15:09左右发现 A3巷道1号螳螂重启，FLO 截图显示 `M-A3-S2-1` 为 `Unknown`，active task `Moving To (7652, 14416, 2094)` failed。
+- `c134-0182` symptom: 1月5日，下午18点12分左右，M-A3-S2-2螳螂将料浆TOTE-H-200050放置与A3-S2-B10接驳位后报错   FLO界面观察螳螂位unknow状态  此时伸缩臂已完全收回
+  analysis: 1月5日18:12左右，`M-A3-S2-2` 将 `TOTE-H-200050` 放置于 `A3-S2-B10` 接驳位后报错；FLO 截图显示 `M-A3-S2-2` 为 `Unknown`，active task `Depositing To A3-S2-B10-PL1-PT1-PS1` failed、`Unloading From M-A3-S2-2` failed，child tote 为 `TOTE-H-200050`。
+- `c134-0253` symptom: 2月24日，上午8点21分左右发现，A3巷道1号螳螂机器人原地重启，具体重启时间未知。
+  analysis: 2月24日上午8点21分左右发现 A3巷道1号螳螂机器人原地重启，具体重启时间未知。截图显示 robot list 中 `M-A3-S2-1` 为 `Unknown`，另一张日志截图显示 `can1.pcap` 与 `can2.pcap` 在 `2026/2/24 8:26` 均为 `0 KB`，源文档结论为该时间段 CAN 日志丢失。
+- `c134-0277` symptom: 3月18日，上午8点25分左右发现A3巷道1号螳螂机器人flo界面处于Unknown状态，由于螳螂机器人夜间不断电，所以判断该螳螂机器人重启。
+  analysis: 3月18日上午8点25分左右发现 A3巷道1号螳螂机器人 FLO 界面处于 `Unknown`。源文档推断：由于螳螂夜间不断电，所以判断该螳螂机器人重启。截图显示 `M-A3-S2-1` 为 `Unknown`，位置 `x: 7652 y: 11348 z: 2094`，`Anti-pinch Front` 未触发。
 - `c134-0350` symptom: 3月28日，上午8点47分，工作台WS002下发入库任务之后，全库机器人没有动作，flo界面没有报错，网络通畅。
   analysis: 截止到9:32 上层sas系统任务调度没有给螳螂下发拉箱的EXTRACT任务
 - `c134-0438` symptom: 1月26日，下午13点25分左右， A1巷道螳螂机器人报错。在处理的过程中发现螳螂上存在料箱，但是FLO界面上该螳螂没有料箱。
@@ -232,3 +240,16 @@ Training focus:
 
 - Correlate DM code loss, angle deviation, floor-code contamination, speed/acceleration changes, and collision aftermath.
 - Treat path blockage and localization loss as separate hypotheses until logs/video confirm one.
+
+## Mantis/sensor
+
+Cases: 1
+
+Signals:
+
+- `c134-0303` symptom: 5月21号，下午14:27左右现场发现A3巷道1号螳螂机器人报错了，FLO界面显示是红框圈出部分的传感器触发。
+  analysis: 5月21日14:27左右，现场发现 A3巷道1号螳螂机器人报错；FLO 传感器截图红框圈出 `Anti-pinch Rear`。现场检查螳螂传感器时发现货叉松动；联系技术部维修后，作业结束排查认为可能是皮带压块松动导致皮带松动。
+
+Training focus:
+
+- Correlate sensor trigger state with physical obstruction, IO wiring, and recovery after clear/reinitialize.

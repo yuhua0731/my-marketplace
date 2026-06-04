@@ -480,19 +480,20 @@
   },
   {
     "case_id": "c134-0024",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2025-11-26  C134项目 109蚂蚁报\"under voltage\"的问题",
     "source": "https://hcrobots.feishu.cn/wiki/DCpOwYhACi0C7mkzY1LcSxgAnAg",
     "obj_token": "KHt7dOxG9oRHhaxOZTqc6DyGnne",
     "product_line": "C134 穿云箭",
     "system_area": "Ant/power",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0024-2025-11-26-C134项目-109蚂蚁报-under-voltage-的问题.md",
+    "local_path": "cases/accepted/c134/0024-2025-11-26-C134项目-109蚂蚁报-under-voltage-的问题.md",
     "symptom_signal": "如题  19.18分，109蚂蚁报\"under voltage\"，如下图：",
     "asset_requests": [
-      ".20251126-141438.gz",
       "img_v3_02sd_195457c7-8484-4d54-bb5b-eafdfef66eeg.jpg",
-      "sas日志.log"
+      "sas日志.log",
+      "sas日志.log.20251126-141438.gz",
+      "sas日志.log.20251126-180346"
     ]
   },
   {
@@ -1038,14 +1039,14 @@
   },
   {
     "case_id": "c134-0053",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-02-02 C134项目 A3巷道1号螳螂机器人重启",
     "source": "https://hcrobots.feishu.cn/wiki/DqRDwmbHUiqKZSkLcDScT1Cpn0c",
     "obj_token": "RqW7dxM0Co5Q4wx8SHRc1vxVn4g",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/power",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0053-2026-02-02-C134项目-A3巷道1号螳螂机器人重启.md",
+    "local_path": "cases/accepted/c134/0053-2026-02-02-C134项目-A3巷道1号螳螂机器人重启.md",
     "symptom_signal": "2月2日，下午15点09分左右发现，A3巷道的1号螳螂机器人重启。",
     "asset_requests": [
       "can2_C134_A3巷道1号螳螂_14.43-15.13.pcap",
@@ -1079,21 +1080,16 @@
   },
   {
     "case_id": "c134-0055",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-02-02 C134项目 A106蚂蚁在工作台没有举升动作",
     "source": "https://hcrobots.feishu.cn/wiki/SvNTwqROYiQ1pWkjnnwcBxEtn8d",
     "obj_token": "UUHdda7L1ognJLxiZaWc0CzvnCf",
     "product_line": "C134 穿云箭",
     "system_area": "Ant/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0055-2026-02-02-C134项目-A106蚂蚁在工作台没有举升动作.md",
+    "local_path": "cases/accepted/c134/0055-2026-02-02-C134项目-A106蚂蚁在工作台没有举升动作.md",
     "symptom_signal": "2月2日，晚9.29分 A106带料箱TOTE-H-200585前往WS001-2位置，蚂蚁到达工作位的举升点时，没有举升动作，clear后任务变成带料箱返回接驳位。",
     "asset_requests": [
-      ".20260202-205638.gz",
-      ".20260202-210138.gz",
-      ".20260202-211257.gz",
-      ".20260202-212448.gz",
-      ".20260202-213329.gz",
       "20260202220127_rec_.mp4",
       "3acb3a24-fb7a-45ce-b591-c3d9f51c3318.mp4",
       "A-106_can1_20260202T131441Z_to_20260202T135141Z.pcap",
@@ -1101,7 +1097,11 @@
       "A-106_nxp_20260202T131441Z_to_20260202T135141Z.log",
       "A-106_system_20260202T131441Z_to_20260202T135141Z.log",
       "WAS.log",
-      "rms.log",
+      "rms.log.20260202-205638.gz",
+      "rms.log.20260202-210138.gz",
+      "rms.log.20260202-211257.gz",
+      "rms.log.20260202-212448.gz",
+      "rms.log.20260202-213329.gz",
       "sas.log"
     ]
   },
@@ -2778,14 +2778,14 @@
   },
   {
     "case_id": "c134-0141",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-11 C134项目 A2巷道螳螂在A2-S2-B2接驳位拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/BbC2wRoQTiDfhDk5hbacCR9Jnld",
     "obj_token": "Lb5tdMzYmoiLDdxcjKwcU6tynWh",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0141-2026-01-11-C134项目-A2巷道螳螂在A2-S2-B2接驳位拉箱失败.md",
+    "local_path": "cases/accepted/c134/0141-2026-01-11-C134项目-A2巷道螳螂在A2-S2-B2接驳位拉箱失败.md",
     "symptom_signal": "1月11日，下午18点06分左右，A2巷道螳螂在A2-S2-B2接驳位拉箱失败   料箱倾斜",
     "asset_requests": [
       "img_v3_02tr_32a59617-ffba-4e1f-bf74-9dcd0b6a21dg.jpg",
@@ -3304,14 +3304,14 @@
   },
   {
     "case_id": "c134-0168",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-24 C134项目 A3巷道2号螳螂在A3-S2-B9拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/T3qxw5x9uiGU1GkpFvOcenSsnJd",
     "obj_token": "DOaGdKXpqodgyCxWj1acX9yanSf",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0168-2026-01-24-C134项目-A3巷道2号螳螂在A3-S2-B9拉箱失败.md",
+    "local_path": "cases/accepted/c134/0168-2026-01-24-C134项目-A3巷道2号螳螂在A3-S2-B9拉箱失败.md",
     "symptom_signal": "1月24日，上午10点21分左右，A3巷道2号螳螂拉箱失败。",
     "asset_requests": [
       "img_v3_02u8_3a4beeee-e6e1-4c27-a8a7-e30279e7e19g.jpg",
@@ -3577,14 +3577,14 @@
   },
   {
     "case_id": "c134-0182",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-05 C134上海菱华项目 M3-2螳螂重启问题",
     "source": "https://hcrobots.feishu.cn/wiki/Hu6sw3OuaiLC0TkIaq7ca71XnBc",
     "obj_token": "WeqldTTHLocNSBxopEUcXoUpnve",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/power",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0182-2026-01-05-C134上海菱华项目-M3-2螳螂重启问题.md",
+    "local_path": "cases/accepted/c134/0182-2026-01-05-C134上海菱华项目-M3-2螳螂重启问题.md",
     "symptom_signal": "1月5日，下午18点12分左右，M-A3-S2-2螳螂将料浆TOTE-H-200050放置与A3-S2-B10接驳位后报错   FLO界面观察螳螂位unknow状态  此时伸缩臂已完全收回",
     "asset_requests": [
       "2132292422.mp4",
@@ -4013,14 +4013,14 @@
   },
   {
     "case_id": "c134-0204",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2025-12-18 C134上海菱华项目 M2螳螂在A2-S2-B5-PT位取箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/Bhjqwt0xci9KpmkKgArcDHmfnpf",
     "obj_token": "DADTdEaqBoxKuUxGkKectsD9nuw",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0204-2025-12-18-C134上海菱华项目-M2螳螂在A2-S2-B5-PT位取箱失败.md",
+    "local_path": "cases/accepted/c134/0204-2025-12-18-C134上海菱华项目-M2螳螂在A2-S2-B5-PT位取箱失败.md",
     "symptom_signal": "12月18日，下午19.04分  M2螳螂在A2-S2-B5接驳位取箱失败   料箱倾斜",
     "asset_requests": [
       "img_v3_02t3_613d2bd6-890a-4c6f-9df6-ef0dfe46e37g.jpg",
@@ -4029,14 +4029,14 @@
   },
   {
     "case_id": "c134-0205",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2025-12-22 C134项目 M3螳螂在A3-S2-B12-PT位取箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/RkYRwz5Qfifd9UkGmKwcLJgNnNh",
     "obj_token": "BKWyd2g1BoXcbZxet0jcLbr1nKf",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0205-2025-12-22-C134项目-M3螳螂在A3-S2-B12-PT位取箱失败.md",
+    "local_path": "cases/accepted/c134/0205-2025-12-22-C134项目-M3螳螂在A3-S2-B12-PT位取箱失败.md",
     "symptom_signal": "12月22日，下午18.54分  M3螳螂在A3-S2-B12-PT位取箱失败   料箱倾斜",
     "asset_requests": [
       "img_v3_02t7_3a92ad29-7c1f-42f1-b97c-236449d6715g.jpg",
@@ -4272,14 +4272,14 @@
   },
   {
     "case_id": "c134-0217",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2025-12-12 C134 - 菱华/上海项目 A2巷道螳螂在A2-S2-B2接驳位取箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/SvAaw56naikDvNkcxNBcf0JDn1g",
     "obj_token": "PDjOdwlHlo3Dx4x2JNzcK4kRnx4",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0217-2025-12-12-C134---菱华-上海项目-A2巷道螳螂在A2-S2-B2接驳位取箱失败.md",
+    "local_path": "cases/accepted/c134/0217-2025-12-12-C134---菱华-上海项目-A2巷道螳螂在A2-S2-B2接驳位取箱失败.md",
     "symptom_signal": "12月12日，上午9点30分左右（具体时间未知），A2巷道螳螂在PT位A2-S2-B2处取箱失败，并报错。",
     "asset_requests": [
       "can1_C134_A2巷道螳螂_9点30分至10点.pcap",
@@ -4998,17 +4998,18 @@
   },
   {
     "case_id": "c134-0253",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-02-24 C134上海菱华项目 A3巷道1号螳螂机器人重启",
     "source": "https://hcrobots.feishu.cn/wiki/JoO4wWbs8i61VxkvK68cAdGAnme",
     "obj_token": "UCsZdtixBoBBCKxzVjucqjzJnPg",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/power",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0253-2026-02-24-C134上海菱华项目-A3巷道1号螳螂机器人重启.md",
+    "local_path": "cases/accepted/c134/0253-2026-02-24-C134上海菱华项目-A3巷道1号螳螂机器人重启.md",
     "symptom_signal": "2月24日，上午8点21分左右发现，A3巷道1号螳螂机器人原地重启，具体重启时间未知。",
     "asset_requests": [
       "image.png",
+      "image-logs.png",
       "nxp_C134_A3巷道1号螳螂机器人_2月22日16点至2月24日8点24分.log",
       "wormhole_C134_A3巷道1号螳螂机器人_2月22日16点至2月24日8点24分.log"
     ]
@@ -5116,14 +5117,14 @@
   },
   {
     "case_id": "c134-0259",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-02-11 C134上海菱华项目 A2螳螂B7-L15还箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/ZdErwnWx2iBPU2kpPRXc2hpVnPf",
     "obj_token": "KWWmdRiiIonPPGxrMmqcCjn3n7e",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0259-2026-02-11-C134上海菱华项目-A2螳螂B7-L15还箱失败.md",
+    "local_path": "cases/accepted/c134/0259-2026-02-11-C134上海菱华项目-A2螳螂B7-L15还箱失败.md",
     "symptom_signal": "2月11号晚18.22分，A2巷道螳螂在B7-L15-T4还箱失败，螳螂平面较货位低，需要调整螳螂还箱高度。",
     "asset_requests": [
       "18446744073583452313.mp4",
@@ -5494,14 +5495,14 @@
   },
   {
     "case_id": "c134-0277",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-03-18 C134上海菱华项目 A3巷道1号螳螂机器人夜间重启",
     "source": "https://hcrobots.feishu.cn/wiki/EvacwvIzbivEVhksFKYckMH8nbg",
     "obj_token": "C4AGdD7ZNoR45txolLZc6L3InLc",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/power",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0277-2026-03-18-C134上海菱华项目-A3巷道1号螳螂机器人夜间重启.md",
+    "local_path": "cases/accepted/c134/0277-2026-03-18-C134上海菱华项目-A3巷道1号螳螂机器人夜间重启.md",
     "symptom_signal": "3月18日，上午8点25分左右发现A3巷道1号螳螂机器人flo界面处于Unknown状态，由于螳螂机器人夜间不断电，所以判断该螳螂机器人重启。",
     "asset_requests": [
       "img_v3_02vt_e0af4195-7a3a-4723-9b26-d64ea404e23g.jpg",
@@ -6006,14 +6007,14 @@
   },
   {
     "case_id": "c134-0303",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-05-21 C134上海菱华项目 A3巷道1号螳螂机器人货叉松动",
     "source": "https://hcrobots.feishu.cn/wiki/Ty6Bw7Vu7iHXXSkDP1IcuJfHnzg",
     "obj_token": "H54pd7fv0oPueQxxvI1csQ6Tn3c",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/sensor",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0303-2026-05-21-C134上海菱华项目-A3巷道1号螳螂机器人货叉松动.md",
+    "local_path": "cases/accepted/c134/0303-2026-05-21-C134上海菱华项目-A3巷道1号螳螂机器人货叉松动.md",
     "symptom_signal": "5月21号，下午14:27左右现场发现A3巷道1号螳螂机器人报错了，FLO界面显示是红框圈出部分的传感器触发。",
     "asset_requests": [
       "18446744072816901063.mp4",
@@ -7162,14 +7163,14 @@
   },
   {
     "case_id": "c134-0361",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-02-08 C134上海菱华项目 A-102蚂蚁机器人在进入WS001-3工位时，剪刀结构撞击拖箱条",
     "source": "https://hcrobots.feishu.cn/wiki/GxT5w0XzXikW2IkgcflcYS4fncc",
     "obj_token": "F3dSdt3qsoHMJYxTewAcwOyAnLg",
     "product_line": "C134 穿云箭",
     "system_area": "Ant/motion-localization",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0361-2026-02-08-C134上海菱华项目-A-102蚂蚁机器人在进入WS001-3工位时-剪刀结构撞击拖箱条.md",
+    "local_path": "cases/accepted/c134/0361-2026-02-08-C134上海菱华项目-A-102蚂蚁机器人在进入WS001-3工位时-剪刀结构撞击拖箱条.md",
     "symptom_signal": "2月8日，上午9点06分左右，A-111蚂蚁机器人在离开工位WS001-3后，跑偏。",
     "asset_requests": [
       "20260208092521_rec_.mp4",
@@ -7178,8 +7179,8 @@
       "A-102_nxp_20260208T005816Z_to_20260208T012816Z.log",
       "A-102_system_20260208T005816Z_to_20260208T012816Z.log",
       "img_v3_02un_5246dcc6-5494-4851-9322-f3d000d381eg.jpg",
-      "rms1.log",
-      "rms2.log"
+      "rms1.log.20260208-091914",
+      "rms2.log.20260208-091744"
     ]
   },
   {
@@ -7325,14 +7326,14 @@
   },
   {
     "case_id": "c134-0368",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-02-03 C134上海菱华项目 A2巷道螳螂拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/Y6ggwneTEidURJkyE1nchj4onj5",
     "obj_token": "FGfAd4ESzoX5HVx5PQ0cLwMxndb",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0368-2026-02-03-C134上海菱华项目-A2巷道螳螂拉箱失败.md",
+    "local_path": "cases/accepted/c134/0368-2026-02-03-C134上海菱华项目-A2巷道螳螂拉箱失败.md",
     "symptom_signal": "2月3日，下午15点55分，A2巷道螳螂在A2-S2-B12-L10-T3位置拉箱失败  螳螂伸缩臂位置偏向B13方向   需要将拉箱偏移量向B1方向调整大概7mm。",
     "asset_requests": [
       "img_v3_02ui_02b0b1a4-621e-402f-be72-b116cea4749g.jpg",
@@ -8472,17 +8473,17 @@
   },
   {
     "case_id": "c134-0422",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-03  C134  A-107 运行过程中重启",
     "source": "https://hcrobots.feishu.cn/wiki/RgIKwj4DPiXA8rkiqqecNciwnzP",
     "obj_token": "KHl2dimaPom32pxmXgYc0JzMneh",
     "product_line": "C134 穿云箭",
     "system_area": "Ant/power",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0422-2026-01-03-C134-A-107-运行过程中重启.md",
+    "local_path": "cases/accepted/c134/0422-2026-01-03-C134-A-107-运行过程中重启.md",
     "symptom_signal": "A-107在运行过程中重启",
     "asset_requests": [
-      "A-107nxp.log",
+      "A-107nxp.log-2026-01-03-1038",
       "A-107system.log",
       "img_v3_02tj_594bf226-119c-47fe-98ce-76c52ff7c0fg.jpg"
     ]
@@ -8529,14 +8530,14 @@
   },
   {
     "case_id": "c134-0425",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-02  C134项目 9:46:23.284 M-A3-A2-1 螳螂控制手臂还箱时顶部右边避障传感器误触发",
     "source": "https://hcrobots.feishu.cn/wiki/EwKawVgrQilmrbkW91wcPgtDn9b",
     "obj_token": "BMb9dYK33oBaWHxjHh3cPAjOnEU",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0425-2026-01-02-C134项目-9-46-23-284-M-A3-A2-1-螳螂控制手臂还箱时顶部右边避障传感器误触发.md",
+    "local_path": "cases/accepted/c134/0425-2026-01-02-C134项目-9-46-23-284-M-A3-A2-1-螳螂控制手臂还箱时顶部右边避障传感器误触发.md",
     "symptom_signal": "9:46:23.284 M-A3-A2-1 螳螂控制手臂还箱时顶部右边避障传感器误触发",
     "asset_requests": [
       "C134-20260102-M-A3-S2-1-can1.pcap",
@@ -8630,14 +8631,14 @@
   },
   {
     "case_id": "c134-0430",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-27 C134上海菱华项目 M2螳螂拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/Gw2SwGv2Zin55bkSB9gcMiRcn6w",
     "obj_token": "YfIrdg0Llor9VbxKqFDcAM73nKb",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0430-2026-01-27-C134上海菱华项目-M2螳螂拉箱失败.md",
+    "local_path": "cases/accepted/c134/0430-2026-01-27-C134上海菱华项目-M2螳螂拉箱失败.md",
     "symptom_signal": "1月27日，下午18点53分，M2螳螂拉箱失败   A2-S2-B6  整体取箱偏向B1位置  需要调整偏移量",
     "asset_requests": [
       "img_v3_02ub_c8e4cb0b-db94-4a2c-9564-4a040b90b10g.jpg",
@@ -8665,14 +8666,14 @@
   },
   {
     "case_id": "c134-0432",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-27中午 C134项目 M2螳螂在A2-S2-B6拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/SKD4wHhEuiLzFrkDG2dc6S0lnLc",
     "obj_token": "IBuldkcERoP6iMxQ3AictqgQnle",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0432-2026-01-27中午-C134项目-M2螳螂在A2-S2-B6拉箱失败.md",
+    "local_path": "cases/accepted/c134/0432-2026-01-27中午-C134项目-M2螳螂在A2-S2-B6拉箱失败.md",
     "symptom_signal": "1月27日，中午13点13分，M2螳螂拉箱失败   A2-S2-B6  整体取箱偏向B1位置  需要调整偏移量",
     "asset_requests": [
       "img_v3_02ub_f714aa3c-d689-436f-8032-5895d124282g.jpg"
@@ -8695,14 +8696,14 @@
   },
   {
     "case_id": "c134-0434",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-27 C134上海菱华项目 M1螳螂拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/Cz7vwxDsYixo2ekZ1LbcZo9pnyc",
     "obj_token": "OH6GdS0SSoRCYPxvyrxcycVjnwf",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0434-2026-01-27-C134上海菱华项目-M1螳螂拉箱失败.md",
+    "local_path": "cases/accepted/c134/0434-2026-01-27-C134上海菱华项目-M1螳螂拉箱失败.md",
     "symptom_signal": "1月27日，晚20点09分，M1螳螂拉箱失败  A1-S2-B4接驳位   螳螂取箱位置需要下降6MM。",
     "asset_requests": [
       "2114977118.mp4",
@@ -8711,14 +8712,14 @@
   },
   {
     "case_id": "c134-0435",
-    "decision": "needs-assets",
+    "decision": "accepted",
     "title": "【问题跟踪】2026-01-28 C134上海菱华项目 M-A3-S2-1螳螂拉箱失败",
     "source": "https://hcrobots.feishu.cn/wiki/EMPiww5Tbi3umckYk1ec1QJrnVF",
     "obj_token": "UnnjdODH7oo6GixcuaxcyHZRnkd",
     "product_line": "C134 穿云箭",
     "system_area": "Mantis/load-handling",
     "training_priority": "high",
-    "local_path": "cases/needs-assets/c134/0435-2026-01-28-C134上海菱华项目-M-A3-S2-1螳螂拉箱失败.md",
+    "local_path": "cases/accepted/c134/0435-2026-01-28-C134上海菱华项目-M-A3-S2-1螳螂拉箱失败.md",
     "symptom_signal": "1月28日，上午9点10分左右，M-A2-S2-1螳螂拉箱在A3-S2-B5-L5-T4处拉箱失败，需要往B1方向调整3-4mm。",
     "asset_requests": [
       "img_v3_02uc_72810017-0556-4bff-98a5-8c08c379439g.jpg"

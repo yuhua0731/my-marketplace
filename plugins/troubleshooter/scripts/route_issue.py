@@ -7,6 +7,20 @@ import re
 
 ROUTES = [
     {
+        "area": "mantis.power_network",
+        "needles": [
+            "Mantis/power",
+            "重启",
+            "UPTIME",
+            "Booting Zephyr",
+            "failed to set led type",
+            "MQTT client disconnected",
+            "DHCPACK",
+        ],
+        "specialists": ["embedded-software", "can-bus", "network-infra", "scheduler-traffic", "vision-media"],
+        "knowledge": "mantis-power-network.md",
+    },
+    {
         "area": "mantis.load_handling",
         "needles": ["螳螂", "M-A", "fork", "货叉", "拨指", "quick stop", "PT", "PD", "拉箱", "还箱"],
         "specialists": ["mantis-handling", "can-bus", "embedded-software", "scheduler-traffic", "vision-media"],
@@ -45,8 +59,24 @@ ROUTES = [
 ]
 
 
+SYSTEM_AREA_MAP = {
+    "Mantis/power": "mantis.power_network",
+    "Mantis/network": "mantis.power_network",
+    "Mantis/load-handling": "mantis.load_handling",
+    "Ant/motion-localization": "ant.motion_localization",
+    "Ant/network": "ant.network",
+    "Ant/load-handling": "ant.load_handling",
+    "Ant/power": "ant.power",
+    "Workstation/WLED": "workstation_wled",
+}
+
+
 def score(route, text):
     lowered = text.lower()
+    system_area = None
+    match = re.search(r"^system_area:\s*(.+?)\s*$", text, re.M)
+    if match:
+        system_area = SYSTEM_AREA_MAP.get(match.group(1).strip())
     is_mantis_packet = "螳螂" in text or re.search(r"\bM-A\d", text)
     is_ant_packet = "蚂蚁" in text or re.search(r"\bA-\d", text)
     if route["area"].startswith("mantis.") and is_ant_packet and not is_mantis_packet:
@@ -65,8 +95,16 @@ def score(route, text):
         term in hits for term in ["重启", "关机", "低电", "充电", "蓝灯", "自检", "INIT", "motor init", "ToF init", "under voltage", "UPTIME"]
     ):
         total += 2
+    if route["area"] == "mantis.power_network" and any(
+        term in hits
+        for term in ["Mantis/power", "重启", "UPTIME", "Booting Zephyr", "failed to set led type", "DHCPACK"]
+    ):
+        total += 4
     if total and route["area"] == "workstation_wled":
         total += 3
+    if system_area == route["area"]:
+        total += 20
+        hits.insert(0, f"system_area:{match.group(1).strip()}")
     return total, hits
 
 

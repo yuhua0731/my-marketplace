@@ -17,11 +17,6 @@ description: Use when C134 diagnosis involves NXP logs, firmware startup, reboot
 
 ## Checks
 
-- For software issues, establish robot software version before branch judgment.
-  1. Use explicit version in the issue document.
-  2. Use explicit version printed in NXP logs.
-  3. Look up the robot in the factory robot info sheet: https://hcrobots.feishu.cn/sheets/CaODsB0iEhiu9ZtuoV4cUucsnSb?sheet=1pNOmt
-  4. If still unknown, use the robot repo latest main branch as the fallback context.
 - Identify last log before fault and first log after recovery.
 - Confirm reboot only with log evidence, not UI alone.
 - If logs start after the event, mark pre-event evidence missing.

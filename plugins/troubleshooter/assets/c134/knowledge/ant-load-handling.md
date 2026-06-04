@@ -1,7 +1,7 @@
 # C134 Ant Load Handling Knowledge
 
 source_set: accepted high-priority `Ant/load-handling`
-case_count: 32
+case_count: 33
 status: draft refined from visible text
 
 ## Symptoms
@@ -9,6 +9,7 @@ status: draft refined from visible text
 - lift/raise failure or buzzer during load action: `c134-0048`, `c134-0078`, `c134-0180`, `c134-0237`, `c134-0254`, `c134-0340`, `c134-0444`
 - PT/PD pick or place failure: `c134-0047`, `c134-0084`, `c134-0086`, `c134-0094`, `c134-0098`, `c134-0102`, `c134-0190`, `c134-0194`, `c134-0215`, `c134-0216`, `c134-0401`
 - robot reaches workstation but does not lift or continue, FLO has no error: `c134-0020`, `c134-0152`, `c134-0196`, `c134-0206`, `c134-0249`
+- robot carries tote from station but no lift command appears in relevant RMS sequence: `c134-0055`
 - place/lift handling symptom with nearby or alleged reboot: `c134-0061`, `c134-0237`, `c134-0378`
 - MQTT/network interruption presenting as handling failure: `c134-0100`, `c134-0254`
 - load sensor state mismatch: `c134-0084`, `c134-0094`, `c134-0102`, `c134-0160`, `c134-0169`, `c134-0170`, `c134-0171`, `c134-0181`, `c134-0194`, `c134-0444`
@@ -26,6 +27,7 @@ status: draft refined from visible text
    - `c134-0152`: A109 moved to `(130847,105831)`, rotated to 0 degrees, then received no new command; A101’s legal exit reservation overlapped A109 state reservation by about 8 mm.
    - `c134-0206`: A111 stayed under `WS001-2`/box `100905`; RMS logged reservation intersection with A107 and `Commands created for A-111 are invalid`.
    - `c134-0249` is same pattern as `c134-0152`.
+   - `c134-0055`: after A-106 extracted `TOTE-H-200585` at `2026-02-02T13:28:08.580Z`, RMS generated MOVE/EXIT-style commands with `liftHeight: 0`; robot reboot was excluded, so task/state flow is the leading branch.
 4. Check load sensor timing and physical tote seating.
    - `c134-0084`: FLO failed lift/extract with `FUTURE_STATE_NOT_MATCH#LoadSensor#Expected: true#Actual: false`; photos show abnormal tote seating at `A3-S2-B10`.
    - `c134-0094`: FLO failed extracting `TOTE-L-600138` at `A2-S2-B12-PT1` with `FUTURE_STATE_NOT_MATCH#LoadSensor#Expected: true#Actual: false`; robot logs are unavailable.
@@ -67,6 +69,7 @@ status: draft refined from visible text
 - physical inspection of PT/PD sheet metal, limit blocks, tote placement, picking-station height, and scissor mechanism.
 - battery/boost-module CAN data during lift if buzzer or low-voltage appears.
 - exact log coverage end time when an event is reported near the edge of the downloaded window.
+- clear/manual intervention records when behavior changes from workstation handling to returning the tote.
 
 ## Logs And Files To Inspect
 
@@ -81,6 +84,7 @@ status: draft refined from visible text
 
 - stale or incorrect container/task state: `c134-0047`, `c134-0196`
 - reservation/state overlap preventing next command: `c134-0152`, `c134-0249`
+- task/clear flow where the expected lift command is absent: `c134-0055`
 - tote not seated or temporarily blocked, sensor timing mismatch: `c134-0102`, `c134-0444`
 - mechanical interference with PT/PD/workstation geometry: `c134-0086`, `c134-0194`, `c134-0216`, `c134-0230`
 - lift power/boost-module abnormality under load: `c134-0180`
@@ -141,10 +145,7 @@ status: draft refined from visible text
 - `c134-0170`: A-112 FLO notification confirms load-sensor mismatch while moving; robot logs unavailable.
 - `c134-0171`: A-108 full log set shows load-sensor transitions; root cause unresolved.
 - `c134-0181`: A-101 manual check normal but software reported sensor abnormal; intermittent/state-timing cause unresolved.
-
-## Blocked Asset-Backed Needs-Assets
-
-- `c134-0055`: A-106 did not lift at `WS001-2` with `TOTE-H-200585`; local NXP/system logs show no reboot and lift capability earlier, but missing RMS/gz logs block command/state root cause.
+- `c134-0055`: A-106 no-lift report at `WS001-2` with `TOTE-H-200585`; NXP/system exclude reboot and RMS shows no obvious lift-at-WS command in the relevant post-extract sequence, but workstation/clear-flow root cause remains unresolved.
 
 ## Specialist Routing
 

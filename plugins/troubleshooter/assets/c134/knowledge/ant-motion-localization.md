@@ -1,13 +1,14 @@
 # C134 Ant Motion Localization Knowledge
 
 source_set: accepted high-priority `Ant/motion-localization`
-case_count: 30
+case_count: 31
 status: draft refined from visible text and first downloaded motion logs
 
 ## Symptoms
 
 - DM code lost during straight movement: `c134-0003`, `c134-0011`, `c134-0018`, `c134-0037`, `c134-0352`, `c134-0365`
 - visible route deviation or collision after deviation: `c134-0003`, `c134-0015`, `c134-0034`, `c134-0037`, `c134-0038`, `c134-0043`, `c134-0117`, `c134-0120`, `c134-0121`, `c134-0199`, `c134-0219`, `c134-0231`, `c134-0232`, `c134-0276`, `c134-0304`, `c134-0319`, `c134-0323`, `c134-0352`, `c134-0365`
+- WS scissor/tote-strip collision with robot-ID mismatch: `c134-0361`
 - angle too large / command direction mismatch: `c134-0041`, `c134-0093`, `c134-0101`, `c134-0197`, `c134-0198`, `c134-0208`, `c134-0250`
 - short-distance/high-speed command overrun or unreasonable braking: `c134-0304`, `c134-0319`, `c134-0428`
 - repeated issue at WS001-3 or same coordinate: `c134-0101`, `c134-0198`, `c134-0208`, `c134-0231`, `c134-0232`
@@ -41,6 +42,7 @@ status: draft refined from visible text and first downloaded motion logs
    - `c134-0323`: severe deviation after reducer replacement; two walking motors had inconsistent subdivision, new motor subdivision was not changed.
 8. Separate collision aftermath from primary cause.
    - Collisions in `c134-0034`, `c134-0037`, `c134-0304`, `c134-0319`, `c134-0352`, `c134-0365` are consequences unless logs/video prove external impact preceded deviation.
+   - `c134-0361` has title/assets identifying A-102 but source body says A-111; preserve both and use local image/log filenames as stronger evidence for robot identity.
 9. Check whether the attached logs actually cover the deviation.
    - `c134-0015` has downloaded NXP/wormhole logs, but they begin post-boot and mostly show startup/idle state, not the reported deviation sequence.
 
@@ -106,6 +108,7 @@ status: draft refined from visible text and first downloaded motion logs
 - `c134-0015`: downloaded assets exist, but logs only show startup/idle and do not cover the deviation sequence.
 - `c134-0199`: downloaded logs show DM scan/correction evidence near the A103 deviation window, but root cause remains unconfirmed.
 - `c134-0208`: WS001-3 angle-too-large/source symptom with downloaded NXP scan context; RMS command payload is still needed for final diagnosis.
+- `c134-0361`: A-102/A-111 identity mismatch; image/assets identify A-102, NXP near `2026-02-08T01:07:57Z` shows long `NoRead` recovery and `corrected_pose`, but direct scissor/tote-strip collision cause is not closed.
 - `c134-0117`, `c134-0120`: specific floor-code segments requested for inspection; conclusion missing.
 - `c134-0231`, `c134-0232`: same coordinate `[130847, 101500]` DM read/rotation issue; root cause unresolved.
 - `c134-0276`: possible motor obstruction or external force; CAN log disabled.

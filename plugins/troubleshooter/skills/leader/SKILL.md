@@ -19,9 +19,7 @@ Use the local plugin assets first:
 ## Workflow
 
 1. Read the source packet before deciding.
-2. Extract exact symptom, timestamps, robot IDs, location, product line, software version, and available files.
-   - For software issues, confirm software version in order: issue document, NXP log print, factory robot info sheet, then latest main branch of the robot repo.
-   - Factory robot info sheet: https://hcrobots.feishu.cn/sheets/CaODsB0iEhiu9ZtuoV4cUucsnSb?sheet=1pNOmt
+2. Extract exact symptom, timestamps, robot IDs, location, product line, and available files.
 3. Classify the area using `fault-taxonomy.md`.
 4. Load the matching knowledge file.
 5. Build a fault tree from observed symptom to plausible branches.

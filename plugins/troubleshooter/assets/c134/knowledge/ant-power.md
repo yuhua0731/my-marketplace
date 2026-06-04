@@ -1,7 +1,7 @@
 # C134 Ant Power Knowledge
 
 source_set: accepted high-priority `Ant/power`
-case_count: 93
+case_count: 95
 status: draft refined from visible text and first asset-backed reboot logs
 
 ## Symptoms
@@ -12,6 +12,7 @@ status: draft refined from visible text and first asset-backed reboot logs
 - blue light after reboot/UNKNOWN: `c134-0050`, `c134-0419`
 - startup/self-check failure: `c134-0001`, `c134-0193`, `c134-0409`
 - UI shows no devices or no robot action after task dispatch: `c134-0221`, `c134-0333`
+- UI motor under-voltage fault: `c134-0024`
 - repeated mode/error behavior from wrong MQTT host: `c134-0313`
 
 ## Fault Tree
@@ -32,6 +33,7 @@ status: draft refined from visible text and first asset-backed reboot logs
    - If logs show continuous `UPTIME` through the reported window, do not confirm reboot; examples `c134-0070`, `c134-0144`.
    - If exported logs are concatenated or not chronological, do not bind low-uptime lines to the reported event without timestamp-order validation; examples `c134-0145`, `c134-0178`.
    - If logs confirm reboot but no pre-reset fatal/panic/low-voltage marker exists, keep cause unknown and route to CAN/BMS/boost-module inspection.
+   - If a screenshot confirms `NODE402_ERROR#...#under voltage` but only service logs are available, accept the under-voltage symptom while keeping BMS/boost/root cause unknown; example `c134-0024`.
 4. Check storage/overlay/SD-card health.
    - Overlay full or SD-card mount/log loss can explain repeated A-105 reboot; examples `c134-0298`, `c134-0299`.
 5. Check wireless/network correlation, but do not overclaim.
@@ -120,7 +122,8 @@ status: draft refined from visible text and first asset-backed reboot logs
 - `c134-0070`, `c134-0144`: complete downloaded logs show continuous `UPTIME`; reported reboot is not confirmed and source date/time must be checked.
 - `c134-0125`: charging-pile reboot with four buzzer alarms; available logs show post-boot/startup material but not the exact pre-reset marker for reported `12点45分左右`.
 - `c134-0145`, `c134-0178`: A107 reboot reports with messy concatenated logs; low-uptime lines exist in package but exact event-time reset remains uncertain.
-- `c134-0422`: partial assets only; missing `A-107nxp.log`, and available system log appears non-chronological/concatenated, so exact event-time reset remains uncertain.
+- `c134-0024`: screenshot confirms A-109 `1102#NODE402_ERROR#MOVER_MOTOR_LEFT#under voltage`; SAS logs give only task/availability context, so BMS/boost/electrical root cause remains unknown.
+- `c134-0422`: A-107 offline screenshot plus low-uptime/startup lines in NXP/system logs; package is non-chronological/concatenated, so exact event-time reset remains uncertain.
 - `c134-0147`, `c134-0151`: source says no logs available; screenshots show A107 UI/asset absence only, so root cause remains unknown.
 - `c134-0239`, `c134-0240`, `c134-0261`, `c134-0321`, `c134-0328`, `c134-0334`: reboot confirmed by `UPTIME` reset; visible text does not prove root cause.
 - `c134-0243`: frequent NIC disconnects on A107/A112/A109 observed; causality to reboot not confirmed.

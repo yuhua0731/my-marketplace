@@ -4,20 +4,20 @@ Source: accepted visible-text cases
 
 ## Ant/power
 
-Cases: 93
+Cases: 95
 
 - `c134-0001` 【问题跟踪】2026-01-29 C134项目 A-111蚂蚁机器人更换升压模块之后，自检报错: Downloaded local assets under `assets/c134-0001/`.
 - `c134-0005` 【问题跟踪】2026-01-29 C134项目 A-101蚂蚁机器人运动过程中重启: Downloaded local assets under `assets/c134-0005/`.
 - `c134-0009` 【问题跟踪】2026-01-30 C134项目 A-107蚂蚁机器人原地重启: Downloaded local assets under `assets/c134-0009/`.
 - `c134-0012` 【问题跟踪】2026-01-31 C134项目 A-107蚂蚁机器人原地重启: System log confirms a real reboot/reset close to the reported lift-time restart.
 - `c134-0019` 【问题跟踪】2025-11-24  C134项目 110蚂蚁运行过程中关机: 通过日志可知，A110号蚂蚁从19点开始到20点期间，电量从24%持续降低到0%，导致升压模块检测到电池低电量自动关机。升压模块低电量自动关机的条件为持续3min电量低于0%（4.0V），期间只要电量高于0%一次，时间会重新计数。
+- `c134-0024` 【问题跟踪】2025-11-26  C134项目 109蚂蚁报"under voltage"的问题: Local assets downloaded under `assets/c134-0024/`.
 - `c134-0032` 【问题跟踪】2026-01-31 C134项目 A-109蚂蚁机器人原地重启: Downloaded local assets under `assets/c134-0032/`.
 - `c134-0035` 【问题跟踪】2025-11-19 C134项目 14点55分：110蚂蚁在休息位重启: Downloaded local assets under `assets/c134-0035/`.
-- `c134-0036` 【问题跟踪】2025-11-21 C134项目 10点25分：111蚂蚁运行过程“重启”，观察时蓝灯常亮。: Downloaded local assets under `assets/c134-0036/`.
 
 ## Mantis/load-handling
 
-Cases: 44
+Cases: 56
 
 - `c134-0008` 【问题跟踪】2025-11-3 C134项目 M-A2-S1螳螂前防夹传感器触发报错: - Local assets downloaded: NXP log, wormhole log, CAN1/CAN2 pcaps, and two photos.
 - `c134-0010` 【问题跟踪】2026-01-30 C134项目 A2巷道螳螂在A2-S2-B5接驳位拉箱失败: - Local assets downloaded: NXP, wormhole, can1/can2 pcaps, UI screenshot, and field photo.
@@ -43,7 +43,7 @@ Cases: 42
 
 ## Ant/motion-localization
 
-Cases: 30
+Cases: 31
 
 - `c134-0003` 【问题跟踪】2025-10-21 C134项目A-107蚂蚁跑偏问题: Downloaded local assets under `assets/c134-0003/`.
 - `c134-0011` 【问题跟踪】2025-11-3 C134项目 102蚂蚁直线运动时丢码，车不在码线上: 【C134】A102 DM LOST 【2025-11-03】
@@ -69,16 +69,16 @@ Cases: 28
 
 ## Ant/load-handling
 
-Cases: 26
+Cases: 27
 
 - `c134-0020` 【问题跟踪】2025-11-29  C134项目 盘点任务完成，A-110蚂蚁不拿箱子离开: Available robot logs mainly show the manual-recovery window, not the original no-action root cause.
 - `c134-0047` 【问题跟踪】2025-12-3 C134  109蚂蚁PD位取箱没有料箱: 18点9分的clear的A-108蚂蚁
 - `c134-0048` 【问题跟踪】2025-12-4  C134  105蚂蚁举升失败: 此报错非机器人上报
+- `c134-0055` 【问题跟踪】2026-02-02 C134项目 A106蚂蚁在工作台没有举升动作: Local assets downloaded under `assets/c134-0055/`.
 - `c134-0061` 【问题跟踪】2025-12-05 C134项目 105蚂蚁在A1-S2-B2接驳位还箱失败: Downloaded local assets under `assets/c134-0061/`.
 - `c134-0078` 【问题跟踪】2025-12-23 C134项目 A-104蚂蚁机器人举升失败: 见同类问题分析：【问题跟踪】2025-12-23 C134项目 A-104蚂蚁机器人举升失败
 - `c134-0084` 【问题跟踪】2025-12-24 C134项目 A-102蚂蚁机器人A3-S2-B10接驳位取箱失败 料箱倾斜: This is a visual/sensor mismatch handling case.
 - `c134-0086` 【问题跟踪】2025-12-25 C134项目 A-104蚂蚁机器人A2-S2-B9接驳位取箱失败 料箱倾斜: - Observed fact: field photo shows A-104 with the tote visibly tilted/not normally seated at `A2-S2-B9`.
-- `c134-0094` 【问题跟踪】2025-12-20 C134项目 A-107蚂蚁在A2-S2-B12-PT1取箱报错: - Observed fact: FLO screenshot shows A-107 active task failed while extracting `TOTE-L-600138` at `A2-S2-B12-PT1`.
 
 ## Ant/network
 
@@ -144,19 +144,23 @@ Cases: 7
 - `c134-0181` 【问题跟踪】2026-01-04 C134上海菱华项目 A101蚂蚁箱在位传感器问题: - Observed fact: source reports A-101 load-sensor state abnormal at WS002 entry point around 2026-01-04 17:13 local time.
 - `c134-0230` 【问题跟踪】2026-02-06 C134上海菱华项目 WS002-3工位的箱在位传感器线束断裂: - Observed fact: source states WS002-3 load-sensor harness was broken at about 2026-02-06 13:46 local time.
 
+## Mantis/power
+
+Cases: 6
+
+- `c134-0053` 【问题跟踪】2026-02-02 C134项目 A3巷道1号螳螂机器人重启: 2月2日15:09左右发现 A3巷道1号螳螂重启，FLO 截图显示 `M-A3-S2-1` 为 `Unknown`，active task `Moving To (7652, 14416, 2094)` failed。
+- `c134-0182` 【问题跟踪】2026-01-05 C134上海菱华项目 M3-2螳螂重启问题: 1月5日18:12左右，`M-A3-S2-2` 将 `TOTE-H-200050` 放置于 `A3-S2-B10` 接驳位后报错；FLO 截图显示 `M-A3-S2-2` 为 `Unknown`，active task `Depositing To A3-S2-B10-PL1-PT1-PS1` failed、`Unloading From M-A3-S2-2` failed，child tote 为 `TOTE-H-200050`。
+- `c134-0253` 【问题跟踪】2026-02-24 C134上海菱华项目 A3巷道1号螳螂机器人重启: 2月24日上午8点21分左右发现 A3巷道1号螳螂机器人原地重启，具体重启时间未知。截图显示 robot list 中 `M-A3-S2-1` 为 `Unknown`，另一张日志截图显示 `can1.pcap` 与 `can2.pcap` 在 `2026/2/24 8:26` 均为 `0 KB`，源文档结论为该时间段 CAN 日志丢失。
+- `c134-0277` 【问题跟踪】2026-03-18 C134上海菱华项目 A3巷道1号螳螂机器人夜间重启: 3月18日上午8点25分左右发现 A3巷道1号螳螂机器人 FLO 界面处于 `Unknown`。源文档推断：由于螳螂夜间不断电，所以判断该螳螂机器人重启。截图显示 `M-A3-S2-1` 为 `Unknown`，位置 `x: 7652 y: 11348 z: 2094`，`Anti-pinch Front` 未触发。
+- `c134-0350` 【问题跟踪】2026-03-28 C134上海菱华项目 下发任务之后，机器人没有动作: 截止到9:32 上层sas系统任务调度没有给螳螂下发拉箱的EXTRACT任务
+- `c134-0438` 【问题跟踪】2026-01-25 C134项目 A1巷道螳螂报错: 螳螂报错后，料箱数据不准确属于正常现象。请按照标准流程操作，将出问题时对应的料箱传送到孤儿区，再重新走料箱入库流程。
+
 ## Mantis/network
 
 Cases: 2
 
 - `c134-0150` 【问题跟踪】2026-01-26 C134上海菱华项目 设备断连现象严重: 2026-01-23 聚合分析，11:56:37 - 14:56:00
 - `c134-0353` 【问题跟踪】2026-03-14 C134上海菱华项目 全库停止运行: unknown
-
-## Mantis/power
-
-Cases: 2
-
-- `c134-0350` 【问题跟踪】2026-03-28 C134上海菱华项目 下发任务之后，机器人没有动作: 截止到9:32 上层sas系统任务调度没有给螳螂下发拉箱的EXTRACT任务
-- `c134-0438` 【问题跟踪】2026-01-25 C134项目 A1巷道螳螂报错: 螳螂报错后，料箱数据不准确属于正常现象。请按照标准流程操作，将出问题时对应的料箱传送到孤儿区，再重新走料箱入库流程。
 
 ## Ant/performance
 
@@ -169,6 +173,12 @@ Cases: 1
 Cases: 1
 
 - `c134-0184` 【问题跟踪】2026-01-07 C134上海菱华项目 A2巷道螳螂撞击蚂蚁: 碰撞事件基本信息
+
+## Mantis/sensor
+
+Cases: 1
+
+- `c134-0303` 【问题跟踪】2026-05-21 C134上海菱华项目 A3巷道1号螳螂机器人货叉松动: 5月21日14:27左右，现场发现 A3巷道1号螳螂机器人报错；FLO 传感器截图红框圈出 `Anti-pinch Rear`。现场检查螳螂传感器时发现货叉松动；联系技术部维修后，作业结束排查认为可能是皮带压块松动导致皮带松动。
 
 ## Workstation/sensor
 

@@ -1,6 +1,6 @@
 ---
 name: network-infra
-description: Use when C134 diagnosis involves robot disconnect, AP, NIC, dual-NIC failover, MQTT, RVS, Kafka, server, EasyBox, ping, pcap, EFK, disk I/O, or whole-site disconnects.
+description: Use when diagnosis involves robot/device disconnect, AP, NIC, dual-NIC failover, MQTT, RVS, Kafka, server, EasyBox, ping, pcap, EFK, disk I/O, or whole-site disconnects.
 ---
 
 # Network Infrastructure Specialist

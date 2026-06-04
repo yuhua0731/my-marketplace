@@ -2,15 +2,31 @@
 
 status: draft
 target_plugin: `Troubleshooter`
+scope: multi-project, multi-product-line troubleshooting
+company: HC Robotics
+product_line: omniflow
+product_name_cn: 慧仓穿云箭
+product_name_en: OmniFlow
 primary_corpus: C134 field cases
 
 ## Goal
 
-Take an issue packet or Feishu problem document, identify the observed symptom, build a fault tree, route evidence to specialists, and return a diagnosis that separates facts, claims, inference, confirmed cause, and missing evidence.
+Take an issue packet or Feishu problem document, identify the corpus/project/product line and observed symptom, build a fault tree, route evidence to specialists, and return a diagnosis that separates facts, claims, inference, confirmed cause, and missing evidence.
+
+`Troubleshooter` is broader than C134. C134 is the first named OmniFlow project corpus and keeps its own taxonomy, knowledge, case index, and playbook under `assets/c134/`. Future projects should add their own `assets/<corpus>/` package instead of mixing product-specific terms into the global plugin prompt.
+
+Load order for C134:
+
+1. `assets/hc-robotics/`
+2. `assets/omniflow/`
+3. `assets/c134/`
+4. case files and local assets
 
 ## Input Packet
 
 - title/source
+- company/product line/project/corpus if known
+- corpus/project/product line if known
 - product/project
 - visible description
 - timestamps
@@ -23,6 +39,7 @@ Take an issue packet or Feishu problem document, identify the observed symptom, 
 ## Output Packet
 
 - decision: `diagnose`, `needs-assets`, `insufficient`, `reject`
+- company/product line/project/corpus
 - symptom summary
 - impact
 - observed facts
@@ -39,14 +56,23 @@ Take an issue packet or Feishu problem document, identify the observed symptom, 
 Responsibilities:
 
 - read source packet first
-- classify system area with `docs/c134/fault-taxonomy.md`
-- load matching knowledge file from `docs/c134/knowledge/`
+- identify or infer the corpus before applying corpus-specific assumptions
+- identify HC Robotics product line before applying project assumptions
+- classify system area with `assets/<product_line>/fault-taxonomy.md` and `assets/<corpus>/fault-taxonomy.md` when available
+- load matching knowledge file from `assets/<corpus>/knowledge/`
 - build initial fault tree from symptom
 - decide specialist routing
 - merge specialist conclusions only after checking conflicts
 - keep unresolved branches explicit
 
-Default route order:
+Corpus handling:
+
+- known C134 issue: use `assets/hc-robotics/`, `assets/omniflow/`, then `assets/c134/`
+- unknown corpus: infer from title, project names, product names, device IDs, paths, and user wording; mark confidence
+- new corpus with no assets: use the general fault-tree workflow and request corpus-specific context when needed
+- never apply C134-specific terms or examples to another corpus unless evidence supports the analogy
+
+C134 default route order:
 
 1. exact symptom and system area
 2. highest diagnostic value logs
@@ -184,7 +210,7 @@ Use for:
 
 Guardrail: WLED belongs to workstation, not Ant. A WS location in a title does not automatically mean workstation root cause.
 
-## Routing Map
+## C134 Routing Map
 
 - `ant.power`: embedded-software, can-bus, scheduler-traffic, network-infra
 - `ant.motion_localization`: robot-motion, embedded-software, can-bus, vision-media
@@ -197,18 +223,23 @@ Guardrail: WLED belongs to workstation, not Ant. A WS location in a title does n
 
 ## Knowledge Files
 
-- `docs/c134/knowledge/ant-power.md`
-- `docs/c134/knowledge/ant-motion-localization.md`
-- `docs/c134/knowledge/ant-network.md`
-- `docs/c134/knowledge/ant-load-handling.md`
-- `docs/c134/knowledge/mantis-load-handling.md`
-- `docs/c134/knowledge/mantis-power-network.md`
+Corpus knowledge lives under `assets/<corpus>/knowledge/`.
+
+C134 knowledge files:
+
+- `assets/c134/knowledge/ant-power.md`
+- `assets/c134/knowledge/ant-motion-localization.md`
+- `assets/c134/knowledge/ant-network.md`
+- `assets/c134/knowledge/ant-load-handling.md`
+- `assets/c134/knowledge/mantis-load-handling.md`
+- `assets/c134/knowledge/mantis-power-network.md`
 
 ## Asset Handling
 
 - If Feishu attachments are inaccessible, return `needs-assets`.
 - Request only files needed to decide the active fault-tree branches.
 - Place files under `assets/<case_id>/`.
+- Keep case records under `cases/<status>/<corpus>/`.
 - Do not treat screenshots as proof of log-level root cause.
 - Do not promote from `needs-assets` until evidence is sufficient.
 

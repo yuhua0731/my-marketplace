@@ -1,6 +1,6 @@
 ---
 name: scheduler-traffic
-description: Use when C134 diagnosis involves SAS, RCS, RMS, WAS, task assignment, reservations, locks, deadlock/interlock, no-action symptoms, duplicate deposit tasks, Redis, Kafka task state, or robot availability.
+description: Use when diagnosis involves scheduler/service task assignment, SAS, RCS, RMS, WAS, reservations, locks, deadlock/interlock, no-action symptoms, duplicate tasks, Redis, Kafka task state, or robot/device availability.
 ---
 
 # Scheduler Traffic Specialist

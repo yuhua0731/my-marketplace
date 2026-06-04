@@ -1,23 +1,25 @@
 {
   "name": "troubleshooter",
   "version": "1.0.0",
-  "description": "Company-specific fault-tree troubleshooting for C134 field issues.",
+  "description": "Team-specific fault-tree troubleshooting across projects and product lines.",
   "author": {
     "name": "Huayu"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Troubleshooter",
-    "shortDescription": "Diagnose C134 field issues with structured fault trees.",
-    "longDescription": "Troubleshooter routes C134 issue packets, Feishu problem documents, logs, videos, CAN traces, and field notes through leader and specialist workflows for Ant, Mantis, scheduler, network, media, and workstation faults.",
+    "shortDescription": "Diagnose field issues with structured fault trees.",
+    "longDescription": "Troubleshooter routes issue packets, Feishu problem documents, logs, videos, CAN traces, and field notes through leader and specialist workflows. HC Robotics product-line context is separated from project corpora; C134 is kept as the first OmniFlow corpus.",
     "developerName": "Huayu",
     "category": "Productivity",
     "capabilities": [
       "Fault-tree diagnosis",
-      "C134 field case triage",
+      "Cross-project field case triage",
       "CAN/NXP/log evidence routing",
+      "HC Robotics product-line context",
+      "Corpus-specific knowledge lookup",
       "Missing-asset intake"
     ],
-    "defaultPrompt": "Use Troubleshooter to diagnose this C134 issue packet. Separate observed facts, claims, inference, confirmed causes, excluded branches, and missing assets."
+    "defaultPrompt": "Use Troubleshooter to diagnose this issue packet. Identify the corpus/project/product line when possible, then separate observed facts, claims, inference, confirmed causes, excluded branches, and missing assets."
   }
 }

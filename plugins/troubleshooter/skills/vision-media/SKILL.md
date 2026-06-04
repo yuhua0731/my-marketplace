@@ -1,6 +1,6 @@
 ---
 name: vision-media
-description: Use when C134 diagnosis needs image or video inspection for physical state, robot pose, tote position, indicator light, floor condition, PT/PD interference, obstacle, collision ordering, or monitor timestamp offset.
+description: Use when diagnosis needs image or video inspection for physical state, robot pose, tote position, indicator light, floor condition, PT/PD interference, obstacle, collision ordering, or monitor timestamp offset.
 ---
 
 # Vision Media Specialist

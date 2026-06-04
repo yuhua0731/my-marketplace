@@ -1,6 +1,6 @@
 ---
 name: mantis-handling
-description: Use when C134 Mantis diagnosis involves fork, arm, finger, PT/PD position, tote placement, quick stop, emergency stop, accessNodeOffset, actuator/IO faults, high torque, or physical interference.
+description: Use when Mantis or similar handling-equipment diagnosis involves fork, arm, finger, PT/PD position, tote placement, quick stop, emergency stop, accessNodeOffset, actuator/IO faults, high torque, or physical interference.
 ---
 
 # Mantis Handling Specialist

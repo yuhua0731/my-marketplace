@@ -1,6 +1,6 @@
 {
   "name": "troubleshooter",
-  "description": "Diagnose C134 field issues with structured fault trees and specialist workflows.",
+  "description": "Team-specific fault-tree troubleshooting across HC Robotics product lines and project corpora.",
   "version": "1.0.0",
   "author": {
     "name": "yuhua0731",

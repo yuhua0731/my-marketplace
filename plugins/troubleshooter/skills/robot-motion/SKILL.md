@@ -1,6 +1,6 @@
 ---
 name: robot-motion
-description: Use when C134 Ant diagnosis involves DM code loss, angle-too-large, path deviation, runout, short-move planning, camera offset, collision sequence, floor-code contamination, or WS entry/exit motion.
+description: Use when mobile-robot diagnosis involves DM code loss, angle-too-large, path deviation, runout, short-move planning, camera offset, collision sequence, floor-code contamination, or station entry/exit motion.
 ---
 
 # Robot Motion Specialist

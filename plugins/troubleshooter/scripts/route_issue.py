@@ -112,7 +112,7 @@ def score(route, text):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Route a C134 issue packet to Troubleshooter specialists.")
+    parser = argparse.ArgumentParser(description="Route an issue packet to Troubleshooter specialists. Current keyword routes target the C134 corpus.")
     parser.add_argument("packet", help="Path to a text or markdown issue packet.")
     args = parser.parse_args()
 
@@ -129,6 +129,11 @@ def main():
         best_score, hits, route = ranked[0]
         decision = {
             "decision": "diagnose",
+            "company": "hc_robotics",
+            "product_line": "omniflow",
+            "product_name_cn": "慧仓穿云箭",
+            "product_name_en": "OmniFlow",
+            "corpus": "c134",
             "area": route["area"],
             "matched_terms": hits,
             "specialists": route["specialists"],
@@ -137,6 +142,11 @@ def main():
     else:
         decision = {
             "decision": "insufficient",
+            "company": "unknown",
+            "product_line": "unknown",
+            "product_name_cn": "unknown",
+            "product_name_en": "unknown",
+            "corpus": "unknown",
             "area": "unknown_needs_assets",
             "matched_terms": [],
             "specialists": ["leader"],

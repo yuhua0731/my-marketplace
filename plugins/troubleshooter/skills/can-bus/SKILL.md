@@ -1,6 +1,6 @@
 ---
 name: can-bus
-description: Use when C134 diagnosis involves CAN, candump, pcap, CANopen, motor heartbeat, quick stop, TPDO/IO timing, boost-module voltage/current, or device state transitions.
+description: Use when diagnosis involves CAN, candump, pcap, CANopen, motor heartbeat, quick stop, TPDO/IO timing, boost-module voltage/current, or device state transitions.
 ---
 
 # CAN Bus Specialist

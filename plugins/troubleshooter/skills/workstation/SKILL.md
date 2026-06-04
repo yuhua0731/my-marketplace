@@ -1,6 +1,6 @@
 ---
 name: workstation
-description: Use when C134 diagnosis involves WS, WLED, HLED, workstation light strips, workstation sensors, operator stations, workstation task state, or lower-priority non-Ant workstation issues.
+description: Use when diagnosis involves WS, WLED, HLED, workstation light strips, workstation sensors, operator stations, workstation task state, or other workstation issues.
 ---
 
 # Workstation Specialist

@@ -1,7 +1,7 @@
 {
   "name": "troubleshooter",
   "description": "Diagnose C134 field issues with structured fault trees and specialist workflows.",
-  "version": "0.1.0+codex.20260603174757",
+  "version": "1.0.0",
   "author": {
     "name": "yuhua0731",
     "email": "yuhua364@gmail.com"

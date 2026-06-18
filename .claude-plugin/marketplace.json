@@ -29,7 +29,7 @@
         {
             "name": "troubleshooter",
             "source": "./plugins/troubleshooter",
-            "description": "Diagnose C134 field issues with structured fault trees and specialist workflows.",
+            "description": "Diagnose HC Robotics field issues with structured fault trees and specialist workflows.",
             "strict": true
         }
   ]

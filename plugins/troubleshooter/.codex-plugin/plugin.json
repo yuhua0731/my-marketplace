@@ -1,6 +1,6 @@
 {
   "name": "troubleshooter",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Team-specific fault-tree troubleshooting across projects and product lines.",
   "author": {
     "name": "Huayu"

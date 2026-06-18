@@ -11,10 +11,11 @@ C134 remains the first named OmniFlow project corpus. Its cases, taxonomy, playb
 - `skills/*`: specialist workflows
 - `assets/hc-robotics/`: company-level product portfolio and industry context
 - `assets/omniflow/`: 慧仓穿云箭 / OmniFlow common product-line context
-- `assets/<corpus>/`: corpus-specific taxonomy, plugin spec, case index, playbook, asset intake plan, and knowledge files
+- `assets/<corpus>/`: publishable corpus taxonomy, playbook, and distilled knowledge files
 - `assets/c134/`: C134 OmniFlow project corpus assets
-- `assets/c134/training/`: accepted JSONL, diagnostic patterns, asset manifest, and embedded-priority queues
 - `scripts/route_issue.py`: lightweight issue-packet router
+
+Training cases, JSONL, source indexes, reports, and asset queues stay in the training repository, not in the published plugin.
 
 ## Use
 

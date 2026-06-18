@@ -25,17 +25,10 @@ OmniFlow / 慧仓穿云箭 product-line layer:
 Corpus layer examples. Load the matching corpus package when the issue identifies one:
 
 - `assets/c134/fault-taxonomy.md`
-- `assets/c134/troubleshooter-plugin-spec.md`
 - `assets/c134/knowledge/`
-- `assets/c134/high-priority-asset-intake-plan.md`
-- `assets/c134/case-index.md`
 - `assets/c134/troubleshooting-playbook.md`
-- `assets/c134/training/diagnostic-patterns.md`
-- `assets/c134/training/asset-requests.md`
-- `assets/c113/case-index.md`
-- `assets/c113/training/diagnostic-patterns.md`
-- `assets/sort-conveyor/case-index.md`
-- `assets/sort-conveyor/training/diagnostic-patterns.md`
+- `assets/c113/troubleshooting-playbook.md`
+- `assets/sort-conveyor/troubleshooting-playbook.md`
 
 ## Workflow
 

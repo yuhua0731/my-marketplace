@@ -1,6 +1,6 @@
-# C134 Embedded Priority Queue
+# C134 Priority Queue
 
-Review order: embedded software/hardware first.
+Review order: embedded software/hardware first when applicable.
 
 ## Accepted High Priority
 
@@ -275,3 +275,7 @@ Review order: embedded software/hardware first.
 - `c134-0303` 【问题跟踪】2026-05-21 C134上海菱华项目 A3巷道1号螳螂机器人货叉松动
 
 ## Needs Assets High Priority
+
+### Mantis/load-handling
+
+- `c134-0446` assets=4 【问题跟踪】2026-06-07 C134上海菱华项目 11:58 A2-S2-B3-PD位的料箱掉落

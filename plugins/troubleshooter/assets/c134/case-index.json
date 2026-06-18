@@ -8934,5 +8934,23 @@
       "img_v3_02125_d4ba9a48-1611-4362-af4d-33a40beca7ag.jpg",
       "was.log"
     ]
+  },
+  {
+    "case_id": "c134-0446",
+    "decision": "needs-assets",
+    "title": "【问题跟踪】2026-06-07 C134上海菱华项目 11:58 A2-S2-B3-PD位的料箱掉落",
+    "source": "https://hcrobots.feishu.cn/wiki/FopjwbB8JiY6cbk1yEjcCRLLnqe",
+    "obj_token": "LA33dB6rxoZRaHxOiIGc5OcSnah",
+    "product_line": "omniflow",
+    "system_area": "Mantis/load-handling",
+    "training_priority": "high",
+    "local_path": "cases/needs-assets/c134/0446-2026-06-07-C134上海菱华项目-A2-S2-B3-PD位料箱掉落.md",
+    "symptom_signal": "2026-06-07 11:58，A2-S2-B3-PD位料箱掉落。料箱编号：`TOTE-H-101614` / 文档标题写 `TOTL-H-101614`。",
+    "asset_requests": [
+      "`M-A2-S1-1` NXP日志，至少覆盖 `2026-06-07 11:58:30` 至 `12:00:30`。",
+      "`M-A2-S1-1` candump/CAN日志，至少覆盖 `2026-06-07 11:58:30` 至 `12:00:30`。",
+      "如有：wormhole/system日志，覆盖同一窗口。",
+      "更清晰监控视频，覆盖 `2026-06-07 11:59:50` 至 `12:00:00`，能看到拨指、手臂和料箱相对位置。"
+    ]
   }
 ]

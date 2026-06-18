@@ -2,6 +2,17 @@
 
 Priority: needs-assets cases with visible symptoms but missing logs/media.
 
+## c134-0446 【问题跟踪】2026-06-07 C134上海菱华项目 11:58 A2-S2-B3-PD位的料箱掉落
+
+- area: Mantis/load-handling
+- priority: high
+- source: https://hcrobots.feishu.cn/wiki/FopjwbB8JiY6cbk1yEjcCRLLnqe
+- missing assets: 4
+  - `M-A2-S1-1` NXP日志，至少覆盖 `2026-06-07 11:58:30` 至 `12:00:30`。
+  - `M-A2-S1-1` candump/CAN日志，至少覆盖 `2026-06-07 11:58:30` 至 `12:00:30`。
+  - 如有：wormhole/system日志，覆盖同一窗口。
+  - 更清晰监控视频，覆盖 `2026-06-07 11:59:50` 至 `12:00:00`，能看到拨指、手臂和料箱相对位置。
+
 ## c134-0234 【问题跟踪】2026-02-09 C134上海菱华项目 A105/106互撞
 
 - area: Ant/traffic-collision

@@ -21,3 +21,17 @@
 - local robot logs around the event
 - video showing sequence and physical position
 
+## Multi-Fault Recovery Notes
+
+- Long field threads can contain unrelated sequential faults. Keep branches separate until evidence links them.
+- In legacy RF systems, an initial communication outage can be followed by robot-specific hardware/config/mechanical faults after recovery.
+- Example `c113-0001` contains all of these branches:
+  - scheduler command sent;
+  - RF gateways disconnected and recovered;
+  - one spider/S301 suspected offline;
+  - LD2 CANopen `0x8120` / `33056` error passive;
+  - motor node `0x3` SDO/enable failure;
+  - blown fuse and burnt pull-box motor/connector;
+  - duplicate motor ID after replacement;
+  - over-tight belt tensioner causing torque alarm.
+- Preserve recovery actions as evidence, because replacement, firmware flashing, or mechanical adjustment can introduce new fault modes.

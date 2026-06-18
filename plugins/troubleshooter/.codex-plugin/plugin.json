@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Troubleshooter",
     "shortDescription": "Diagnose field issues with structured fault trees.",
-    "longDescription": "Troubleshooter routes issue packets, Feishu problem documents, logs, videos, CAN traces, and field notes through leader and specialist workflows. HC Robotics product-line context is separated from project corpora; C134 is kept as the first OmniFlow corpus.",
+    "longDescription": "Troubleshooter routes issue packets, Feishu problem documents, logs, videos, CAN traces, and field notes through leader and specialist workflows. HC Robotics product-line context is separated from project corpora so multiple projects can share reusable diagnosis patterns without mixing site-specific facts.",
     "developerName": "Huayu",
     "category": "Productivity",
     "capabilities": [

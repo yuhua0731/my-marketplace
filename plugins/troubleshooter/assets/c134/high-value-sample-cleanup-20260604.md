@@ -28,7 +28,7 @@ goal: turn repeated accepted high-priority cases into stable diagnostic rules an
 
 - `training/c134/accepted-training.jsonl`
 - `training/c134/diagnostic-patterns.md`
-- `training/c134/embedded-diagnostic-playbook.md`
+- `training/c134/diagnostic-playbook.md`
 - `docs/c134/case-index.md`
 - `docs/c134/case-index.json`
 - synced copy under `plugins/troubleshooter/assets/c134/`

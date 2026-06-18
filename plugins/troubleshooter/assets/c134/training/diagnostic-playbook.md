@@ -1,4 +1,4 @@
-# C134 Embedded Diagnostic Playbook
+# C134 Diagnostic Playbook
 
 Built from accepted high-priority visible-text cases.
 

@@ -1,17 +1,17 @@
 # C134 Case Index
 
-Source-to-local mapping for C134 troubleshooting material.
+Source-to-local mapping for `c134` troubleshooting material.
 
 ## Summary
 
-- total: 445
+- total: 446
 - accepted: 346
-- needs-assets: 96
+- needs-assets: 97
 - rejected: 3
 
 ## Priority Counts
 
-- high: 242
+- high: 243
 - medium: 176
 - low: 27
 
@@ -19,7 +19,7 @@ Source-to-local mapping for C134 troubleshooting material.
 
 - Ant/power: 95
 - Ant/unknown: 77
-- Mantis/load-handling: 56
+- Mantis/load-handling: 57
 - Ant/traffic-collision: 51
 - Ant/motion-localization: 32
 - Ant/load-handling: 28
@@ -484,3 +484,4 @@ Source-to-local mapping for C134 troubleshooting material.
 - `c134-0443` `needs-assets` `medium` `Mantis/unknown` assets=3 source=https://hcrobots.feishu.cn/wiki/GmutwAlPjiZic3kWHyJcVFAVnwh local=cases/needs-assets/c134/0443-2026-05-28-C134菱华A-110蚂蚁机器人与M-A2-S1-1螳螂机器人死锁.md title=【问题跟踪】2026-05-28 C134菱华A-110蚂蚁机器人与M-A2-S1-1螳螂机器人死锁
 - `c134-0444` `accepted` `high` `Ant/load-handling` assets=10 source=https://hcrobots.feishu.cn/wiki/CZlQwEI32iEkjwkFQTHc7d51nsd local=cases/accepted/c134/0444-2026-05-28-C134上海菱华项目A-112蚂蚁任务失败报错.md title=【问题跟踪】2026-05-28 C134上海菱华项目A-112蚂蚁任务失败报错
 - `c134-0445` `needs-assets` `medium` `Ant/unknown` assets=5 source=https://hcrobots.feishu.cn/wiki/L5JVwfsR3iyQfpkFmGOc3L1Once local=cases/needs-assets/c134/0445-2026-05-29-C134上海菱华项目A110蚂蚁行走过程中停止不动.md title=【问题跟踪】2026-05-29 C134上海菱华项目A110蚂蚁行走过程中停止不动
+- `c134-0446` `needs-assets` `high` `Mantis/load-handling` assets=4 source=https://hcrobots.feishu.cn/wiki/FopjwbB8JiY6cbk1yEjcCRLLnqe local=cases/needs-assets/c134/0446-2026-06-07-C134上海菱华项目-A2-S2-B3-PD位料箱掉落.md title=【问题跟踪】2026-06-07 C134上海菱华项目 11:58 A2-S2-B3-PD位的料箱掉落

@@ -12,6 +12,7 @@ Company layer:
 - `assets/hc-robotics/company-overview.md`
 - `assets/hc-robotics/product-portfolio.md`
 - `assets/hc-robotics/industry-solutions.md`
+- `assets/hc-robotics/knowledge/`
 
 OmniFlow / 慧仓穿云箭 product-line layer:
 
@@ -21,7 +22,7 @@ OmniFlow / 慧仓穿云箭 product-line layer:
 - `assets/omniflow/fault-taxonomy.md`
 - `assets/omniflow/knowledge/`
 
-C134 is currently the primary OmniFlow project corpus:
+Corpus layer examples. Load the matching corpus package when the issue identifies one:
 
 - `assets/c134/fault-taxonomy.md`
 - `assets/c134/troubleshooter-plugin-spec.md`
@@ -31,6 +32,10 @@ C134 is currently the primary OmniFlow project corpus:
 - `assets/c134/troubleshooting-playbook.md`
 - `assets/c134/training/diagnostic-patterns.md`
 - `assets/c134/training/asset-requests.md`
+- `assets/c113/case-index.md`
+- `assets/c113/training/diagnostic-patterns.md`
+- `assets/sort-conveyor/case-index.md`
+- `assets/sort-conveyor/training/diagnostic-patterns.md`
 
 ## Workflow
 
@@ -42,12 +47,12 @@ C134 is currently the primary OmniFlow project corpus:
 6. Classify the area using product-line and corpus taxonomies when available.
 7. Load the matching knowledge file.
 8. Build a fault tree from observed symptom to plausible branches.
-9. Route evidence to specialists. For C134:
-   - Ant power/reboot: `embedded-software`, `can-bus`, `scheduler-traffic`, `network-infra`
-   - Ant motion/localization: `robot-motion`, `embedded-software`, `can-bus`, `vision-media`
-   - Ant network: `network-infra`, `embedded-software`
-   - Ant load handling: `embedded-software`, `robot-motion`, `scheduler-traffic`, `vision-media`
-   - Mantis handling: `mantis-handling`, `can-bus`, `embedded-software`, `scheduler-traffic`, `vision-media`
+9. Route evidence to specialists by observed domain:
+   - power/reboot: `embedded-software`, `can-bus`, `scheduler-traffic`, `network-infra`
+   - motion/localization: `robot-motion`, `embedded-software`, `can-bus`, `vision-media`
+   - network/connectivity: `network-infra`, `embedded-software`
+   - load handling: `embedded-software`, `robot-motion`, `scheduler-traffic`, `vision-media`
+   - Mantis or rack-handling mechanism: `mantis-handling`, `can-bus`, `embedded-software`, `scheduler-traffic`, `vision-media`
    - Scheduler/no-action: `scheduler-traffic`, then robot specialist only if robot evidence exists
    - WS/WLED: `workstation`
 10. Merge conclusions only after checking conflicts and evidence strength.

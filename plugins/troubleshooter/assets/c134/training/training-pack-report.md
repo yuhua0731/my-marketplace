@@ -1,7 +1,7 @@
 # C134 Training Pack Report
 
 - accepted_examples: 346
-- needs_assets: 96
+- needs_assets: 97
 - rejected: 3
 
 ## Accepted Area Counts

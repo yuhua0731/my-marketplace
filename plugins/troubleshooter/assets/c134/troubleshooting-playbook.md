@@ -617,3 +617,47 @@ Knowledge file: `docs/c134/knowledge/workstation-wled.md`
 - `c134-0106`, `c134-0108`, `c134-0109`, `c134-0114`, `c134-0115`, `c134-0116`, `c134-0191`, `c134-0300`, `c134-0349`: WLED/HLED reboot symptoms need local video/module/controller evidence or exact log correlation.
 - `c134-0211`, `c134-0212`, `c134-0213`, `c134-0214`: light-strip abnormal color after robot self-check; robot operation/FLO may be normal, but local light module evidence is missing.
 - `c134-0292`: WS002-1 light-curtain/photoelectric sensor abnormal flashing; controller/electrical/alignment evidence still needed.
+
+## C134 Scheduler Traffic Knowledge
+
+Knowledge file: `docs/c134/knowledge/scheduler-traffic.md`
+
+### First Checks
+
+1. Build the command timeline before robot-side diagnosis.
+   - Preserve the exact `robotCommandLabel`, task label, expected state, future state, target coordinates, velocity, and acceleration.
+   - Example `c134-0447`: command `A-103-S2182292-2026-06-12T06:58:58.173Z-0`.
+2. Compare expected pose, future pose, and MOVE target geometry.
+   - In `c134-0447`, expected state is near `118719,99000`, but command target is `118656,104226`.
+   - The X coordinate shifts by `-63 mm` while Y moves about `+5226 mm`, creating a slight diagonal instead of staying on the `x=118719` DM line.
+3. Check whether NXP executed the command it received.
+   - `c134-0447` NXP received `MOVE_EVENT: 118656, 104226`.
+   - The robot trajectory followed the command line; relative error to the command line stayed small before DM loss.
+4. Interpret DM loss as possible downstream evidence.
+   - In `c134-0447`, DM reads progressed on `118719GG099000`, `118719GG100000`, `118719GG100750`, then became continuous `NoRead`.
+   - Since the command line drifted away from the DM-code line, scanner loss is more consistent with bad MOVE geometry than dirty floor code or vehicle runout.
+5. Escalate to RMS/path-planning root cause when command geometry is invalid.
+   - Check map node conversion, scheduler-to-robot coordinate transform, path segment generation, and any offset injected between expected state and future state.
+
+### Evidence
+
+- RCS/RMS command records with `expectedState`, `futureState`, `coordX`, `coordY`, `finalTargetX`, `finalTargetY`, `maxVelocity`, and `maxAcceleration`.
+- NXP log proving the robot received the same target as the service command.
+- DM read/no-read sequence before fault.
+- Actual pose samples before fault to compare against the command line.
+- Map/path segment definition for the expected DM line.
+- Any coordinate transform, offset, or map-node conversion logs around the command-generation window.
+
+### Exclusions
+
+- If the NXP target differs from RCS/RMS target, inspect command transport or translation before path planning.
+- If expected state, future state, and MOVE target are all aligned to the same DM line, do not use this branch; inspect floor code, scanner, drivetrain, and braking feasibility.
+- If trajectory deviates significantly from the received command line, inspect robot-side motion/localization or drivetrain.
+- If DM loss begins before the bad command segment, do not treat the scheduler command as the first cause.
+- Do not classify the case as dirty floor code only because `DM_LOST` appears; compare command geometry first.
+
+### Examples
+
+- `c134-0447`: A-103 stopped at `2026-06-12 14:59`. RCS/RMS generated a target `118656,104226` from expected state near `118719,99000`; NXP received and followed that target, then lost DM reads after moving away from the `x=118719` DM line.
+
+- `c134-0447`: exact RMS/path-planning defect is not closed. Follow up on why `futureState.coordX = 118656` was generated instead of a DM-line-aligned target.

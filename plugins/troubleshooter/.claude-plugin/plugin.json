@@ -1,9 +1,0 @@
-{
-  "name": "troubleshooter",
-  "description": "Team-specific fault-tree troubleshooting across HC Robotics product lines and project corpora.",
-  "version": "1.2.1",
-  "author": {
-    "name": "yuhua0731",
-    "email": "yuhua364@gmail.com"
-  }
-}

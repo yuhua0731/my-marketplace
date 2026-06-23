@@ -77,6 +77,7 @@ scope: C134 accepted + needs-assets training corpus
 - `duplicate_deposit_assignment`: multiple robots assigned into one available slot.
 - `no_task_after_state_change`: robot available/task state changes but no new task.
 - `worker_task_stale`: workstation task state remains after completion.
+- `move_target_off_dm_line`: scheduler/RMS generates a MOVE target that is not aligned to the expected DM-code line, causing downstream DM loss.
 
 ### workstation_wled
 

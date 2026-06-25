@@ -20,7 +20,7 @@ status: refined into evidence-strength patterns from visible text
 - local command dictionary miss during extraction: `c134-0013`
 - anti-pinch sensor state mismatch or false trigger: `c134-0008`, `c134-0425`, `c134-0431`
 - rear anti-pinch/sensor trigger with fork or belt looseness: `c134-0303`
-- `ARM_MOTOR_SINGLE` following error during pull/load: `c134-0010`, `c134-0076`, `c134-0085`, `c134-0096`, `c134-0141`, `c134-0153`, `c134-0154`, `c134-0155`, `c134-0172`, `c134-0204`, `c134-0205`, `c134-0229`, `c134-0289`, `c134-0327`, `c134-0357`, `c134-0369`
+- `ARM_MOTOR_SINGLE` following error during pull/load: `c134-0010`, `c134-0076`, `c134-0085`, `c134-0096`, `c134-0141`, `c134-0153`, `c134-0154`, `c134-0155`, `c134-0172`, `c134-0204`, `c134-0205`, `c134-0229`, `c134-0289`, `c134-0327`, `c134-0357`, `c134-0369`, `c134-0448`
 - `ARM_MOTOR_SINGLE` following error during deposit/unload: `c134-0270`
 - `ARM_MOTOR_SINGLE` stall during pull/load: `c134-0156`
 - Mantis/shelf height mismatch during deposit: `c134-0259`
@@ -84,6 +84,8 @@ status: refined into evidence-strength patterns from visible text
    - `c134-0259`: source concludes Mantis plane was lower than shelf/storage position at `B7-L15-T4`; adjust Mantis deposit height before chasing motor hardware.
    - `c134-0434`: FLO shows `M-A1-S1-1` `ARM_MOTOR_SINGLE#following error, 55259` while extracting `TOTE-H-100281`; source says `A1-S2-B4` pick position needs lowering `6MM`, so height/access geometry is the first branch.
    - `c134-0430`: FLO shows `M-A2-S1-1` `ARM_MOTOR_SINGLE#following error, 10040` while extracting `TOTE-L-600316`; source says `A2-S2-B6` whole pick is biased toward `B1`, matching offset/external-load before motor-hardware diagnosis.
+   - `c134-0448`: `M-A3-S2-1` failed `RETRACT_PICKUP` for `TOTE-H-101481` with `ARM_MOTOR_SINGLE#following error, 10204`. CAN TPDO evidence for node 5 shows position demand/actual diverging during retract, velocity demand spiking while actual collapses, and torque demand/actual reaching about `2000` raw before the NXP fault. Treat this as strong proof of real overload/stall behavior, but still distinguish motor hardware from external tote/fork/shelf interference.
+   - For cases like `c134-0448`, use a standardized CAN evidence chart when raw PDO data is available: position following (`0x6062` demand vs `0x6064` actual), speed response (`0x606B` demand vs `0x606C` actual), and load evidence (`0x6074` torque demand vs `0x6077` torque actual). Use one time axis and mark command creation, target change, first overtorque/current warning, and fault time. If no EDS/DBC or SDO PDO mapping is available, explicitly mark object labels as inferred.
 14. For command-cache errors, inspect RCS/RMS command lifecycle before hardware.
    - `c134-0013`: `"Could not get RobotCommand ... from local commands dictionary"` while mechanism had not extended; clear plus reset arms recovered.
 15. For anti-pinch sensor mismatches, verify physical obstruction and IO mapping.
@@ -102,6 +104,7 @@ status: refined into evidence-strength patterns from visible text
 |---|---|---|---|
 | UI + NXP node402 following/stall error | strong | Mantis arm/fork fault branch | physical root cause alone |
 | CAN quick stop / `60FD` / TPDO timing | strong | firmware/IO timing branch | scheduler-only conclusion |
+| CAN motor PDO evidence chart with object labels | strong | overload/stall/following-error proof and motor-vs-load branch split | motor hardware replacement without mechanical exclusion |
 | 1 mm `coordY` expected/actual mismatch | strong | access-node/offset config branch | motor replacement |
 | torque >200% or speed collapse | strong | external load/interference branch | pure software conclusion |
 | SAS `No PDs or Tunnels available` | strong | scheduler target-selection branch | actuator fault |
@@ -116,7 +119,8 @@ status: refined into evidence-strength patterns from visible text
 - 1 mm expected-state mismatch: `c134-0351`, `c134-0140`, `c134-0316`; audit access-node offsets before hardware.
 - No deposit target / scheduler contention: `c134-0311`; route SAS/PD/tunnel selection first.
 - External load, high torque, PT deformation: `c134-0362`, `c134-0318`, `c134-0364`; video/torque/contact evidence outranks motor swap guesses.
-- ARM following error with physical interference: `c134-0270`, `c134-0229`, `c134-0327`, `c134-0010`, `c134-0155`; inspect tote bottom, side guide, limit strip, and shelf clearance.
+- ARM following error with physical interference: `c134-0270`, `c134-0229`, `c134-0327`, `c134-0010`, `c134-0155`, `c134-0448`; inspect tote bottom, side guide, limit strip, and shelf clearance.
+- CAN PDO evidence chart for arm motor following error: `c134-0448`; plot position, velocity, and torque/current object values around the fault window as diagnostic evidence, not just an illustration.
 - Height/offset geometry corrections: `c134-0259`, `c134-0430`, `c134-0432`, `c134-0434`, `c134-0435`; accept operational fix while keeping firmware/motor cause unproven without logs.
 - Anti-pinch/sensor mismatch: `c134-0008`, `c134-0425`, `c134-0431`, `c134-0303`; separate physical obstruction from IO instability.
 - Command dictionary/cache desync: `c134-0013`; inspect RCS/RMS command lifecycle before mechanism inspection.
@@ -127,6 +131,7 @@ status: refined into evidence-strength patterns from visible text
 - RMS/RCS command-set lifecycle with command index and timestamps.
 - NXP logs for HSM, node402, quick stop, target reached, state mismatch.
 - CAN logs for pull motor, fork, finger motors, `60FD` IO, TPDO timing.
+- For motor following-error/stall/overtorque cases with raw CAN, plot PDO object curves: position demand/actual, velocity demand/actual, torque/current demand/actual, with object IDs and units.
 - SAS task/container and available shelf/PD/tunnel selection logs.
 - access node and accessNodeOffset config for rest, load, deposit points.
 - torque curves for pull/fork/finger motors.
@@ -138,7 +143,7 @@ status: refined into evidence-strength patterns from visible text
 ## Logs And Files To Inspect
 
 - NXP logs, especially quick stop and target-reached sequence.
-- candump/CAN for pull motor/finger motor state, torque, IO.
+- candump/CAN for pull motor/finger motor state, torque, IO, and PDO object curves around the fault time.
 - RMS/RCS `robot_command_set.create` and command lifecycle dumps.
 - SAS `SelectDepositService`, `FindClosestAvailableShelfService`, robot task create logs.
 - access node/offset database rows for affected location.
@@ -162,7 +167,7 @@ status: refined into evidence-strength patterns from visible text
 - anti-pinch sensor active when expected false: `c134-0008`, `c134-0431`
 - right anti-pinch sensor active during arm return/deposit command: `c134-0425`
 - rear anti-pinch trigger due to mechanical looseness around fork/belt: likely `c134-0303`
-- external load/mechanical interference causing arm following error: likely branch for `c134-0010`, `c134-0155`, `c134-0172`, `c134-0229`; unresolved for `c134-0076`
+- external load/mechanical interference causing arm following error: likely branch for `c134-0010`, `c134-0155`, `c134-0172`, `c134-0229`, `c134-0448`; unresolved for `c134-0076`
 - tote/limit-strip/shelf clearance interference causing arm following error: `c134-0270`, likely `c134-0204`, `c134-0205`, `c134-0327`, branch for `c134-0369`
 - Mantis deposit plane lower than shelf plane / height mismatch: `c134-0259`
 - Mantis pull/access offset or height mismatch: `c134-0368`, `c134-0430`, `c134-0432`, `c134-0434`, `c134-0435`
@@ -182,6 +187,7 @@ status: refined into evidence-strength patterns from visible text
 - If Mantis shaking clears only after an Ant below leaves, inspect reservations, mode changes, and shared access-zone occupancy before motor hardware.
 - UI says front load sensor error: verify against video and CAN/GPIO mapping before replacing the sensor.
 - UI says `ARM_MOTOR_SINGLE#following error`: inspect tote skew,挡边 contact, and arm load before concluding motor/driver failure.
+- CAN curves prove torque/current limit, velocity collapse, or position following error: confirm motor abnormal behavior, but do not call motor hardware bad until external load/interference, access-height, fork alignment, and tote posture are excluded.
 - Source says Mantis plane is lower than shelf/货位: measure and adjust deposit height/access-node offset before motor debugging.
 - UI says `ARM_MOTOR_SINGLE#stall`: inspect physical obstruction, tote side-guide contact, and torque/current before concluding motor/driver failure.
 - UI says missing `RobotCommand`: inspect command lifecycle/local dictionary/cache first; mechanical inspection is secondary if the mechanism did not move.
@@ -202,6 +208,7 @@ status: refined into evidence-strength patterns from visible text
 - Preserve RMS logs before clear/reset; many cases become unrecoverable without them.
 - Trust exact robot labels and asset filenames (`M-A2-S1-1`, `A2巷道螳螂`) over a stale `Ant` extraction label.
 - For repeated same-location Mantis failures such as `A2-S2-B6`, compare before/after access-node offsets and keep FLO screenshots with exact following-error codes.
+- For CAN-supported motor faults, include the PDO evidence chart in the diagnosis result so the conclusion is traceable to object-level data rather than only UI/NXP error text.
 
 ## Confirmed Examples
 
@@ -218,6 +225,7 @@ status: refined into evidence-strength patterns from visible text
 - `c134-0259`: A2 `B7-L15-T4` deposit failure was operationally attributed to Mantis plane lower than the shelf position; recommended action was adjusting Mantis deposit height.
 - `c134-0303`: FLO marked `Anti-pinch Rear`; field inspection found fork looseness and likely belt pressure-block looseness, making mechanical maintenance the primary branch.
 - `c134-0368`: `A2-S2-B12-L10-T3` pull failure was operationally attributed to arm bias toward `B13`; recommended offset correction was toward `B1` about `7mm`.
+- `c134-0448`: CAN TPDO object curves around `12:39:14` show arm retract demand moving toward zero, actual position lagging/stopping near `-231k` counts, velocity demand spiking while actual collapses, and torque demand/actual reaching about `2000` raw before `ARM_MOTOR_SINGLE#following error, 10204`. This confirms a real overload/stall/following-error event and supports external load/interference as the first branch unless no-load retest reproduces the same current/torque profile.
 - `c134-0430` and `c134-0432`: repeated `A2-S2-B6` M2 pull failures were operationally attributed to pick offset bias toward `B1`; `c134-0430` additionally records `ARM_MOTOR_SINGLE#following error, 10040`.
 - `c134-0434`: `A1-S2-B4` M1 pull failure records `ARM_MOTOR_SINGLE#following error, 55259`; source action was lowering the pick position by `6MM`.
 - `c134-0435`: `A3-S2-B5-L5-T4` pull failure source action was adjusting toward `B1` by `3-4mm`; robot label remains inconsistent between title and body.
